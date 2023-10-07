@@ -4,7 +4,8 @@ from lookups import ErrorHandling,InputTypes,ETLStep,DestinationDatabase,FinvizW
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_insert_sql
 from logging_handler import show_error_message
-from webscrape import scrape_website
+from webscrape import scrape_website_store_into_staging_table
+from sentiment_analysis import analyze_sentiment
 
 def create_etl_checkpoint(db_session):
     try:
@@ -71,10 +72,11 @@ def execute_hook():
         db_session = create_connection()
         create_etl_checkpoint(db_session)
         etl_date, does_etl_time_exists = return_etl_last_updated_date(db_session)
-        src_names,df_titles,df_src_content =  scrape_website(etl_date= datetime(2023, 10, 6))
+        scrape_website_store_into_staging_table(db_session,etl_date= datetime(2023,10,6))
+        # create_insert_sql(db_session,src_names,df_titles,df_src_content, ETLStep.HOOK, etl_date)
+        analyze_sentiment(db_session)
 
-        create_insert_sql(db_session,[src_names],[df_titles],[df_src_content], ETLStep.HOOK, etl_date)
-        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK, DestinationDatabase.SCHEMA_NAME)
+        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK)
         #last step
         insert_or_update_etl_checkpoint(db_session, does_etl_time_exists,datetime.now())
         close_connection(db_session)

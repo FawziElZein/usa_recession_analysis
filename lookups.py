@@ -22,7 +22,9 @@ class ErrorHandling(Enum):
     HOOK_SQL_ERROR = "Hook: SQL Error"
     DATE_CONVERSION_ERROR = "Warning: column is not a date format"
     RETURN_ETL_LAST_UPDATE_ERROR = "Error returning ETL last update"
-    
+    WEBSCRAPE_PAGE_FAILED = "Webscrapping failed"
+    WEBSCRAPE_PAGE_NOT_FOUND = "Unable to webscrape a page"
+    WEBSCRAPE_UNEXPECTED_ERROR = "An unexpected error occured while web scrapping page"
 
 class InputTypes(Enum):
     SQL = "SQL"
@@ -48,7 +50,7 @@ class FinvizWebScrape(Enum):
     FINVIZ_URL = "https://finviz.com/quote.ashx?t="
     SOURCE = "finviz"
     TABLE_TITLE = "financial_news"
-    COLUMNS_NAME = ['news_id','ticker', 'date', 'time', 'text']
+    COLUMNS_NAME = ['ticker', 'date', 'time','title', 'text']
     TICKERS = ['AMZN']
 
 class DestinationDatabase(Enum):

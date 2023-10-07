@@ -23,12 +23,10 @@ def return_tables_by_schema(schema_name):
     return schema_tables
 
 
-def execute_sql_folder(db_session, sql_command_directory_path, etl_step, target_schema):
+def execute_sql_folder(db_session, sql_command_directory_path, etl_step, target_schema = DestinationDatabase.SCHEMA_NAME):
     sql_files = [sqlfile for sqlfile in os.listdir(sql_command_directory_path) if sqlfile.endswith('.sql')]
     sorted_sql_files = sorted(sql_files, key=lambda x: int(x[1:x.index('-')]))
-    counter = 0
     for sql_file in sorted_sql_files:
-        counter+=1
         file_title = sql_file.split('-')
         if file_title[1] == etl_step.value:
             with open(os.path.join(sql_command_directory_path,sql_file), 'r') as file:
@@ -53,15 +51,12 @@ def create_insert_sql(db_session,source_names,df_titles,df_source_list,etl_step,
                 execute_query(db_session = db_session, query= create_stmt)
                 create_sql_staging_table_index(db_session, destination_schema_name, dst_table, df_source.index.name)
             elif etl_step == ETLStep.HOOK:
-                if source_name==FinvizWebScrape.SOURCE.value:
-                    staging_df = df_source
+                date_dict = return_lookup_items_as_dict(DateField)
+                date_column = date_dict.get(df_title)
+                if date_column =='index':
+                    staging_df = df_source[df_source.index>etl_date]
                 else:
-                    date_dict = return_lookup_items_as_dict(DateField)
-                    date_column = date_dict.get(df_title)
-                    if date_column =='index':
-                        staging_df = df_source[df_source.index>etl_date]
-                    else:
-                        staging_df = df_source[df_source[date_column]>etl_date]
+                    staging_df = df_source[df_source[date_column]>etl_date]
                 if len(staging_df):
                     insert_stmt = return_insert_into_sql_statement_from_df(staging_df, destination_schema_name, dst_table)
                     execute_query(db_session=db_session, query= insert_stmt)

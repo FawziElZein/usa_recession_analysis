@@ -68,7 +68,7 @@ def return_insert_into_sql_statement_from_df(dataframe, schema_name, table_name)
                     # Escape single quotes in the string
                     val_escaped = val.replace("'", "''")
                     value_strs.append(f"'{val_escaped}'")
-                elif isinstance(val, (pd.Timestamp,date)):
+                elif isinstance(val, (date,datetime)):
                     value_strs.append(f"'{val}'")
                 else:
                     value_strs.append(str(val))
@@ -125,17 +125,3 @@ def get_online_csv_into_df_list(*resources):
     
     return df_list,df_titles
 
-def get_empty_df_template(*enum_sources):
-
-    source_names = []
-    table_titles = []
-    empty_df_lists = []
-
-    for enum_source in enum_sources:
-        source_names.append(enum_source.SOURCE.value)
-        table_titles.append(enum_source.TABLE_TITLE.value)
-        empty_df = pd.DataFrame(columns=enum_source.COLUMNS.value)
-        empty_df.set_index(enum_source.COLUMNS.value[0],inplace=True)
-        empty_df_lists.append(empty_df)
-
-    return source_names, table_titles, empty_df_lists
