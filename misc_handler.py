@@ -4,9 +4,7 @@ from database_handler import return_query,execute_query, create_connection, clos
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
 from logging_handler import show_error_message
 
-def return_staging_tables_as_list():
-    tables = [str(table.name).lower() for table in DateField]
-    return tables
+
 
     
 def return_lookup_items_as_dict(lookup_item):

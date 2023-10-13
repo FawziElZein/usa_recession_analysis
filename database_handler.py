@@ -49,7 +49,7 @@ def parse_date_columns(dataframe):
         except Exception as e:
             suffix = str(e)
             error_prefix = ErrorHandling.DATE_CONVERSION_ERROR.value
-            show_error_message(error_prefix,suffix)
+            # show_error_message(error_prefix,suffix)
     
 def return_data_as_df(file_executor, input_type, db_session = None):
     return_dataframe = None
@@ -78,6 +78,23 @@ def return_data_as_df(file_executor, input_type, db_session = None):
     finally:
         return return_dataframe
 
+
+def get_column_names_from_sql_table(schema_name,table_name):
+
+    db_session = create_connection()
+    target_columns_query = f"""
+
+                    SELECT 
+                        column_name
+                    FROM information_schema.columns
+                    WHERE table_schema = '{schema_name}'
+                    AND table_name = '{table_name}'; 
+                """
+
+    target_columns_result = return_query(db_session=db_session,query= target_columns_query)
+    column_names = [item[0] for item in target_columns_result]
+    return column_names
+            
 def execute_query(db_session, query):
     return_val = ErrorHandling.NO_ERROR
     try:

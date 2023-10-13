@@ -1,4 +1,7 @@
 psycopg2-binary==2.9.6
 pandas==1.5.3
+requests
 nltk == 3.8.1
 yahoofinancials == 1.16
+tensorflow
+statsmodels

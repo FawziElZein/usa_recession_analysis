@@ -4,8 +4,10 @@ from lookups import ErrorHandling,InputTypes,ETLStep,DestinationDatabase,FinvizW
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_insert_sql
 from logging_handler import show_error_message
-from webscrape import scrape_website_store_into_staging_table
-from sentiment_analysis import analyze_sentiment
+from webscrape import get_webscrape_data_from_finviz,get_usa_webscrapping_data,get_states_webscraping_data
+from sentiment_analysis import store_sentiment_analysis_into_fact_table
+from faang_stock_market_prices import get_faang_historical_prices
+from politicians_speeches_and_social_media_posts import get_politician_social_media_posts
 
 def create_etl_checkpoint(db_session):
     try:
@@ -56,7 +58,7 @@ def return_etl_last_updated_date(db_session):
             db_session= db_session
         )
         if len(etl_df) == 0:
-            return_date = datetime(1992,6,19) 
+            return_date = datetime(2007,1,1)
         else:
             return_date = etl_df['etl_last_run_date'].iloc[0]
             does_etl_time_exists = True
@@ -72,11 +74,18 @@ def execute_hook():
         db_session = create_connection()
         create_etl_checkpoint(db_session)
         etl_date, does_etl_time_exists = return_etl_last_updated_date(db_session)
-        scrape_website_store_into_staging_table(db_session,etl_date= datetime(2023,10,6))
-        # create_insert_sql(db_session,src_names,df_titles,df_src_content, ETLStep.HOOK, etl_date)
-        analyze_sentiment(db_session)
 
+        # get_faang_historical_prices(db_session,etl_datetime=etl_date)
+        # get_webscrape_data_from_finviz(db_session=db_session,etl_date=etl_date,does_etl_exists=does_etl_time_exists)
+        # get_usa_webscrapping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
+        # get_states_webscraping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
+        get_politician_social_media_posts(db_session)
+        #Might not be in need
+        # create_insert_sql(db_session,src_names,df_titles,df_src_content, ETLStep.HOOK, etl_date)
+
+        # store_sentiment_analysis_into_fact_table(db_session)
         execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK)
+
         #last step
         insert_or_update_etl_checkpoint(db_session, does_etl_time_exists,datetime.now())
         close_connection(db_session)

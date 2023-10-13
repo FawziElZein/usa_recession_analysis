@@ -25,33 +25,41 @@ class ErrorHandling(Enum):
     WEBSCRAPE_PAGE_FAILED = "Webscrapping failed"
     WEBSCRAPE_PAGE_NOT_FOUND = "Unable to webscrape a page"
     WEBSCRAPE_UNEXPECTED_ERROR = "An unexpected error occured while web scrapping page"
-
+    
 class InputTypes(Enum):
     SQL = "SQL"
     CSV = "CSV"
     EXCEL = "Excel"
     HTTP = "Http"
     
-class CsvUrlCoinsInfo(Enum):
-    COINS_INFO = [0,'https://storage.googleapis.com/csv_links/cryptocurrency-coins-data-info.csv-2.csv']
 
-class CsvUrlTweets(Enum):
-    ELON_MUSK_TWEETS = [0,'https://storage.googleapis.com/csv_links/elon_musk_tweets_clean_data.csv','Text'] 
-    CRYPTO_TWEETS = [0,'https://storage.googleapis.com/csv_links/dataset_52_person_tweets.csv','full_text']
-
-class CoinsEnergyConsumption(Enum):
-    BITCOIN_ENERGY_CONSUMPTION = [0,'https://storage.googleapis.com/csv_links/btc_energy_consumption.csv']
-
-class CsvUrlHistoricalData(Enum):
-    CRYPTO_TRANSACTIONS = [0,'https://storage.googleapis.com/csv_links/dex_transactions_post_cleaning.csv']
-    MARKET_CAP = [0,'https://storage.googleapis.com/csv_links/market_capital_of_cryptocuurency_from_2009_till_2023.csv']
+class PoliticianSpeeches(Enum):
+    CSV_RESOURCE = [0,'https://millercenter.org/the-presidency/presidential-speeches']
+    SOURCE = "miller_center"
+    TABLE_TITLE = "presidential_speeches"
 
 class FinvizWebScrape(Enum):
-    FINVIZ_URL = "https://finviz.com/quote.ashx?t="
+    URL = "https://finviz.com/quote.ashx?t="
     SOURCE = "finviz"
     TABLE_TITLE = "financial_news"
-    COLUMNS_NAME = ['ticker', 'date', 'time','title', 'text']
-    TICKERS = ['AMZN']
+    COLUMNS_NAME = ['ticker', 'date', 'time','title', 'text','url']
+    TICKERS = ['META','AMZN','AAPL','NFLX','GOOGL']
+
+class FredEconomicDataWebScrape(Enum):
+    URL = "https://fred.stlouisfed.org/series/"
+    SOURCE = "fred_economic_data"
+    KPI = ['GPDI','NETEXP','GCEC1','IMPGS']
+    # KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
+    # STATE_INITIALS = [
+    # 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+    # 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+    # 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+    # 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+    # 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    # ]
+    KPIS_PER_STATE = ['PCE']
+    STATE_INITIALS = ['AZ','CT','DE','ID','RI']
+
 
 class DestinationDatabase(Enum):
     SCHEMA_NAME = "dw_reporting"

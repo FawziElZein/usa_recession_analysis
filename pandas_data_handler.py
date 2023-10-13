@@ -5,8 +5,8 @@ import io
 from io import StringIO
 from lookups import InputTypes, ErrorHandling
 from logging_handler import show_error_message
-from database_handler import return_data_as_df
-from datetime import date, datetime
+from database_handler import return_data_as_df,get_column_names_from_sql_table
+from datetime import date, datetime,time
 
 
 def return_create_statement_from_df(dataframe, schema_name, table_name):
@@ -44,7 +44,7 @@ def return_create_statement_from_df(dataframe, schema_name, table_name):
         return create_table_statement
 
 
-def return_insert_into_sql_statement_from_df(dataframe, schema_name, table_name):
+def return_insert_into_sql_statement_from_df(dataframe, schema_name, table_name,is_upsert = False):
 
     insert_statement = None
     try:
@@ -68,7 +68,7 @@ def return_insert_into_sql_statement_from_df(dataframe, schema_name, table_name)
                     # Escape single quotes in the string
                     val_escaped = val.replace("'", "''")
                     value_strs.append(f"'{val_escaped}'")
-                elif isinstance(val, (date,datetime)):
+                elif isinstance(val, (date,datetime,time)):
                     value_strs.append(f"'{val}'")
                 else:
                     value_strs.append(str(val))
@@ -78,18 +78,30 @@ def return_insert_into_sql_statement_from_df(dataframe, schema_name, table_name)
 
         values_list = ',\n'.join(values_list)
 
-        insert_statement = f"INSERT INTO {schema_name}.{table_name} ({columns}) VALUES\n {values_list};"
+        insert_statement = f"INSERT INTO {schema_name}.{table_name} ({columns}) VALUES\n {values_list}"
+        
+        if is_upsert:
+            column_names = get_column_names_from_sql_table(schema_name=schema_name,table_name = table_name)
 
+            insert_statement +=f"\n ON CONFLICT({column_names[0]}) \n DO UPDATE SET"
+            for column in column_names[1:]:
+                insert_statement += f"\n {column} = EXCLUDED.{column},"
+            insert_statement = insert_statement[:-1]
+
+        insert_statement +=";"
+        
     except Exception as error:
         error_prefix = ErrorHandling.INSERT_INTO_TABLE_ERROR.value
         suffix = str(error)
         show_error_message(error_prefix, suffix)
+
     finally:
 
         return insert_statement
 
 
 def download_csv_to_dataframe(index_url):
+    
     index = index_url.value[0] 
     url = index_url.value[1]
     try:
@@ -111,7 +123,21 @@ def download_csv_to_dataframe(index_url):
         print(f"An error occurred: {str(e)}")
         return None
 
-
+def download_webscrape_csv_to_dataframe(url):
+    df = None
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check for any HTTP errors
+        if response.status_code == 200:
+            csv_text = StringIO(response.text)
+            df = return_data_as_df(file_executor=csv_text,input_type=InputTypes.CSV)
+        else:
+            print("Failed to download CSV file. Status code:",
+                  response.status_code)
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+    finally:
+        return df
 
 def get_online_csv_into_df_list(*resources):
 
