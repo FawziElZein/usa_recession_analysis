@@ -1,6 +1,6 @@
-from lookups import FinvizWebScrape, DestinationDatabase, InputTypes
-from pandas_data_handler import return_data_as_df,return_insert_into_sql_statement_from_df,return_create_statement_from_df
-from database_handler import execute_query
+from lookups import FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches
+from pandas_data_handler import return_data_as_df, return_insert_into_sql_statement_from_df, return_create_statement_from_df
+from database_handler import execute_query, parse_date_columns
 import os
 from bs4 import BeautifulSoup
 import re
@@ -10,29 +10,53 @@ from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from datetime import datetime
 import pandas as pd
-from misc_handler import create_sql_staging_table_index
+from misc_handler import create_sql_table_index
+from langchain.llms import OpenAI
+import os
 
-def get_data_from_staging_table(db_session, source_name=FinvizWebScrape.SOURCE, table_title=FinvizWebScrape.TABLE_TITLE, destination_schema_name=DestinationDatabase.SCHEMA_NAME):
+
+# def get_data_from_staging_table(db_session, source_name=FinvizWebScrape.SOURCE, table_title=FinvizWebScrape.TABLE_TITLE, destination_schema_name=DestinationDatabase.SCHEMA_NAME):
+
+#     src_schema = destination_schema_name.value
+#     src_table = f"stg_{source_name.value}_{table_title.value}"
+
+#     select_query = f"""
+#         SELECT
+#             CONCAT(ticker,'-',title) AS ticker_title,
+#             ticker,
+#             title,
+#             date,
+#             time,
+#             text,
+#             url
+#         FROM {src_schema}.{src_table}
+#             """
+#     df_financial_news = return_data_as_df(
+#         file_executor=select_query, input_type=InputTypes.SQL, db_session=db_session)
+#     df_financial_news.set_index(df_financial_news.columns[0], inplace=True)
+#     return df_financial_news
+
+
+def get_data_from_staging_table(db_session, columns, source_name, table_title, destination_schema_name):
 
     src_schema = destination_schema_name.value
     src_table = f"stg_{source_name.value}_{table_title.value}"
 
-    select_query = f"""
-    SELECT
-        CONCAT(ticker,'-',title) AS ticker_title,
-        ticker,
-        title,
-        date,
-        time,
-        text,
-        url
-    FROM {src_schema}.{src_table}
-            """
-    df_financial_news = return_data_as_df(file_executor=select_query, input_type=InputTypes.SQL, db_session=db_session)
-    df_financial_news.set_index(df_financial_news.columns[0],inplace=True)
-    return df_financial_news
+    select_query = "SELECT"
 
+    if source_name.value == 'finviz':
+        select_query += "\nCONCAT(ticker,'-',title) AS ticker_title,"
 
+    for column in columns.value:
+        select_query += '\n' + column + ','
+    select_query = select_query[:-1]
+
+    select_query += f"\n FROM {src_schema}.{src_table}"
+
+    df = return_data_as_df(
+        file_executor=select_query, input_type=InputTypes.SQL, db_session=db_session)
+    df.set_index(df.columns[0], inplace=True)
+    return df
 
 
 def preprocess_text(text):
@@ -57,39 +81,55 @@ def preprocess_text(text):
     return text
 
 
-def analyze_sentiment(df):
+# def analyze_sentiment(df, source_name, text_column):
+#     text_column = text_column.value
+#     vader = SentimentIntensityAnalyzer()
+#     scores = df[text_column].apply(preprocess_text).apply(
+#         vader.polarity_scores).tolist()
 
-    vader = SentimentIntensityAnalyzer()
+#     scores_df = pd.DataFrame(scores)
+#     index_name = df.index.name
+#     scores_df[index_name] = df.index
+#     df = pd.merge(df, scores_df, on=index_name)
+#     df['date'] = pd.to_datetime(df['date'])
+#     df.set_index(index_name, inplace=True)
+#     return df
 
-    scores = df['text'].apply(preprocess_text).apply(
-        vader.polarity_scores).tolist()
 
-    scores_df = pd.DataFrame(scores)
+def get_openAI_sentiment_result(text):
+    llm = OpenAI(
+        openai_api_key="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")
+    request = f'This is a sentiment analysis request. Please send me the negative, neutral, positive and compound scores in a forme of array [negative,neutral,positive,compound]\n\n"{text}"\n\n'
+    response = llm(request)
 
-    df = df.join(scores_df)
+    start_index = response.find("[")
+    end_index = response.find("]")
+    sentiment_scores_str = response[start_index:end_index + 1]
+    sentiment_scores = eval(sentiment_scores_str)
+    return sentiment_scores
+
+
+def analyze_sentiment(df, source_name, text_column):
+    text_column = text_column.value
+
+    df[['neg', 'neu', 'pos', 'compound']] = df[text_column].apply(get_openAI_sentiment_result).apply(
+        lambda row: pd.Series(row, index=['neg', 'neu', 'pos', 'compound']))
+
     return df
 
 
-def create_and_store_into_fact_table(db_session,df, destination_schema=DestinationDatabase.SCHEMA_NAME, source_name=FinvizWebScrape.SOURCE, table_title=FinvizWebScrape.TABLE_TITLE):
+def get_sentiment_analysis_results(db_session, resources):
 
-    
-    target_schema = destination_schema.value
-    dst_table = f"fact_{table_title.value}"
+    df_sentiment_list = []
+    for resource in resources:
 
-    create_stmt = return_create_statement_from_df(df_financial_news_sentiment,target_schema,dst_table)
-    execute_query(db_session=db_session,query=create_stmt)
-    
-    create_sql_staging_table_index(db_session,target_schema,dst_table,df.index.name)
+        df = get_data_from_staging_table(db_session, columns=resource.COLUMNS_NAME, source_name=resource.SOURCE,
+                                         table_title=resource.TABLE_TITLE, destination_schema_name=DestinationDatabase.SCHEMA_NAME)
 
-    upsert_query = return_insert_into_sql_statement_from_df(df,target_schema,dst_table,is_upsert=True)
-    execute_query(db_session,upsert_query)
+        if len(df):
+            df_sentiment = analyze_sentiment(
+                df=df, source_name=resource.SOURCE, text_column=resource.TEXT_COLUMN_NAME)
+            df_sentiment_list.append(
+                [resource.TABLE_TITLE.value, df_sentiment])
 
-
-def store_sentiment_analysis_into_fact_table(db_session):
-
-    df_financial_news = get_data_from_staging_table(db_session)
-    if len(df_financial_news):
-        df_financial_news_sentiment = analyze_sentiment(df_financial_news)
-        create_and_store_into_fact_table(db_session,df_financial_news_sentiment)
-
-
+    return df_sentiment_list

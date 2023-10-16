@@ -49,7 +49,7 @@ def parse_date_columns(dataframe):
         except Exception as e:
             suffix = str(e)
             error_prefix = ErrorHandling.DATE_CONVERSION_ERROR.value
-            # show_error_message(error_prefix,suffix)
+            show_error_message(error_prefix,suffix)
     
 def return_data_as_df(file_executor, input_type, db_session = None):
     return_dataframe = None
@@ -106,6 +106,7 @@ def execute_query(db_session, query):
         return_val = error_prefix
         suffix = str(e)
         show_error_message(error_prefix.value, suffix)
+        print(query)
     finally:
         return return_val
 

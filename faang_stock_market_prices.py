@@ -53,9 +53,7 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
     latest_datetime = get_latest_datetime_from_stock_price_table(db_session,dst_schema)
     print("latest_datetime")
     print(latest_datetime)
-    if latest_datetime:
-        latest_datetime += timedelta(days=1)
-    else:
+    if not latest_datetime:
         latest_datetime = convert_local_to_utc(etl_datetime)
 
     print("latest_datetime after processing",latest_datetime)
@@ -77,10 +75,13 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
     data = {}
     for ticker in tickers:
         yahoo_financials = YahooFinancials(ticker)
+        print("getting data for ",ticker)
         historical_data = yahoo_financials.get_historical_price_data(latest_date_str, end_date_str, "daily")
+        # print(historical_data[ticker])
         if historical_data[ticker]:
             data[ticker] = historical_data[ticker]['prices']
-    
+            print(data[ticker])
+    # print(date)
     for ticker, prices in data.items():
         df = pd.DataFrame(prices)
         parse_date_columns(df)

@@ -25,6 +25,10 @@ class ErrorHandling(Enum):
     WEBSCRAPE_PAGE_FAILED = "Webscrapping failed"
     WEBSCRAPE_PAGE_NOT_FOUND = "Unable to webscrape a page"
     WEBSCRAPE_UNEXPECTED_ERROR = "An unexpected error occured while web scrapping page"
+
+
+class CHROME_EXECUTOR:
+    PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     
 class InputTypes(Enum):
     SQL = "SQL"
@@ -34,9 +38,12 @@ class InputTypes(Enum):
     
 
 class PoliticianSpeeches(Enum):
-    CSV_RESOURCE = [0,'https://millercenter.org/the-presidency/presidential-speeches']
+    URL = 'https://millercenter.org/the-presidency/presidential-speeches'
     SOURCE = "miller_center"
     TABLE_TITLE = "presidential_speeches"
+    COLUMNS_NAME = ['date', 'speech_title','speaker_name', 'speech']
+    TEXT_COLUMN_NAME = 'speech'
+
 
 class FinvizWebScrape(Enum):
     URL = "https://finviz.com/quote.ashx?t="
@@ -44,22 +51,29 @@ class FinvizWebScrape(Enum):
     TABLE_TITLE = "financial_news"
     COLUMNS_NAME = ['ticker', 'date', 'time','title', 'text','url']
     TICKERS = ['META','AMZN','AAPL','NFLX','GOOGL']
+    # TICKERS = ['META']
+    TEXT_COLUMN_NAME = 'text'
 
 class FredEconomicDataWebScrape(Enum):
     URL = "https://fred.stlouisfed.org/series/"
     SOURCE = "fred_economic_data"
     KPI = ['GPDI','NETEXP','GCEC1','IMPGS']
-    # KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
-    # STATE_INITIALS = [
-    # 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
-    # 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
-    # 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-    # 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
-    # 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-    # ]
-    KPIS_PER_STATE = ['PCE']
-    STATE_INITIALS = ['AZ','CT','DE','ID','RI']
-
+    KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
+    STATE_INITIALS = [
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+    'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+    'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    ]
+    
+    # KPIS_PER_STATE = ['PCE']
+    # STATE_INITIALS = ['AZ','CT','DE','ID','RI']
+    DEPENDENT_VAR = 'gdp'
+    DEPENDENT_INDEPENDENT_VARS = ['gdp','pce','gpdi','netexp','gcec','impgs','average_negative','average_neutral','average_positive','average_compound']
+    ARIMA_ORDER = (4, 1, 3)
+    FUTURE_FORECAST_PERIODS = 20
+    FORECAST_TABLE_TITLE = 'forecasted_gdp'
 
 class DestinationDatabase(Enum):
     SCHEMA_NAME = "dw_reporting"
@@ -71,3 +85,9 @@ class DateField(Enum):
 class ETLStep(Enum):
     PRE_HOOK = "prehook"
     HOOK = "hook"
+
+class TABLE_TYPE:
+    DIM = "dim"
+    FACT = "fact"
+    AGG = "agg"
+    VIEW = "views"

@@ -1,5 +1,5 @@
 import os
-from lookups import ErrorHandling,ETLStep,InputTypes,DateField,CsvUrlTweets,DestinationDatabase,FinvizWebScrape
+from lookups import ErrorHandling,ETLStep,InputTypes,DateField,DestinationDatabase,FinvizWebScrape
 from database_handler import return_query,execute_query, create_connection, close_connection,return_data_as_df
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
 from logging_handler import show_error_message
@@ -20,13 +20,24 @@ def return_tables_by_schema(schema_name):
             schema_tables.append(table.split('.')[1])
     return schema_tables
 
+def is_hook_file_title_executable(etl_step,file_title,table_types):
 
-def execute_sql_folder(db_session, sql_command_directory_path, etl_step, target_schema = DestinationDatabase.SCHEMA_NAME):
+    if etl_step.value == ETLStep.PRE_HOOK.value:
+        return True
+    
+    for table_type in table_types:
+        if file_title == table_type:
+            return True
+    
+    return False
+
+def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_types, target_schema = DestinationDatabase.SCHEMA_NAME):
+
     sql_files = [sqlfile for sqlfile in os.listdir(sql_command_directory_path) if sqlfile.endswith('.sql')]
     sorted_sql_files = sorted(sql_files, key=lambda x: int(x[1:x.index('-')]))
     for sql_file in sorted_sql_files:
         file_title = sql_file.split('-')
-        if file_title[1] == etl_step.value:
+        if file_title[1] == etl_step.value and is_hook_file_title_executable(etl_step,file_title[2],table_types):
             with open(os.path.join(sql_command_directory_path,sql_file), 'r') as file:
                 sql_query = file.read()
                 sql_query = sql_query.replace('target_schema', target_schema.value)
@@ -35,7 +46,7 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, target_
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
 
 
-def create_sql_staging_table_index(db_session,source_name, table_name, index_val):
+def create_sql_table_index(db_session,source_name, table_name, index_val):
     query = f"CREATE INDEX IF NOT EXISTS idx_{table_name}_{index_val} ON {source_name}.{table_name} ({index_val});"
     execute_query(db_session,query)
 
@@ -47,7 +58,7 @@ def create_insert_sql(db_session,source_names,df_titles,df_source_list,etl_step,
             if etl_step == ETLStep.PRE_HOOK:
                 create_stmt = return_create_statement_from_df(df_source, destination_schema_name, dst_table)
                 execute_query(db_session = db_session, query= create_stmt)
-                create_sql_staging_table_index(db_session, destination_schema_name, dst_table, df_source.index.name)
+                create_sql_table_index(db_session, destination_schema_name, dst_table, df_source.index.name)
             elif etl_step == ETLStep.HOOK:
                 date_dict = return_lookup_items_as_dict(DateField)
                 date_column = date_dict.get(df_title)

@@ -5,3 +5,5 @@ nltk == 3.8.1
 yahoofinancials == 1.16
 tensorflow
 statsmodels
+langchain
+streamlit

@@ -1,0 +1,1 @@
+SELECT * FROM dw_reporting.stg_finviz_financial_news;
