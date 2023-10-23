@@ -7,3 +7,4 @@ tensorflow
 statsmodels
 langchain
 streamlit
+xgboost

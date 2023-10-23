@@ -193,11 +193,11 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
 
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = chrome_exec_path
-    driver = webdriver.Chrome(options=chrome_options)
+    
 
     for kpi in kpis:
         try:
-
+            driver = webdriver.Chrome(options=chrome_options)
             url = main_url + kpi
             driver.get(url)
             response = requests.get(url)
@@ -239,12 +239,17 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
                                 if "CSV" in anchor_tag.text:
                                     href_link = anchor_tag.get_attribute("href")
                                     df = download_webscrape_csv_to_dataframe(href_link)
-                                    print(df)
+                                    time.sleep(1)
                                     df.set_index(df.columns[0],inplace=True)
                                     
                                     table_name = f"stg_{FredEconomicDataWebScrape.SOURCE.value}_{kpi}"
+                                    print("table_name")
+                                    print(table_name)
+                                    print("Df")
+                                    print(df)
                                     insert_stmt = return_insert_into_sql_statement_from_df(df,schema_name,table_name)
                                     execute_query(db_session,insert_stmt)
+                                    time.sleep(1)
             else:
                 error_string_prefix = ErrorHandling.WEBSCRAPE_PAGE_FAILED.value
                 error_string_suffix = f"Unable to web scrape {inner_url}, HTTP status code: " +response.getcode()
@@ -258,7 +263,7 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
                 error_string_suffix = str(e)
             show_error_message(error_string_prefix,error_string_suffix)
 
-    driver.quit()
+        driver.quit()
 
 def get_states_webscraping_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
 

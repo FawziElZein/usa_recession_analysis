@@ -14,7 +14,7 @@ def execute_prehook(sql_command_directory_path = './SQL_Commands'):
     try:
         
         db_session = create_connection()
-        execute_sql_folder(db_session, sql_command_directory_path, ETLStep.PRE_HOOK, DestinationDatabase.SCHEMA_NAME)
+        execute_sql_folder(db_session, sql_command_directory_path, ETLStep.PRE_HOOK, table_types = None, target_schema= DestinationDatabase.SCHEMA_NAME)
         # df_online_src_content ,df_online_src_titles = get_online_csv_into_df_list(CsvUrlCoinsInfo,CoinsEnergyConsumption,CsvUrlHistoricalData)
 
         # df_src_content = df_sentiment_analysis + df_crypto_prices + df_online_src_content

@@ -25,7 +25,11 @@ class ErrorHandling(Enum):
     WEBSCRAPE_PAGE_FAILED = "Webscrapping failed"
     WEBSCRAPE_PAGE_NOT_FOUND = "Unable to webscrape a page"
     WEBSCRAPE_UNEXPECTED_ERROR = "An unexpected error occured while web scrapping page"
-
+    ARIMA_ERROR = "Error in ARIMA implementation"
+    PROCESS_PREDICTION_RESULTS_ERROR = "Error processing prediction results"
+    GDP_FORECAST_ERROR = "Error forecasting gdp value"
+    OPEN_AI_ERROR = "Error requesting sentiment analysis results from OpenAI"
+    SENTIMENTS_RESULT_ERROR = "Error processing sentiment results"
 
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
@@ -57,7 +61,7 @@ class FinvizWebScrape(Enum):
 class FredEconomicDataWebScrape(Enum):
     URL = "https://fred.stlouisfed.org/series/"
     SOURCE = "fred_economic_data"
-    KPI = ['GPDI','NETEXP','GCEC1','IMPGS']
+    KPI = ['GDPC1','PCE','GPDI','NETEXP','GCEC1','IMPGS']
     KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
     STATE_INITIALS = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -67,8 +71,8 @@ class FredEconomicDataWebScrape(Enum):
     'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
     ]
     
-    # KPIS_PER_STATE = ['PCE']
-    # STATE_INITIALS = ['AZ','CT','DE','ID','RI']
+    # KPIS_PER_STATE = ['MEHOINUSXXA672N']
+    # STATE_INITIALS = ['PA']
     DEPENDENT_VAR = 'gdp'
     DEPENDENT_INDEPENDENT_VARS = ['gdp','pce','gpdi','netexp','gcec','impgs','average_negative','average_neutral','average_positive','average_compound']
     ARIMA_ORDER = (4, 1, 3)

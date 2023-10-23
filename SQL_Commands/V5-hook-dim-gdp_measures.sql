@@ -101,11 +101,23 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_gdp_all_measures(
 
     date DATE PRIMARY KEY NOT NULL,
     gdp FLOAT,
+    gdp_trend_value DOUBLE PRECISION,
+    gdp_trend_percentage NUMERIC,
     pce FLOAT,
+    pce_trend_value DOUBLE PRECISION,
+    pce_trend_percentage NUMERIC,
     gpdi FLOAT,
+    gpdi_trend_value DOUBLE PRECISION,
+    gpdi_trend_percentage NUMERIC,
     netexp FLOAT,
+    netexp_trend_value DOUBLE PRECISION,
+    netexp_trend_percentage NUMERIC,
     gcec FLOAT,
-    impgs FLOAT
+    gcec_trend_value DOUBLE PRECISION,
+    gcec_trend_percentage NUMERIC,
+    impgs FLOAT,
+    impgs_trend_value DOUBLE PRECISION,
+    impgs_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_gdp_all_measures(date);
@@ -115,7 +127,7 @@ WITH CTE_PCE_PER_QUARTER AS(
 SELECT 
     CAST(date_trunc('quarter', date) AS DATE) AS quarter_start,
 	SUM(pce) AS pce
-FROM dw_reporting.stg_fred_economic_data_pce
+FROM target_schema.stg_fred_economic_data_pce
 GROUP BY 
 	date_trunc('quarter', date)
 ORDER BY
@@ -126,11 +138,23 @@ INSERT INTO target_schema.dim_gdp_all_measures
 SELECT
 	stg_gdp.date,
 	stg_gdp.gdpc1,
+    ROUND(CAST(stg_gdp.gdpc1 - LAG(stg_gdp.gdpc1) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2) AS gdp_trend_value,
+    ROUND(CAST((stg_gdp.gdpc1 - LAG(stg_gdp.gdpc1) OVER (ORDER BY stg_gdp.date))/ABS(LAG(stg_gdp.gdpc1) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS gdp_trend_percentage,
 	CTE_PCE_PER_QUARTER.pce,
+    ROUND(CAST(CTE_PCE_PER_QUARTER.pce - LAG(CTE_PCE_PER_QUARTER.pce) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2) AS pce_trend_value,
+    ROUND(CAST((CTE_PCE_PER_QUARTER.pce - LAG(CTE_PCE_PER_QUARTER.pce) OVER (ORDER BY stg_gdp.date))/ABS(LAG(CTE_PCE_PER_QUARTER.pce) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS pce_trend_percentage,
 	stg_gpdi.gpdi,
+    ROUND(CAST(stg_gpdi.gpdi - LAG(stg_gpdi.gpdi) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2)AS gpdi_trend_value,
+    ROUND(CAST((stg_gpdi.gpdi - LAG(stg_gpdi.gpdi) OVER (ORDER BY stg_gdp.date))/ABS(LAG(stg_gpdi.gpdi) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS gpdi_trend_percentage,
 	stg_netexp.netexp,
+    ROUND(CAST(stg_netexp.netexp - LAG(stg_netexp.netexp) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2) AS netexp_trend_value,
+    ROUND(CAST((stg_netexp.netexp - LAG(stg_netexp.netexp) OVER (ORDER BY stg_gdp.date))/ABS(LAG(stg_netexp.netexp) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS netexp_trend_percentage,
 	stg_gcec1.gcec1,
-	stg_impgs.impgs
+    ROUND(CAST(stg_gcec1.gcec1 - LAG(stg_gcec1.gcec1) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2) AS gcec1_trend_value,
+    ROUND(CAST((stg_gcec1.gcec1 - LAG(stg_gcec1.gcec1) OVER (ORDER BY stg_gdp.date))/ABS(LAG(stg_gcec1.gcec1) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS gcec1_trend_percentage,
+	stg_impgs.impgs,
+    ROUND(CAST(stg_impgs.impgs - LAG(stg_impgs.impgs) OVER (ORDER BY stg_gdp.date) AS DECIMAL),2) AS impgs_trend_value,
+    ROUND(CAST((stg_impgs.impgs - LAG(stg_impgs.impgs) OVER (ORDER BY stg_gdp.date))/ABS(LAG(stg_impgs.impgs) OVER (ORDER BY stg_gdp.date)) AS DECIMAL),4)*100  AS impgs_trend_percentage
 FROM target_schema.stg_fred_economic_data_gdpc1 AS stg_gdp
 INNER JOIN CTE_PCE_PER_QUARTER
 ON stg_gdp.date = CTE_PCE_PER_QUARTER.quarter_start

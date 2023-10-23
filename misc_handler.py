@@ -35,9 +35,11 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
 
     sql_files = [sqlfile for sqlfile in os.listdir(sql_command_directory_path) if sqlfile.endswith('.sql')]
     sorted_sql_files = sorted(sql_files, key=lambda x: int(x[1:x.index('-')]))
+    
     for sql_file in sorted_sql_files:
         file_title = sql_file.split('-')
         if file_title[1] == etl_step.value and is_hook_file_title_executable(etl_step,file_title[2],table_types):
+            
             with open(os.path.join(sql_command_directory_path,sql_file), 'r') as file:
                 sql_query = file.read()
                 sql_query = sql_query.replace('target_schema', target_schema.value)
