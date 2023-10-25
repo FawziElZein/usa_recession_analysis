@@ -107,7 +107,8 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
                 current_time_str = f"{date} {time}"
                 current_time = datetime.strptime(
                     current_time_str, "%Y-%m-%d %I:%M%p")
-            
+                print("current_time")
+                print(current_time)
             url = tr.a['href']
             
             try:
@@ -193,11 +194,10 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
 
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = chrome_exec_path
-    
+    driver = webdriver.Chrome(options=chrome_options)
 
     for kpi in kpis:
         try:
-            driver = webdriver.Chrome(options=chrome_options)
             url = main_url + kpi
             driver.get(url)
             response = requests.get(url)
@@ -215,17 +215,17 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
                 if etl_datetime < datetime.strptime(end_date_input_value, '%Y-%m-%d'):
 
                     input_field = driver.find_element(By.ID, "input-cosd")
-                    time.sleep(1)
+                    time.sleep(2)
                     input_field.clear()
-                    time.sleep(1)
+                    time.sleep(2)
 
                     etl_date_str = etl_datetime.strftime('%Y-%m-%d')
                     input_field.send_keys(etl_date_str)
-                    time.sleep(1)
+                    time.sleep(2)
                     download_button = driver.find_element(By.ID, "download-button")
                     download_button.click()
 
-                    time.sleep(1)
+                    time.sleep(2)
 
 
                     download_menu = driver.find_element(By.ID, "fg-download-menu")
@@ -263,7 +263,7 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
                 error_string_suffix = str(e)
             show_error_message(error_string_prefix,error_string_suffix)
 
-        driver.quit()
+    driver.quit()
 
 def get_states_webscraping_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
 

@@ -87,6 +87,7 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
         parse_date_columns(df)
         df = df.drop('date', axis=1).set_index('formatted_date')
         df['volume'] = df['volume'].astype(float)
+        df.dropna(inplace=True)
         source = 'yahoo_finance'
         df_name = ticker + '_stock_price'
         dst_table = f"stg_{source}_{df_name}"

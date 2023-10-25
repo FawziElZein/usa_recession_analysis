@@ -3,8 +3,5 @@ pandas==1.5.3
 requests
 nltk == 3.8.1
 yahoofinancials == 1.16
-tensorflow
-statsmodels
 langchain
-streamlit
-xgboost
+tqdm==4.64.1

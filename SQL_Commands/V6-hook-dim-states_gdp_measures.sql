@@ -5,9 +5,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_mehoin
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
     date DATE,
-    mehoin DOUBLE PRECISION,
-    mehoin_trend_value DOUBLE PRECISION,
-    mehoin_trend_percentage NUMERIC
+    median_household_income DOUBLE PRECISION,
+    median_household_income_trend_value DOUBLE PRECISION,
+    median_household_income_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_mehoin(state_date);
@@ -24,9 +24,9 @@ SELECT
 FROM target_schema.stg_fred_economic_data_states_mehoin
 ON CONFLICT(state_date)
 DO UPDATE SET
-    mehoin = EXCLUDED.mehoin,
-    mehoin_trend_value = EXCLUDED.mehoin_trend_value,
-    mehoin_trend_percentage = EXCLUDED.mehoin_trend_percentage;
+    median_household_income = EXCLUDED.median_household_income,
+    median_household_income_trend_value = EXCLUDED.median_household_income_trend_value,
+    median_household_income_trend_percentage = EXCLUDED.median_household_income_trend_percentage;
 
 --- real gross domestic product per state 
 
@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_ngsp
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
     date DATE,
-    ngsp DOUBLE PRECISION,
-    ngsp_trend_value DOUBLE PRECISION,
-    ngsp_trend_percentage NUMERIC
+    gross_domestic_product DOUBLE PRECISION,
+    gross_domestic_product_trend_value DOUBLE PRECISION,
+    gross_domestic_product_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_ngsp(state_date);
@@ -53,9 +53,9 @@ SELECT
 FROM target_schema.stg_fred_economic_data_states_ngsp
 ON CONFLICT(state_date)
 DO UPDATE SET
-    ngsp = EXCLUDED.ngsp,
-    ngsp_trend_value = EXCLUDED.ngsp_trend_value,
-    ngsp_trend_percentage = EXCLUDED.ngsp_trend_percentage;
+    gross_domestic_product = EXCLUDED.gross_domestic_product,
+    gross_domestic_product_trend_value = EXCLUDED.gross_domestic_product_trend_value,
+    gross_domestic_product_trend_percentage = EXCLUDED.gross_domestic_product_trend_percentage;
 
 --- personal consumption expenditures per state
 
@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_pce
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
     date DATE,
-    pce DOUBLE PRECISION,
-    pce_trend_value DOUBLE PRECISION,
-    pce_trend_percentage NUMERIC
+    personal_consumption_expenditures DOUBLE PRECISION,
+    personal_consumption_expenditures_trend_value DOUBLE PRECISION,
+    personal_consumption_expenditures_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_pce(state_date);
@@ -82,9 +82,9 @@ SELECT
 FROM target_schema.stg_fred_economic_data_states_pce
 ON CONFLICT(state_date)
 DO UPDATE SET
-    pce = EXCLUDED.pce,
-    pce_trend_value = EXCLUDED.pce_trend_value,
-    pce_trend_percentage = EXCLUDED.pce_trend_percentage;
+    personal_consumption_expenditures = EXCLUDED.personal_consumption_expenditures,
+    personal_consumption_expenditures_trend_value = EXCLUDED.personal_consumption_expenditures_trend_value,
+    personal_consumption_expenditures_trend_percentage = EXCLUDED.personal_consumption_expenditures_trend_percentage;
 
 
 --- unemployment rate per state
@@ -94,9 +94,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_ur
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
     date DATE,
-    ur DOUBLE PRECISION,
-    ur_trend_value DOUBLE PRECISION,
-    ur_trend_percentage NUMERIC
+    unemployment_rate DOUBLE PRECISION,
+    unemployment_rate_trend_value DOUBLE PRECISION,
+    unemployment_rate_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_dim_states_ur_state_date ON target_schema.dim_states_ur(state_date);
@@ -114,6 +114,6 @@ SELECT
 FROM target_schema.stg_fred_economic_data_states_ur
 ON CONFLICT(state_date)
 DO UPDATE SET
-    ur = EXCLUDED.ur,
-    ur_trend_value = EXCLUDED.ur_trend_value,
-    ur_trend_percentage = EXCLUDED.ur_trend_percentage;
+    unemployment_rate = EXCLUDED.unemployment_rate,
+    unemployment_rate_trend_value = EXCLUDED.unemployment_rate_trend_value,
+    unemployment_rate_trend_percentage = EXCLUDED.unemployment_rate_trend_percentage;

@@ -99,31 +99,28 @@ def execute_hook():
         etl_date, does_etl_time_exists = return_etl_last_updated_date(
             db_session)
 
-        # get_faang_historical_prices(db_session,etl_datetime=etl_date)
-        # print("get_faang_historical_prices done")
-        # get_webscrape_data_from_finviz(
-        #     db_session=db_session, etl_date=etl_date, does_etl_exists=does_etl_time_exists)
-        # print("get_webscrape_data_from_finviz done")
+        get_faang_historical_prices(db_session,etl_datetime=etl_date)
+        print("get_faang_historical_prices done")
+        get_webscrape_data_from_finviz(
+            db_session=db_session, etl_date=etl_date, does_etl_exists=does_etl_time_exists)
+        print("get_webscrape_data_from_finviz done")
 
-        # get_usa_webscrapping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
-        # get_states_webscraping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
-        # get_politician_speeches(db_session,etl_date)
+        get_usa_webscrapping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
+        get_states_webscraping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
+        get_politician_speeches(db_session,etl_date)
 
-        # Might not be in need
-        # create_insert_sql(db_session,src_names,df_titles,df_src_content, ETLStep.HOOK, etl_date)
         execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types=[TABLE_TYPE.DIM])
 
-        # list_df_title_pairs = get_sentiment_analysis_results(db_session, [FinvizWebScrape])
-        # create_and_store_into_fact_agg_table(
-        #     db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=DestinationDatabase.SCHEMA_NAME)
+        list_df_title_pairs = get_sentiment_analysis_results(db_session, [FinvizWebScrape,PoliticianSpeeches])
+        create_and_store_into_fact_agg_table(
+            db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=DestinationDatabase.SCHEMA_NAME)
 
-        # print("store_sentiment_analysis_into_fact_table done")
+        print("store_sentiment_analysis_into_fact_table done")
 
         execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types = [TABLE_TYPE.FACT,TABLE_TYPE.AGG])
         
         # list_df_title_pairs = get_forecast_gdp(db_session)
         # create_and_store_into_fact_agg_table(db_session,list_df_title_pairs,sql_table_type=TABLE_TYPE.AGG,destination_schema=DestinationDatabase.SCHEMA_NAME)
-        # need to create the function that create an agg table and insert the above result into it
         execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types = [TABLE_TYPE.VIEW])
         # last step
         insert_or_update_etl_checkpoint(

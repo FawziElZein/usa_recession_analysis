@@ -92,24 +92,24 @@ DROP VIEW IF EXISTS target_schema.vw_gdp_all_measures;
 CREATE VIEW target_schema.vw_gdp_all_measures AS
     SELECT
     date,
-    gdp,
-    gdp_trend_value,
-    gdp_trend_percentage,
-    pce,
-    pce_trend_value,
-    pce_trend_percentage,
-    gpdi,
-    gpdi_trend_value,
-    gpdi_trend_percentage,
-    netexp,
-    netexp_trend_value,
-    netexp_trend_percentage,
-    gcec,
-    gcec_trend_value,
-    gcec_trend_percentage,
-    impgs,
-    impgs_trend_value,
-    impgs_trend_percentage
+    gross_domestic_product,
+    gross_domestic_product_trend_value,
+    gross_domestic_product_trend_percentage,
+    personal_consumption_expenditures,
+    personal_consumption_expenditures_trend_value,
+    personal_consumption_expenditures_trend_percentage,
+    gross_private_domestic_investment,
+    gross_private_domestic_investment_trend_value,
+    gross_private_domestic_investment_trend_percentage,
+    net_exports_of_goods_and_services,
+    net_exports_of_goods_and_services_trend_value,
+    net_exports_of_goods_and_services_trend_percentage,
+    government_consumption_expenditures,
+    government_consumption_expenditures_trend_value,
+    government_consumption_expenditures_trend_percentage,
+    imports_of_goods_and_services,
+    imports_of_goods_and_services_trend_value,
+    imports_of_goods_and_services_trend_percentage
     FROM target_schema.dim_gdp_all_measures;
 
 --- GDP of all states in U.S
@@ -122,9 +122,9 @@ CREATE VIEW target_schema.vw_all_states_ngsp AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        ngsp,
-        ngsp_trend_value,
-        ngsp_trend_percentage
+        gross_domestic_product,
+        gross_domestic_product_trend_value,
+        gross_domestic_product_trend_percentage
     FROM target_schema.dim_states_ngsp;
 
 -- PCE of all states in U.S
@@ -137,9 +137,9 @@ CREATE VIEW target_schema.vw_all_states_pce AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        pce,
-        pce_trend_value,
-        pce_trend_percentage
+        personal_consumption_expenditures,
+        personal_consumption_expenditures_trend_value,
+        personal_consumption_expenditures_trend_percentage
     FROM target_schema.dim_states_pce;
 
 --- MEHOIN of all states in U.S.
@@ -152,9 +152,9 @@ CREATE VIEW target_schema.vw_all_states_mehoin AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        mehoin,
-        mehoin_trend_value,
-        mehoin_trend_percentage
+        median_household_income,
+        median_household_income_trend_value,
+        median_household_income_trend_percentage
     FROM target_schema.dim_states_mehoin;
 
 
@@ -168,9 +168,9 @@ CREATE VIEW target_schema.vw_all_states_monthly_ur AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        ur,
-        ur_trend_value,
-        ur_trend_percentage
+        unemployment_rate,
+        unemployment_rate_trend_value,
+        unemployment_rate_trend_percentage
     FROM target_schema.dim_states_ur;
 
 --- Unemployment rate of all states in the US per quarter
@@ -183,9 +183,9 @@ CREATE VIEW target_schema.vw_all_states_quarterly_ur AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        ur,
-        ur_trend_value,
-        ur_trend_percentage
+        unemployment_rate,
+        unemployment_rate_trend_value,
+        unemployment_rate_trend_percentage
     FROM target_schema.agg_quarterly_states_ur;
 
 --- Unemployment rate of all states in the US per year
@@ -198,9 +198,9 @@ CREATE VIEW target_schema.vw_all_states_yearly_ur AS
         state,
         target_schema.get_state_name(state) AS state_name,
         date,
-        ur,
-        ur_trend_value,
-        ur_trend_percentage
+        unemployment_rate,
+        unemployment_rate_trend_value,
+        unemployment_rate_trend_percentage
     FROM target_schema.agg_yearly_states_ur;
 
 --- GDP vs Presidentials speech sentiments 
@@ -209,12 +209,12 @@ DROP VIEW IF EXISTS target_schema.vw_gdp_vs_presidentials_speech_sentiments;
 CREATE VIEW target_schema.vw_gdp_vs_presidentials_speech_sentiments AS
     SELECT
         date,
-        gdp,
-        pce,
-        gpdi,
-        netexp,
-        gcec,
-        impgs,
+        gross_domestic_product,
+        personal_consumption_expenditures,
+        gross_private_domestic_investment,
+        net_exports_of_goods_and_services,
+        government_consumption_expenditures,
+        imports_of_goods_and_services,
         presidents,
         number_of_speeches_per_president,
         average_negative,

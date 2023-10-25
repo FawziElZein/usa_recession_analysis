@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS target_schema.dim_real_gross_domestic_product(
 
     date DATE PRIMARY KEY NOT NULL,
-    gdp_value FLOAT
+    gross_domestic_product FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_real_gross_domestic_product(date);
@@ -19,7 +19,7 @@ FROM target_schema.stg_fred_economic_data_gdpc1;
 CREATE TABLE IF NOT EXISTS target_schema.dim_personal_consumption_expenditures(
     
     date DATE PRIMARY KEY NOT NULL,
-    pce_value FLOAT
+    personal_consumption_expenditures FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_personal_consumption_expenditures(date);
@@ -39,7 +39,7 @@ ORDER BY
 CREATE TABLE IF NOT EXISTS target_schema.dim_gross_private_domestic_investment(
     
     date DATE PRIMARY KEY NOT NULL,
-    gpdi_value FLOAT
+    gross_private_domestic_investment FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_gross_private_domestic_investment(date);
@@ -55,7 +55,7 @@ FROM target_schema.stg_fred_economic_data_gpdi;
 CREATE TABLE IF NOT EXISTS target_schema.dim_net_exports_of_goods_and_services(
     
     date DATE PRIMARY KEY NOT NULL,
-    netexp_value FLOAT
+    net_exports_of_goods_and_services FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_net_exports_of_goods_and_services(date);
@@ -70,7 +70,7 @@ FROM target_schema.stg_fred_economic_data_netexp;
 CREATE TABLE IF NOT EXISTS target_schema.dim_real_government_consumption_expenditures_and_gross_invest(
     
     date DATE PRIMARY KEY NOT NULL,
-    gcec1_value FLOAT
+    government_consumption_expenditures FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_real_government_consumption_expenditures_and_gross_invest(date);
@@ -85,7 +85,7 @@ FROM target_schema.stg_fred_economic_data_gcec1;
 CREATE TABLE IF NOT EXISTS target_schema.dim_imports_of_goods_and_services(
     
     date DATE PRIMARY KEY NOT NULL,
-    impgs_value FLOAT
+    imports_of_goods_and_services FLOAT
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_imports_of_goods_and_services(date);
@@ -100,24 +100,24 @@ FROM target_schema.stg_fred_economic_data_impgs;
 CREATE TABLE IF NOT EXISTS target_schema.dim_gdp_all_measures(
 
     date DATE PRIMARY KEY NOT NULL,
-    gdp FLOAT,
-    gdp_trend_value DOUBLE PRECISION,
-    gdp_trend_percentage NUMERIC,
-    pce FLOAT,
-    pce_trend_value DOUBLE PRECISION,
-    pce_trend_percentage NUMERIC,
-    gpdi FLOAT,
-    gpdi_trend_value DOUBLE PRECISION,
-    gpdi_trend_percentage NUMERIC,
-    netexp FLOAT,
-    netexp_trend_value DOUBLE PRECISION,
-    netexp_trend_percentage NUMERIC,
-    gcec FLOAT,
-    gcec_trend_value DOUBLE PRECISION,
-    gcec_trend_percentage NUMERIC,
-    impgs FLOAT,
-    impgs_trend_value DOUBLE PRECISION,
-    impgs_trend_percentage NUMERIC
+    gross_domestic_product FLOAT,
+    gross_domestic_product_trend_value DOUBLE PRECISION,
+    gross_domestic_product_trend_percentage NUMERIC,
+    personal_consumption_expenditures FLOAT,
+    personal_consumption_expenditures_trend_value DOUBLE PRECISION,
+    personal_consumption_expenditures_trend_percentage NUMERIC,
+    gross_private_domestic_investment FLOAT,
+    gross_private_domestic_investment_trend_value DOUBLE PRECISION,
+    gross_private_domestic_investment_trend_percentage NUMERIC,
+    net_exports_of_goods_and_services FLOAT,
+    net_exports_of_goods_and_services_trend_value DOUBLE PRECISION,
+    net_exports_of_goods_and_services_trend_percentage NUMERIC,
+    government_consumption_expenditures FLOAT,
+    government_consumption_expenditures_trend_value DOUBLE PRECISION,
+    government_consumption_expenditures_trend_percentage NUMERIC,
+    imports_of_goods_and_services FLOAT,
+    imports_of_goods_and_services_trend_value DOUBLE PRECISION,
+    imports_of_goods_and_services_trend_percentage NUMERIC
 );
 
 CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_gdp_all_measures(date);
