@@ -139,7 +139,7 @@ A central dashboard where viewers can check:
 ## Backend
 
 1. Web scraping & Automation.
-2. ETL Pipeline: using python and pandas, raw data is extracted, transformed into a usable format and loaded into postgreSQL database.
+2. ETL Pipeline: using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
 4. Sentiment Analysis: "Using OpenAI's Large Language Model. 
 4. Machine Learning & Predictive Analysis: Model Training - Evaluation and Prediction.  
