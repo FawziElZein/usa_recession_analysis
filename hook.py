@@ -77,22 +77,27 @@ def return_etl_last_updated_date(db_session):
 def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_type,destination_schema):
 
     target_schema = destination_schema.value
+    try:
 
-    for table_title,df in df_table_title:
+        for table_title,df in df_table_title:
 
-        dst_table = f"{sql_table_type}_{table_title}"
+            dst_table = f"{sql_table_type}_{table_title}"
 
-        create_stmt = return_create_statement_from_df(
-            df, target_schema, dst_table)
-        execute_query(db_session=db_session, query=create_stmt)
+            create_stmt = return_create_statement_from_df(
+                df, target_schema, dst_table)
+            execute_query(db_session=db_session, query=create_stmt)
 
-        create_sql_table_index(
-            db_session, target_schema, dst_table, df.index.name)
+            create_sql_table_index(
+                db_session, target_schema, dst_table, df.index.name)
 
-        upsert_query = return_insert_into_sql_statement_from_df(
-            df, target_schema, dst_table, is_upsert=True)
-        execute_query(db_session, upsert_query)
+            upsert_query = return_insert_into_sql_statement_from_df(
+                df, target_schema, dst_table, is_upsert=True)
+            execute_query(db_session, upsert_query)
 
+    except Exception as e:
+        error_prefix = ErrorHandling.CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR
+        suffix = str(error)
+        show_error_message(error_prefix.value, suffix)
 
 def execute_hook():
 
@@ -107,10 +112,10 @@ def execute_hook():
             db_session)
 
         get_faang_historical_prices(db_session,etl_datetime=etl_date)
-        print("get_faang_historical_prices done")
+        
+
         get_webscrape_data_from_finviz(
             db_session=db_session, etl_date=etl_date, does_etl_exists=does_etl_time_exists)
-        print("get_webscrape_data_from_finviz done")
 
         get_usa_webscrapping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
         get_states_webscraping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
@@ -121,8 +126,6 @@ def execute_hook():
         list_df_title_pairs = get_sentiment_analysis_results(db_session, [FinvizWebScrape,PoliticianSpeeches])
         create_and_store_into_fact_agg_table(
             db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=DestinationDatabase.SCHEMA_NAME)
-
-        print("store_sentiment_analysis_into_fact_table done")
 
         execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types = [TABLE_TYPE.FACT,TABLE_TYPE.AGG])
         
