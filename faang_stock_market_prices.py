@@ -2,7 +2,7 @@ from yahoofinancials import YahooFinancials
 import pandas as pd
 from database_handler import execute_query,return_query,parse_date_columns
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
-from lookups import DestinationDatabase,ErrorHandling
+from lookups import DestinationDatabase,ErrorHandling,LoggerMessages,ETLStep
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 import pytz
@@ -83,6 +83,9 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
             create_staging_table(db_session = db_session,staging_df = df,schema_name =dst_schema,table_title = dst_table)
             store_into_staging_table(db_session = db_session, staging_df = df, dst_schema = dst_schema ,dst_table = dst_table)
 
+        logger_string_prefix = ETLStep.HOOK.value
+        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETREIVAL.value
+        show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
         error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED.value
