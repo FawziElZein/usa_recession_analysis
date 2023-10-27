@@ -33,6 +33,8 @@ class ErrorHandling(Enum):
     OPEN_AI_ERROR = "Error requesting sentiment analysis results from OpenAI"
     SENTIMENTS_RESULT_ERROR = "Error processing sentiment results"
     CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR = "Error create and storing into fact and agg tables"
+
+    
 class Logger:
     LOG_LEVEL = 'INFO'
 
@@ -70,7 +72,6 @@ class FinvizWebScrape(Enum):
     TABLE_TITLE = "financial_news"
     COLUMNS_NAME = ['ticker', 'date', 'time','title', 'text','url']
     TICKERS = ['META','AMZN','AAPL','NFLX','GOOGL']
-    # TICKERS = ['META']
     TEXT_COLUMN_NAME = 'text'
 
 class FredEconomicDataWebScrape(Enum):
@@ -85,9 +86,6 @@ class FredEconomicDataWebScrape(Enum):
     'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
     'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
     ]
-    
-    # KPIS_PER_STATE = ['MEHOINUSXXA672N']
-    # STATE_INITIALS = ['PA']
     DEPENDENT_VAR = 'gdp'
     DEPENDENT_INDEPENDENT_VARS = ['gdp','pce','gpdi','netexp','gcec','impgs','average_negative','average_neutral','average_positive','average_compound']
     ARIMA_ORDER = (4, 1, 3)
@@ -97,9 +95,6 @@ class FredEconomicDataWebScrape(Enum):
 class DestinationDatabase(Enum):
     SCHEMA_NAME = "dw_reporting"
 
-
-class DateField(Enum):
-    FINVIZ_FINANCIAL_NEWS = "financial_news_date" # NOT NEEDED NOW
 
 class ETLStep(Enum):
     PRE_HOOK = "prehook"

@@ -150,7 +150,7 @@ def store_into_staging_table(db_session,staging_df,source,table_title):
         insert_stmt = return_insert_into_sql_statement_from_df(staging_df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
         execute_query(db_session=db_session, query= insert_stmt)
     
-def get_webscrape_data_from_finviz(db_session,etl_date,does_etl_exists,enum_website=FinvizWebScrape):
+def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=FinvizWebScrape):
 
     try:
 
@@ -190,7 +190,7 @@ def get_kpi_name(symbol):
     if symbol == 'PCE':
         return 'personal_consumption_expenditures'
     
-def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
+def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
 
     main_url = FredEconomicDataWebScrape.URL.value
     schema_name = DestinationDatabase.SCHEMA_NAME.value
@@ -277,7 +277,7 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
     show_logger_message(logger_string_prefix,logger_string_suffix)
     driver.quit()
 
-def get_states_webscraping_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
+def get_states_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH):
 
     main_url = FredEconomicDataWebScrape.URL.value
     df_list = []
