@@ -7,10 +7,6 @@ from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 import pytz
 
-def create_staging_table(db_session,staging_df,schema_name,table_title):
-
-    create_stmt = return_create_statement_from_df(dataframe= staging_df,schema_name = schema_name,table_name= table_title)
-    execute_query(db_session=db_session, query= create_stmt)
 
 def store_into_staging_table(db_session,staging_df,dst_schema,dst_table):
 
@@ -18,6 +14,8 @@ def store_into_staging_table(db_session,staging_df,dst_schema,dst_table):
         insert_stmt = return_insert_into_sql_statement_from_df(staging_df,dst_schema, dst_table)
         execute_query(db_session=db_session, query= insert_stmt)
     
+
+
 def get_latest_datetime_from_stock_price_table(db_session,dst_schema):
 
     latest_date = None
