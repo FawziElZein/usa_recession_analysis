@@ -37,7 +37,8 @@ class Logger:
 
 class LoggerMessages:
     SQL_FOLDER_EXECUTION = "SQL folder successfully executed"
-
+    STOCK_PRICES_RETREIVAL = "FAANG stock prices successfully fetched"
+    
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     
