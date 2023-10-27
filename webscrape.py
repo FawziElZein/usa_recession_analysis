@@ -491,5 +491,9 @@ def get_politician_speeches(db_session,etl_datetime,chrome_exec_path = CHROME_EX
                 show_error_message(error_string_prefix,error_string_suffix)
             finally:
                 inner_driver.quit()
-        
+
+    logger_string_prefix = ETLStep.HOOK.value
+    logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE.value
+    show_logger_message(logger_string_prefix,logger_string_suffix)
+      
     driver.quit()
