@@ -84,7 +84,7 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
             store_into_staging_table(db_session = db_session, staging_df = df, dst_schema = dst_schema ,dst_table = dst_table)
 
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETREIVAL.value
+        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL.value
         show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
