@@ -9,4 +9,4 @@ def show_logger_message(logger_string_prefix,logger_string_postfix):
     logging.info(log_level)
     logger = logging.getLogger()
     logger.setLevel(log_level)
-    logger.info(logger_string_prefix +": "+ logger_string_postfix)
+    logger.info(logger_string_prefix +" : "+ logger_string_postfix)
