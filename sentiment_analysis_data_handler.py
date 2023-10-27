@@ -1,6 +1,6 @@
 from lookups import ETLStep,LoggerMessages,FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches,ErrorHandling
 from pandas_data_handler import return_data_as_df, return_insert_into_sql_statement_from_df, return_create_statement_from_df
-from database_handler import execute_query, parse_date_columns
+from database_handler import execute_query
 import os
 from bs4 import BeautifulSoup
 import re
@@ -115,7 +115,7 @@ def get_sentiment_analysis_results(db_session, resources):
         
 
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS
+        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS.value
         show_logger_message(logger_string_prefix,logger_string_suffix)
         
     except Exception as e:

@@ -39,8 +39,7 @@ def return_query(db_session,query):
         return results
 
 
-def parse_date_columns(dataframe):
-    first_row = dataframe.iloc[0]
+def parse_date_columns(dataframe,first_row):
     for index,val in zip(first_row.index, first_row):
         try:
             parsed_date = parse(val, fuzzy=True)
@@ -49,17 +48,17 @@ def parse_date_columns(dataframe):
         except Exception as e:
             suffix = str(e)
             error_prefix = ErrorHandling.DATE_CONVERSION_ERROR.value
-            show_error_message(error_prefix,suffix)
+            # show_error_message(error_prefix,suffix)
     
 def return_data_as_df(file_executor, input_type, db_session = None):
     return_dataframe = None
     try:
         if input_type == InputTypes.CSV:
             return_dataframe = pd.read_csv(file_executor)
-            parse_date_columns(return_dataframe)
+            parse_date_columns(return_dataframe,return_dataframe.iloc[0])
         elif input_type == InputTypes.EXCEL:
             return_dataframe = pd.read_excel(file_executor)
-            parse_date_columns(return_dataframe)
+            parse_date_columns(return_dataframe,return_dataframe.iloc[0])
         elif input_type == InputTypes.SQL:
             return_dataframe = pd.read_sql_query(con= db_session, sql= file_executor)
         else:
@@ -105,8 +104,10 @@ def execute_query(db_session, query):
         error_prefix = ErrorHandling.EXECUTE_QUERY_ERROR
         return_val = error_prefix
         suffix = str(e)
-        show_error_message(error_prefix.value, suffix)
         print(query)
+        print(suffix)
+        show_error_message(error_prefix.value, suffix)
+        
     finally:
         return return_val
 

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_appl_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_formatted_date ON target_schema.dim_appl_stock_price(formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_appl_stock_price_formatted_date ON target_schema.dim_appl_stock_price(formatted_date);
 
 INSERT INTO target_schema.dim_appl_stock_price
 (
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_amzn_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_formatted_date ON target_schema.dim_amzn_stock_price(formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_amzn_stock_price_formatted_date ON target_schema.dim_amzn_stock_price(formatted_date);
 
 INSERT INTO target_schema.dim_amzn_stock_price
 (
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_googl_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_formatted_date ON target_schema.dim_googl_stock_price(formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_googl_stock_price_formatted_date ON target_schema.dim_googl_stock_price(formatted_date);
 
 INSERT INTO target_schema.dim_googl_stock_price
 (
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_meta_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_formatted_date ON target_schema.dim_meta_stock_price(formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_meta_stock_price_formatted_date ON target_schema.dim_meta_stock_price(formatted_date);
 
 INSERT INTO target_schema.dim_meta_stock_price
 (
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_nflx_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_formatted_date ON target_schema.dim_nflx_stock_price(formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_nflx_stock_price_formatted_date ON target_schema.dim_nflx_stock_price(formatted_date);
 
 INSERT INTO target_schema.dim_nflx_stock_price
 (
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_faang_stock_price(
     adjclose DOUBLE PRECISION
 );
 
-CREATE INDEX IF NOT EXISTS idx_ticker_formatted_date ON target_schema.dim_faang_stock_price(ticker_formatted_date);
+CREATE INDEX IF NOT EXISTS idx_dim_faang_stock_price_ticker_formatted_date ON target_schema.dim_faang_stock_price(ticker_formatted_date);
 
 INSERT INTO target_schema.dim_faang_stock_price
 (

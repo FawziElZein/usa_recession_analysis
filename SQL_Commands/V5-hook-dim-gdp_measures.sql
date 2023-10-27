@@ -5,15 +5,13 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_real_gross_domestic_product(
     gross_domestic_product FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_real_gross_domestic_product(date);
+CREATE INDEX IF NOT EXISTS idx_dim_real_gross_domestic_product_date ON target_schema.dim_real_gross_domestic_product(date);
 
 INSERT INTO target_schema.dim_real_gross_domestic_product
 SELECT
     date,
     gdpc1
 FROM target_schema.stg_fred_economic_data_gdpc1;
-
-
 
 --- personal consumption expenditures
 CREATE TABLE IF NOT EXISTS target_schema.dim_personal_consumption_expenditures(
@@ -22,7 +20,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_personal_consumption_expenditures(
     personal_consumption_expenditures FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_personal_consumption_expenditures(date);
+CREATE INDEX IF NOT EXISTS idx_dim_personal_consumption_expenditures_date ON target_schema.dim_personal_consumption_expenditures(date);
 
 INSERT INTO target_schema.dim_personal_consumption_expenditures
 SELECT 
@@ -42,7 +40,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_gross_private_domestic_investment(
     gross_private_domestic_investment FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_gross_private_domestic_investment(date);
+CREATE INDEX IF NOT EXISTS idx_dim_gross_private_domestic_investment_date ON target_schema.dim_gross_private_domestic_investment(date);
 
 INSERT INTO target_schema.dim_gross_private_domestic_investment
 SELECT
@@ -58,7 +56,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_net_exports_of_goods_and_services(
     net_exports_of_goods_and_services FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_net_exports_of_goods_and_services(date);
+CREATE INDEX IF NOT EXISTS idx_dim_net_exports_of_goods_and_services_date ON target_schema.dim_net_exports_of_goods_and_services(date);
 
 INSERT INTO target_schema.dim_net_exports_of_goods_and_services
 SELECT
@@ -73,7 +71,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_real_government_consumption_expendi
     government_consumption_expenditures FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_real_government_consumption_expenditures_and_gross_invest(date);
+CREATE INDEX IF NOT EXISTS idx_dim_real_government_consumption_expenditures_date ON target_schema.dim_real_government_consumption_expenditures_and_gross_invest(date);
 
 INSERT INTO target_schema.dim_real_government_consumption_expenditures_and_gross_invest
 SELECT
@@ -88,7 +86,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_imports_of_goods_and_services(
     imports_of_goods_and_services FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_imports_of_goods_and_services(date);
+CREATE INDEX IF NOT EXISTS idx_dim_imports_of_goods_and_services_date ON target_schema.dim_imports_of_goods_and_services(date);
 
 INSERT INTO target_schema.dim_imports_of_goods_and_services
 SELECT
@@ -97,7 +95,7 @@ SELECT
 FROM target_schema.stg_fred_economic_data_impgs;
 
 
-CREATE TABLE IF NOT EXISTS target_schema.dim_gdp_all_measures(
+CREATE TABLE IF NOT EXISTS target_schema.dim_gross_domestic_product_all_measures(
 
     date DATE PRIMARY KEY NOT NULL,
     gross_domestic_product FLOAT,
@@ -120,7 +118,7 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_gdp_all_measures(
     imports_of_goods_and_services_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS idx_date ON target_schema.dim_gdp_all_measures(date);
+CREATE INDEX IF NOT EXISTS idx_dim_gross_domestic_product_all_measures_date ON target_schema.dim_gross_domestic_product_all_measures(date);
 
 WITH CTE_PCE_PER_QUARTER AS(
 

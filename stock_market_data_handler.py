@@ -38,7 +38,7 @@ def convert_local_to_utc(local_datetime):
     return utc_date
 
 
-def get_faang_historical_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
+def get_stock_market_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
 
     latest_datetime = get_latest_datetime_from_stock_price_table(db_session,dst_schema)
     try:
@@ -62,7 +62,7 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
                 data[ticker] = historical_data[ticker]['prices']
         for ticker, prices in data.items():
             df = pd.DataFrame(prices)
-            parse_date_columns(df)
+            parse_date_columns(df,df.iloc[0])
             df = df.drop('date', axis=1).set_index('formatted_date')
             df['volume'] = df['volume'].astype(float)
             df.dropna(inplace=True)
@@ -70,14 +70,16 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
             df_name = ticker + '_stock_price'
             dst_table = f"stg_{source}_{df_name}"            
             if len(df):
-                insert_stmt = return_insert_into_sql_statement_from_df( df,  source, dst_table)
+                insert_stmt = return_insert_into_sql_statement_from_df( df, dst_schema, dst_table)
                 execute_query(db_session=db_session, query= insert_stmt)
             
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL
+        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL.value
         show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
         error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED
         error_string_postfix = str(e)
         show_error_message(error_string_prefix,error_string_postfix)
+        raise Exception(error_string_prefix)
+
