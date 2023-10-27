@@ -40,7 +40,8 @@ class LoggerMessages:
     SQL_FOLDER_EXECUTION = "SQL folder successfully executed"
     STOCK_PRICES_RETRIEVAL = "FAANG stock prices successfully fetched"
     WEBSCRAPE_DATA_FROM_FINVIZ = "FINVIZ stock news successfully fetched"
-    WEBSCRAPE_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A economic dataset successfully fetched from Fred Economic website"
+    WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A economic dataset successfully fetched from Fred Economic Website"
+    WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A state wise econmic dataset successfully fetched from Fred Economic Website"
     
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
