@@ -1,22 +1,7 @@
 from database_handler import execute_query, create_connection,return_query
 import misc_handler
 from lookups import DestinationDatabase
-
-def return_staging_tables_as_list(db_session):
-    
-    get_staging_tables_query = """
-    SELECT 
-        table_name
-    FROM information_schema.tables
-    WHERE
-        table_type = 'BASE TABLE'
-        AND table_schema = 'dw_reporting'
-        AND table_name LIKE 'stg%';
-    """
-    staging_tables = return_query(db_session, get_staging_tables_query)
-
-    table_names = [item[0] for item in staging_tables]
-    return table_names
+from misc_handler import return_staging_tables_as_list
 
 def truncate_staging_tables(schema_name, table_list, db_session):
     for table_name in table_list:

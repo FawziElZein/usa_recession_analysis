@@ -95,7 +95,7 @@ def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_t
             execute_query(db_session, upsert_query)
         
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.CREATE_AND_STORE_INTO_FACT_AGG_TABLE.value
+        logger_string_postfix = LoggerMessages.CREATE_AND_STORE_INTO_FACT_AGG_TABLE
         show_logger_message(logger_string_prefix,logger_string_postfix)
     except Exception as e:
         error_prefix = ErrorHandling.CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR

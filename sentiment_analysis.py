@@ -115,7 +115,7 @@ def get_sentiment_analysis_results(db_session, resources):
         
 
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS.value
+        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS
         show_logger_message(logger_string_prefix,logger_string_suffix)
         
     except Exception as e:
