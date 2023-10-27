@@ -1,7 +1,8 @@
 from database_handler import execute_query, create_connection,return_query
 import misc_handler
-from lookups import DestinationDatabase
+from lookups import DestinationDatabase,ETLStep,Logger
 from misc_handler import return_staging_tables_as_list
+from logging_handler import show_logger_message
 
 def truncate_staging_tables(schema_name, table_list, db_session):
     for table_name in table_list:
@@ -34,6 +35,14 @@ def truncate_staging_tables(schema_name, table_list, db_session):
 
 
 def execute_posthook():
+    logger_string_prefix = ETLStep.POST_HOOK.value
+    logger_string_postfix = Logger.START.value
+    show_logger_message(logger_string_prefix,logger_string_postfix)
+
     db_session = create_connection()
     tables = return_staging_tables_as_list(db_session)
     truncate_staging_tables(DestinationDatabase.SCHEMA_NAME, tables, db_session)
+
+    logger_string_postfix = Logger.SUCCESS_MESSAGE.value
+    show_logger_message(logger_string_prefix,logger_string_postfix)
+    

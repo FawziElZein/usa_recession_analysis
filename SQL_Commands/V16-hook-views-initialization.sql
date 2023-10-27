@@ -87,9 +87,9 @@ CREATE VIEW target_schema.vw_monthly_stock_prices_vs_sentiments AS
 
 --- United states GDP view
 
-DROP VIEW IF EXISTS target_schema.vw_gdp_all_measures;
+DROP VIEW IF EXISTS target_schema.vw_gross_domestic_product_all_measures;
 
-CREATE VIEW target_schema.vw_gdp_all_measures AS
+CREATE VIEW target_schema.vw_gross_domestic_product_all_measures AS
     SELECT
     date,
     gross_domestic_product,
@@ -110,13 +110,13 @@ CREATE VIEW target_schema.vw_gdp_all_measures AS
     imports_of_goods_and_services,
     imports_of_goods_and_services_trend_value,
     imports_of_goods_and_services_trend_percentage
-    FROM target_schema.dim_gdp_all_measures;
+    FROM target_schema.dim_gross_domestic_product_all_measures;
 
 --- GDP of all states in U.S
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_ngsp;
+DROP VIEW IF EXISTS target_schema.vw_all_states_gross_domestic_product;
 
-CREATE VIEW target_schema.vw_all_states_ngsp AS
+CREATE VIEW target_schema.vw_all_states_gross_domestic_product AS
     SELECT
         state_date,
         state,
@@ -125,13 +125,13 @@ CREATE VIEW target_schema.vw_all_states_ngsp AS
         gross_domestic_product,
         gross_domestic_product_trend_value,
         gross_domestic_product_trend_percentage
-    FROM target_schema.dim_states_ngsp;
+    FROM target_schema.dim_states_gross_domestic_product;
 
 -- PCE of all states in U.S
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_pce;
+DROP VIEW IF EXISTS target_schema.vw_all_states_personal_consumption_expenditures;
 
-CREATE VIEW target_schema.vw_all_states_pce AS
+CREATE VIEW target_schema.vw_all_states_personal_consumption_expenditures AS
     SELECT
         state_date,
         state,
@@ -140,13 +140,13 @@ CREATE VIEW target_schema.vw_all_states_pce AS
         personal_consumption_expenditures,
         personal_consumption_expenditures_trend_value,
         personal_consumption_expenditures_trend_percentage
-    FROM target_schema.dim_states_pce;
+    FROM target_schema.dim_states_personal_consumption_expenditures;
 
 --- MEHOIN of all states in U.S.
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_mehoin;
+DROP VIEW IF EXISTS target_schema.vw_all_states_median_household_income;
 
-CREATE VIEW target_schema.vw_all_states_mehoin AS
+CREATE VIEW target_schema.vw_all_states_median_household_income AS
     SELECT
         state_date,
         state,
@@ -155,14 +155,14 @@ CREATE VIEW target_schema.vw_all_states_mehoin AS
         median_household_income,
         median_household_income_trend_value,
         median_household_income_trend_percentage
-    FROM target_schema.dim_states_mehoin;
+    FROM target_schema.dim_states_median_household_income;
 
 
 --- Unemployment rate of all states in the US per month
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_monthly_ur;
+DROP VIEW IF EXISTS target_schema.vw_all_states_monthly_unemployment_rate;
 
-CREATE VIEW target_schema.vw_all_states_monthly_ur AS
+CREATE VIEW target_schema.vw_all_states_monthly_unemployment_rate AS
     SELECT
         state_date,
         state,
@@ -171,13 +171,13 @@ CREATE VIEW target_schema.vw_all_states_monthly_ur AS
         unemployment_rate,
         unemployment_rate_trend_value,
         unemployment_rate_trend_percentage
-    FROM target_schema.dim_states_ur;
+    FROM target_schema.dim_states_unemployment_rate;
 
 --- Unemployment rate of all states in the US per quarter
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_quarterly_ur;
+DROP VIEW IF EXISTS target_schema.vw_all_states_quarterly_unemployment_rate;
 
-CREATE VIEW target_schema.vw_all_states_quarterly_ur AS
+CREATE VIEW target_schema.vw_all_states_quarterly_unemployment_rate AS
     SELECT
         state_date,
         state,
@@ -186,13 +186,13 @@ CREATE VIEW target_schema.vw_all_states_quarterly_ur AS
         unemployment_rate,
         unemployment_rate_trend_value,
         unemployment_rate_trend_percentage
-    FROM target_schema.agg_quarterly_states_ur;
+    FROM target_schema.agg_quarterly_states_unemployment_rate;
 
 --- Unemployment rate of all states in the US per year
 
-DROP VIEW IF EXISTS target_schema.vw_all_states_yearly_ur;
+DROP VIEW IF EXISTS target_schema.vw_all_states_yearly_unemployment_rate;
 
-CREATE VIEW target_schema.vw_all_states_yearly_ur AS
+CREATE VIEW target_schema.vw_all_states_yearly_unemployment_rate AS
     SELECT
         state_date,
         state,
@@ -201,12 +201,12 @@ CREATE VIEW target_schema.vw_all_states_yearly_ur AS
         unemployment_rate,
         unemployment_rate_trend_value,
         unemployment_rate_trend_percentage
-    FROM target_schema.agg_yearly_states_ur;
+    FROM target_schema.agg_yearly_states_unemployment_rate;
 
 --- GDP vs Presidentials speech sentiments 
-DROP VIEW IF EXISTS target_schema.vw_gdp_vs_presidentials_speech_sentiments;
+DROP VIEW IF EXISTS target_schema.vw_gross_domestic_product_vs_presidentials_speech_sentiments;
 
-CREATE VIEW target_schema.vw_gdp_vs_presidentials_speech_sentiments AS
+CREATE VIEW target_schema.vw_gross_domestic_product_vs_presidentials_speech_sentiments AS
     SELECT
         date,
         gross_domestic_product,

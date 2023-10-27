@@ -33,7 +33,7 @@ INSERT INTO target_schema.agg_quarterly_gdp_vs_presidentials_speech_sentiments(
         presidentials_speeches_sentiments.average_positive,
         presidentials_speeches_sentiments.average_compound,
         presidentials_speeches_sentiments.presidents
-    FROM target_schema.dim_gdp_all_measures AS gdp_all_measures
+    FROM target_schema.dim_gross_domestic_product_all_measures AS gdp_all_measures
     INNER JOIN target_schema.agg_quarterly_presidentials_speeches_sentiments AS presidentials_speeches_sentiments
     ON gdp_all_measures.date = presidentials_speeches_sentiments.quarter_start_date
 );

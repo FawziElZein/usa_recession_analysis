@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS target_schema.agg_quarterly_states_ur(
+CREATE TABLE IF NOT EXISTS target_schema.agg_quarterly_states_unemployment_rate(
 
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(2),
@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS target_schema.agg_quarterly_states_ur(
     unemployment_rate_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS agg_quarterly_states_ur_state_date ON target_schema.agg_quarterly_states_ur(state_date);
+CREATE INDEX IF NOT EXISTS idx_agg_quarterly_states_unemployment_rate_state_date ON target_schema.agg_quarterly_states_unemployment_rate(state_date);
 
-TRUNCATE TABLE target_schema.agg_quarterly_states_ur;
+TRUNCATE TABLE target_schema.agg_quarterly_states_unemployment_rate;
 
 WITH CTE_AGG_QUARTERLY_STATES_UR AS (
 	SELECT
@@ -18,12 +18,12 @@ WITH CTE_AGG_QUARTERLY_STATES_UR AS (
 		state,
 		CAST(date_trunc('quarter',date) AS date) AS quarter_start_date,
 		ROUND(CAST(AVG(unemployment_rate) AS DECIMAL),2) AS ur
-	FROM target_schema.dim_states_ur
+	FROM target_schema.dim_states_unemployment_rate
 	GROUP BY
 		state,date_trunc('quarter',date)
 )
 
-INSERT INTO target_schema.agg_quarterly_states_ur
+INSERT INTO target_schema.agg_quarterly_states_unemployment_rate
 SELECT
 	state_date,
 	state,

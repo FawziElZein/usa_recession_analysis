@@ -62,9 +62,8 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
                 if not return_val == ErrorHandling.NO_ERROR:
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
 
-
     logger_string_prefix = etl_step.value
-    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION
+    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
     show_logger_message(logger_string_prefix,logger_string_suffix)
 
 
@@ -72,32 +71,5 @@ def create_sql_table_index(db_session,source_name, table_name, index_val):
     query = f"CREATE INDEX IF NOT EXISTS idx_{table_name}_{index_val} ON {source_name}.{table_name} ({index_val});"
     execute_query(db_session,query)
 
-def create_insert_sql(db_session,source_names,df_titles,df_source_list,etl_step,etl_date = None):
-    destination_schema_name = DestinationDatabase.SCHEMA_NAME.value
-    try:
-        for source_name,df_title, df_source in zip(source_names,df_titles,df_source_list):
-            dst_table = f"stg_{source_name}_{df_title}"
-            if etl_step == ETLStep.PRE_HOOK:
-                create_stmt = return_create_statement_from_df(df_source, destination_schema_name, dst_table)
-                execute_query(db_session = db_session, query= create_stmt)
-                create_sql_table_index(db_session, destination_schema_name, dst_table, df_source.index.name)
-            elif etl_step == ETLStep.HOOK:
-                date_dict = return_lookup_items_as_dict(DateField)
-                date_column = date_dict.get(df_title)
-                if date_column =='index':
-                    staging_df = df_source[df_source.index>etl_date]
-                else:
-                    staging_df = df_source[df_source[date_column]>etl_date]
-                if len(staging_df):
-                    insert_stmt = return_insert_into_sql_statement_from_df(staging_df, destination_schema_name, dst_table)
-                    execute_query(db_session=db_session, query= insert_stmt)
-        logger_string_prefix = ETLStep.PRE_HOOK.value
-        logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
-        show_logger_message(logger_string_prefix,logger_string_suffix)
-    except Exception as error:
-        suffix = str(error)
-        error_prefix = ErrorHandling.CREATE_INSERT_STAGING_TABLES_ERROR
-        show_error_message(error_prefix.value, suffix)
-        raise Exception("Error creating/insert into staging tables")
 
 

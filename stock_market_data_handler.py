@@ -1,27 +1,16 @@
 from yahoofinancials import YahooFinancials
 import pandas as pd
 from database_handler import execute_query,return_query,parse_date_columns
-from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
+from pandas_data_handler import return_insert_into_sql_statement_from_df
 from lookups import DestinationDatabase,ErrorHandling,LoggerMessages,ETLStep
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 import pytz
 
-def create_staging_table(db_session,staging_df,schema_name,table_title):
 
-    create_stmt = return_create_statement_from_df(dataframe= staging_df,schema_name = schema_name,table_name= table_title)
-    execute_query(db_session=db_session, query= create_stmt)
-
-def store_into_staging_table(db_session,staging_df,dst_schema,dst_table):
-
-    if len(staging_df):
-        insert_stmt = return_insert_into_sql_statement_from_df(staging_df,dst_schema, dst_table)
-        execute_query(db_session=db_session, query= insert_stmt)
-    
 def get_latest_datetime_from_stock_price_table(db_session,dst_schema):
 
     latest_date = None
-
     query = f"""
     SELECT EXISTS (
         SELECT 1
@@ -49,7 +38,7 @@ def convert_local_to_utc(local_datetime):
     return utc_date
 
 
-def get_faang_historical_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
+def get_stock_market_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
 
     latest_datetime = get_latest_datetime_from_stock_price_table(db_session,dst_schema)
     try:
@@ -73,21 +62,24 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
                 data[ticker] = historical_data[ticker]['prices']
         for ticker, prices in data.items():
             df = pd.DataFrame(prices)
-            parse_date_columns(df)
+            parse_date_columns(df,df.iloc[0])
             df = df.drop('date', axis=1).set_index('formatted_date')
             df['volume'] = df['volume'].astype(float)
             df.dropna(inplace=True)
             source = 'yahoo_finance'
             df_name = ticker + '_stock_price'
-            dst_table = f"stg_{source}_{df_name}"
-            create_staging_table(db_session = db_session,staging_df = df,schema_name =dst_schema,table_title = dst_table)
-            store_into_staging_table(db_session = db_session, staging_df = df, dst_schema = dst_schema ,dst_table = dst_table)
-
+            dst_table = f"stg_{source}_{df_name}"            
+            if len(df):
+                insert_stmt = return_insert_into_sql_statement_from_df( df, dst_schema, dst_table)
+                execute_query(db_session=db_session, query= insert_stmt)
+            
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL
+        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL.value
         show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
         error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED
         error_string_postfix = str(e)
         show_error_message(error_string_prefix,error_string_postfix)
+        raise Exception(error_string_prefix)
+

@@ -1,6 +1,6 @@
 --- real median household income per state
 
-CREATE TABLE IF NOT EXISTS target_schema.dim_states_mehoin
+CREATE TABLE IF NOT EXISTS target_schema.dim_states_median_household_income
 (
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_mehoin
     median_household_income_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_mehoin(state_date);
+CREATE INDEX IF NOT EXISTS idx_dim_states_median_household_income_state_date ON target_schema.dim_states_median_household_income(state_date);
 
 
-INSERT INTO target_schema.dim_states_mehoin
+INSERT INTO target_schema.dim_states_median_household_income
 SELECT
     state_date,
     state,
@@ -30,7 +30,7 @@ DO UPDATE SET
 
 --- real gross domestic product per state 
 
-CREATE TABLE IF NOT EXISTS target_schema.dim_states_ngsp
+CREATE TABLE IF NOT EXISTS target_schema.dim_states_gross_domestic_product
 (
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_ngsp
     gross_domestic_product_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_ngsp(state_date);
+CREATE INDEX IF NOT EXISTS idx_dim_states_gross_domestic_product_state_date ON target_schema.dim_states_gross_domestic_product(state_date);
 
-INSERT INTO target_schema.dim_states_ngsp
+INSERT INTO target_schema.dim_states_gross_domestic_product
 SELECT
     state_date,
     state,
@@ -59,7 +59,7 @@ DO UPDATE SET
 
 --- personal consumption expenditures per state
 
-CREATE TABLE IF NOT EXISTS target_schema.dim_states_pce
+CREATE TABLE IF NOT EXISTS target_schema.dim_states_personal_consumption_expenditures
 (
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
@@ -69,9 +69,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_pce
     personal_consumption_expenditures_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS idx_state_date ON target_schema.dim_states_pce(state_date);
+CREATE INDEX IF NOT EXISTS idx_dim_states_personal_consumption_expenditures_state_date ON target_schema.dim_states_personal_consumption_expenditures(state_date);
 
-INSERT INTO target_schema.dim_states_pce
+INSERT INTO target_schema.dim_states_personal_consumption_expenditures
 SELECT
     state_date,
     state,
@@ -89,7 +89,7 @@ DO UPDATE SET
 
 --- unemployment rate per state
 
-CREATE TABLE IF NOT EXISTS target_schema.dim_states_ur
+CREATE TABLE IF NOT EXISTS target_schema.dim_states_unemployment_rate
 (
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(50),
@@ -99,10 +99,9 @@ CREATE TABLE IF NOT EXISTS target_schema.dim_states_ur
     unemployment_rate_trend_percentage NUMERIC
 );
 
-CREATE INDEX IF NOT EXISTS idx_dim_states_ur_state_date ON target_schema.dim_states_ur(state_date);
+CREATE INDEX IF NOT EXISTS idx_dim_states_unemployment_rate_state_date ON target_schema.dim_states_unemployment_rate(state_date);
 
-
-INSERT INTO target_schema.dim_states_ur
+INSERT INTO target_schema.dim_states_unemployment_rate
 SELECT
     state_date,
     state,
