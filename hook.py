@@ -1,6 +1,6 @@
 from database_handler import execute_query, create_connection, close_connection, return_data_as_df
 from pandas_data_handler import return_insert_into_sql_statement_from_df,return_create_statement_from_df
-from lookups import ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape,TABLE_TYPE
+from lookups import LoggerMessages,ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape,TABLE_TYPE
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_insert_sql,create_sql_table_index
 from logging_handler import show_error_message,show_logger_message
@@ -93,7 +93,10 @@ def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_t
             upsert_query = return_insert_into_sql_statement_from_df(
                 df, target_schema, dst_table, is_upsert=True)
             execute_query(db_session, upsert_query)
-
+        
+        logger_string_prefix = ETLStep.HOOK.value
+        logger_string_postfix = LoggerMessages.CREATE_AND_STORE_INTO_FACT_AGG_TABLE.value
+        show_logger_message(logger_string_prefix,logger_string_postfix)
     except Exception as e:
         error_prefix = ErrorHandling.CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR
         suffix = str(error)
