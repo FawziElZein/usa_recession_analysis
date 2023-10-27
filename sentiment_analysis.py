@@ -1,4 +1,4 @@
-from lookups import FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches,ErrorHandling
+from lookups import ETLStep,LoggerMessages,FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches,ErrorHandling
 from pandas_data_handler import return_data_as_df, return_insert_into_sql_statement_from_df, return_create_statement_from_df
 from database_handler import execute_query, parse_date_columns
 import os
@@ -112,6 +112,12 @@ def get_sentiment_analysis_results(db_session, resources):
                     df=df, source_name=resource.SOURCE, text_column=resource.TEXT_COLUMN_NAME)
                 df_sentiment_list.append(
                     [resource.TABLE_TITLE.value, df_sentiment])
+        
+
+        logger_string_prefix = ETLStep.HOOK.value
+        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS.value
+        show_logger_message(logger_string_prefix,logger_string_suffix)
+        
     except Exception as e:
         error_string_prefix = ErrorHandling.SENTIMENTS_RESULT_ERROR.value
         error_string_suffix = str(e)
