@@ -1,9 +1,9 @@
 from database_handler import execute_query, create_connection, close_connection, return_data_as_df
 from pandas_data_handler import return_insert_into_sql_statement_from_df,return_create_statement_from_df
-from lookups import Logger,ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape,TABLE_TYPE
+from lookups import ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape,TABLE_TYPE
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_insert_sql,create_sql_table_index
-from logging_handler import show_error_message
+from logging_handler import show_error_message,show_logger_message
 from webscrape import get_webscrape_data_from_finviz, get_usa_webscrapping_data, get_states_webscraping_data, get_politician_speeches
 from sentiment_analysis import get_sentiment_analysis_results
 from faang_stock_market_prices import get_faang_historical_prices
@@ -95,11 +95,10 @@ def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_t
 
 
 def execute_hook():
-    log_level = Logger.LOG_LEVEL.value
-    logging.info(.value)
-    logger = logging.getLogger()
-    logger.setLevel(log_level)
-    logger.info("Schedule is running")
+
+    logger_string_prefix = ETLStep.HOOK.value
+    logger_string_postfix = "start"
+    show_logger_message(logger_string_prefix,logger_string_postfix)
 
     try:
         db_session = create_connection()
@@ -134,6 +133,11 @@ def execute_hook():
         insert_or_update_etl_checkpoint(
             db_session, does_etl_time_exists, datetime.now())
         close_connection(db_session)
+
+        logger_string_prefix = ETLStep.HOOK.value
+        logger_string_postfix = "executed successfully"
+        show_logger_message(logger_string_prefix,logger_string_postfix)
+
     except Exception as error:
         suffix = str(error)
         error_prefix = ErrorHandling.HOOK_SQL_ERROR
