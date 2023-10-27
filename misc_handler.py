@@ -1,8 +1,8 @@
 import os
-from lookups import ErrorHandling,ETLStep,InputTypes,DateField,DestinationDatabase,FinvizWebScrape
+from lookups import ErrorHandling,LoggerMessages,ETLStep,InputTypes,DateField,DestinationDatabase,FinvizWebScrape
 from database_handler import return_query,execute_query, create_connection, close_connection,return_data_as_df
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
-from logging_handler import show_error_message
+from logging_handler import show_error_message,show_logger_message
 
 
 
@@ -48,6 +48,11 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
 
 
+    logger_string_prefix = ETLStep.PRE_HOOK.value
+    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
+    show_logger_message(logger_string_prefix +": "+ error_string_suffix)
+
+
 def create_sql_table_index(db_session,source_name, table_name, index_val):
     query = f"CREATE INDEX IF NOT EXISTS idx_{table_name}_{index_val} ON {source_name}.{table_name} ({index_val});"
     execute_query(db_session,query)
@@ -71,7 +76,9 @@ def create_insert_sql(db_session,source_names,df_titles,df_source_list,etl_step,
                 if len(staging_df):
                     insert_stmt = return_insert_into_sql_statement_from_df(staging_df, destination_schema_name, dst_table)
                     execute_query(db_session=db_session, query= insert_stmt)
-        
+        logger_string_prefix = ETLStep.PRE_HOOK.value
+        logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
+        show_logger_message(logger_string_prefix,logger_string_suffix)
     except Exception as error:
         suffix = str(error)
         error_prefix = ErrorHandling.CREATE_INSERT_STAGING_TABLES_ERROR

@@ -22,6 +22,8 @@ class ErrorHandling(Enum):
     HOOK_SQL_ERROR = "Hook: SQL Error"
     DATE_CONVERSION_ERROR = "Warning: column is not a date format"
     RETURN_ETL_LAST_UPDATE_ERROR = "Error returning ETL last update"
+    GET_YAHOO_FINANCE_STOCK_PRICE_FAILED = "Error fetching stock prices from yahoo finance library"
+    WEBSCRAPE_DATA_FROM_FINVIZ = "Unable to webscrape data from Finviz website"
     WEBSCRAPE_PAGE_FAILED = "Webscrapping failed"
     WEBSCRAPE_PAGE_NOT_FOUND = "Unable to webscrape a page"
     WEBSCRAPE_UNEXPECTED_ERROR = "An unexpected error occured while web scrapping page"
@@ -31,6 +33,16 @@ class ErrorHandling(Enum):
     OPEN_AI_ERROR = "Error requesting sentiment analysis results from OpenAI"
     SENTIMENTS_RESULT_ERROR = "Error processing sentiment results"
 
+class Logger:
+    LOG_LEVEL = 'INFO'
+
+class LoggerMessages:
+    SQL_FOLDER_EXECUTION = "SQL folder successfully executed"
+    STOCK_PRICES_RETRIEVAL = "FAANG stock prices successfully fetched"
+    WEBSCRAPE_DATA_FROM_FINVIZ = "FINVIZ stock news successfully fetched"
+    WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A economic dataset successfully fetched from Fred Economic Website"
+    WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A state wise econmic dataset successfully fetched from Fred Economic Website"
+    
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     
