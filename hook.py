@@ -1,21 +1,19 @@
 from database_handler import execute_query, create_connection, close_connection, return_data_as_df
-from pandas_data_handler import return_insert_into_sql_statement_from_df,return_create_statement_from_df
-from lookups import LoggerMessages,ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape,TABLE_TYPE
+from pandas_data_handler import return_insert_into_sql_statement_from_df, return_create_statement_from_df
+from lookups import LoggerMessages, ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape, TABLE_TYPE
 from datetime import datetime
-from misc_handler import execute_sql_folder, create_insert_sql,create_sql_table_index
-from logging_handler import show_error_message,show_logger_message
+from misc_handler import execute_sql_folder, create_insert_sql, create_sql_table_index
+from logging_handler import show_error_message, show_logger_message
 from webscrape import get_webscrape_data_from_finviz, get_usa_webscrapping_data, get_states_webscraping_data, get_politician_speeches
 from sentiment_analysis import get_sentiment_analysis_results
-from faang_stock_market_prices import get_faang_historical_prices
-from gdp_arima_predict import get_forecast_gdp
+from stock_market_data_handler import get_faang_historical_prices
 import logging
 
 
-
-def create_etl_checkpoint(db_session):
+def create_etl_checkpoint(db_session, schema_name):
     try:
-        query = """
-            CREATE TABLE IF NOT EXISTS dw_reporting.etl_checkpoint
+        query = f"""
+            CREATE TABLE IF NOT EXISTS {schema_name}.etl_checkpoint
             (
                 etl_last_run_date TIMESTAMP
             )
@@ -28,17 +26,17 @@ def create_etl_checkpoint(db_session):
         raise Exception("Important Step Failed")
 
 
-def insert_or_update_etl_checkpoint(db_session, does_etl_time_exists, etl_date=None):
+def insert_or_update_etl_checkpoint(db_session, schema_name, does_etl_time_exists, etl_date=None):
 
     if does_etl_time_exists:
 
         status, status_message = ErrorHandling.ETL_UPDATE_CHECKPOINT_ERROR, "updating"
-        insert_update_stmnt = f"UPDATE dw_reporting.etl_checkpoint SET etl_last_run_date = '{etl_date}'"
+        insert_update_stmnt = f"UPDATE {schema_name}.etl_checkpoint SET etl_last_run_date = '{etl_date}'"
 
     else:
 
         status, status_message = ErrorHandling.ETL_INSERT_CHECKPOINT_ERROR, "inserting"
-        insert_update_stmnt = f"INSERT INTO dw_reporting.etl_checkpoint (etl_last_run_date) VALUES ('{etl_date}')"
+        insert_update_stmnt = f"INSERT INTO {schema_name}.etl_checkpoint (etl_last_run_date) VALUES ('{etl_date}')"
 
     try:
         execute_query(db_session, insert_update_stmnt)
@@ -74,12 +72,12 @@ def return_etl_last_updated_date(db_session):
         return return_date, does_etl_time_exists
 
 
-def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_type,destination_schema):
+def create_and_store_into_fact_table(db_session, df_table_title, sql_table_type, destination_schema):
 
     target_schema = destination_schema.value
     try:
 
-        for table_title,df in df_table_title:
+        for table_title, df in df_table_title:
 
             dst_table = f"{sql_table_type}_{table_title}"
 
@@ -93,56 +91,58 @@ def create_and_store_into_fact_agg_table(db_session, df_table_title, sql_table_t
             upsert_query = return_insert_into_sql_statement_from_df(
                 df, target_schema, dst_table, is_upsert=True)
             execute_query(db_session, upsert_query)
-        
+
         logger_string_prefix = ETLStep.HOOK.value
         logger_string_postfix = LoggerMessages.CREATE_AND_STORE_INTO_FACT_AGG_TABLE
-        show_logger_message(logger_string_prefix,logger_string_postfix)
+        show_logger_message(logger_string_prefix, logger_string_postfix)
     except Exception as e:
         error_prefix = ErrorHandling.CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR
         suffix = str(error)
         show_error_message(error_prefix.value, suffix)
 
+
 def execute_hook():
 
     logger_string_prefix = ETLStep.HOOK.value
     logger_string_postfix = "start"
-    show_logger_message(logger_string_prefix,logger_string_postfix)
-
+    show_logger_message(logger_string_prefix, logger_string_postfix)
+    schema_name = DestinationDatabase.SCHEMA_NAME
     try:
         db_session = create_connection()
-        create_etl_checkpoint(db_session)
+        create_etl_checkpoint(db_session,schema_name)
         etl_date, does_etl_time_exists = return_etl_last_updated_date(
             db_session)
 
-        get_faang_historical_prices(db_session,etl_datetime=etl_date)
-        
+        get_faang_historical_prices(db_session, etl_datetime=etl_date)
 
         get_webscrape_data_from_finviz(
             db_session=db_session, etl_date=etl_date, does_etl_exists=does_etl_time_exists)
 
-        get_usa_webscrapping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
-        get_states_webscraping_data(db_session = db_session,etl_datetime = etl_date,does_etl_exists = does_etl_time_exists)
-        get_politician_speeches(db_session,etl_date)
+        get_usa_webscrapping_data(
+            db_session=db_session, etl_datetime=etl_date, does_etl_exists=does_etl_time_exists)
+        get_states_webscraping_data(
+            db_session=db_session, etl_datetime=etl_date, does_etl_exists=does_etl_time_exists)
+        get_politician_speeches(db_session, etl_date)
 
-        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types=[TABLE_TYPE.DIM])
+        execute_sql_folder(db_session, './SQL_Commands',
+                           ETLStep.HOOK, table_types=[TABLE_TYPE.DIM])
 
-        list_df_title_pairs = get_sentiment_analysis_results(db_session, [FinvizWebScrape,PoliticianSpeeches])
-        create_and_store_into_fact_agg_table(
-            db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=DestinationDatabase.SCHEMA_NAME)
+        list_df_title_pairs = get_sentiment_analysis_results(
+            db_session, [FinvizWebScrape, PoliticianSpeeches])
+        create_and_store_into_fact_table(
+            db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=schema_name)
 
-        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types = [TABLE_TYPE.FACT,TABLE_TYPE.AGG])
-        
-        # list_df_title_pairs = get_forecast_gdp(db_session)
-        # create_and_store_into_fact_agg_table(db_session,list_df_title_pairs,sql_table_type=TABLE_TYPE.AGG,destination_schema=DestinationDatabase.SCHEMA_NAME)
-        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,table_types = [TABLE_TYPE.VIEW])
+        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,
+                           table_types=[TABLE_TYPE.FACT, TABLE_TYPE.AGG,TABLE_TYPE.VIEW])
+
         # last step
         insert_or_update_etl_checkpoint(
-            db_session, does_etl_time_exists, datetime.now())
+            db_session, schema_name, does_etl_time_exists, datetime.now())
         close_connection(db_session)
 
         logger_string_prefix = ETLStep.HOOK.value
         logger_string_postfix = "executed successfully"
-        show_logger_message(logger_string_prefix,logger_string_postfix)
+        show_logger_message(logger_string_prefix, logger_string_postfix)
 
     except Exception as error:
         suffix = str(error)

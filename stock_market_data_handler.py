@@ -1,25 +1,16 @@
 from yahoofinancials import YahooFinancials
 import pandas as pd
 from database_handler import execute_query,return_query,parse_date_columns
-from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
+from pandas_data_handler import return_insert_into_sql_statement_from_df
 from lookups import DestinationDatabase,ErrorHandling,LoggerMessages,ETLStep
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 import pytz
 
 
-def store_into_staging_table(db_session,staging_df,dst_schema,dst_table):
-
-    if len(staging_df):
-        insert_stmt = return_insert_into_sql_statement_from_df(staging_df,dst_schema, dst_table)
-        execute_query(db_session=db_session, query= insert_stmt)
-    
-
-
 def get_latest_datetime_from_stock_price_table(db_session,dst_schema):
 
     latest_date = None
-
     query = f"""
     SELECT EXISTS (
         SELECT 1
@@ -77,10 +68,11 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
             df.dropna(inplace=True)
             source = 'yahoo_finance'
             df_name = ticker + '_stock_price'
-            dst_table = f"stg_{source}_{df_name}"
-            create_staging_table(db_session = db_session,staging_df = df,schema_name =dst_schema,table_title = dst_table)
-            store_into_staging_table(db_session = db_session, staging_df = df, dst_schema = dst_schema ,dst_table = dst_table)
-
+            dst_table = f"stg_{source}_{df_name}"            
+            if len(df):
+                insert_stmt = return_insert_into_sql_statement_from_df( df,  source, dst_table)
+                execute_query(db_session=db_session, query= insert_stmt)
+            
         logger_string_prefix = ETLStep.HOOK.value
         logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL
         show_logger_message(logger_string_prefix,logger_string_postfix)
