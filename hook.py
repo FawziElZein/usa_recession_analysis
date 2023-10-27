@@ -4,8 +4,8 @@ from lookups import LoggerMessages, ErrorHandling, InputTypes, ETLStep, Destinat
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_insert_sql, create_sql_table_index
 from logging_handler import show_error_message, show_logger_message
-from webscrape import get_webscrape_data_from_finviz, get_usa_webscrapping_data, get_states_webscraping_data, get_politician_speeches
-from sentiment_analysis import get_sentiment_analysis_results
+from webscrape_data_handler import get_webscrape_data_from_finviz, get_usa_webscrapping_data, get_states_webscraping_data, get_politician_speeches
+from sentiment_analysis_data_handler import get_sentiment_analysis_results
 from stock_market_data_handler import get_faang_historical_prices
 import logging
 
@@ -72,7 +72,7 @@ def return_etl_last_updated_date(db_session):
         return return_date, does_etl_time_exists
 
 
-def create_and_store_into_fact_table(db_session, df_table_title, sql_table_type, destination_schema):
+def create_and_store_into_table(db_session, df_table_title, sql_table_type, destination_schema):
 
     target_schema = destination_schema.value
     try:
@@ -100,6 +100,23 @@ def create_and_store_into_fact_table(db_session, df_table_title, sql_table_type,
         suffix = str(error)
         show_error_message(error_prefix.value, suffix)
 
+def extract_phase(db_session,etl_date,does_etl_exists):
+
+    get_faang_historical_prices(db_session = db_session, etl_datetime = etl_date)
+    get_webscrape_data_from_finviz( db_session = db_session, etl_date = etl_date, does_etl_exists = does_etl_time_exists)
+    get_usa_webscrapping_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_time_exists)
+    get_states_webscraping_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_time_exists)
+    get_politician_speeches(db_session = db_session, etl_datetime = etl_date)
+
+def transform_phase(db_session,schema_name):
+
+    execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK, table_types=[TABLE_TYPE.DIM])
+    list_df_title_pairs = get_sentiment_analysis_results(db_session, [FinvizWebScrape, PoliticianSpeeches])
+    create_and_store_into_table(db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=schema_name)
+    execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK, table_types=[TABLE_TYPE.FACT, TABLE_TYPE.AGG])
+
+def load_phase(db_session):
+    execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK, table_types=[TABLE_TYPE.VIEW])
 
 def execute_hook():
 
@@ -113,28 +130,11 @@ def execute_hook():
         etl_date, does_etl_time_exists = return_etl_last_updated_date(
             db_session)
 
-        get_faang_historical_prices(db_session, etl_datetime=etl_date)
-
-        get_webscrape_data_from_finviz(
-            db_session=db_session, etl_date=etl_date, does_etl_exists=does_etl_time_exists)
-
-        get_usa_webscrapping_data(
-            db_session=db_session, etl_datetime=etl_date, does_etl_exists=does_etl_time_exists)
-        get_states_webscraping_data(
-            db_session=db_session, etl_datetime=etl_date, does_etl_exists=does_etl_time_exists)
-        get_politician_speeches(db_session, etl_date)
-
-        execute_sql_folder(db_session, './SQL_Commands',
-                           ETLStep.HOOK, table_types=[TABLE_TYPE.DIM])
-
-        list_df_title_pairs = get_sentiment_analysis_results(
-            db_session, [FinvizWebScrape, PoliticianSpeeches])
-        create_and_store_into_fact_table(
-            db_session, list_df_title_pairs, sql_table_type=TABLE_TYPE.FACT, destination_schema=schema_name)
-
-        execute_sql_folder(db_session, './SQL_Commands', ETLStep.HOOK,
-                           table_types=[TABLE_TYPE.FACT, TABLE_TYPE.AGG,TABLE_TYPE.VIEW])
-
+        extract_phase(db_session = db_session, etl_date = etl_date, does_etl_exists= does_etl_time_exists )
+    
+        transform_phase(db_session = db_session,schema_name = schema_name)
+        load_phase(db_session = db_session)
+    
         # last step
         insert_or_update_etl_checkpoint(
             db_session, schema_name, does_etl_time_exists, datetime.now())
