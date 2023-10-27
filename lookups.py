@@ -32,7 +32,7 @@ class ErrorHandling(Enum):
     GDP_FORECAST_ERROR = "Error forecasting gdp value"
     OPEN_AI_ERROR = "Error requesting sentiment analysis results from OpenAI"
     SENTIMENTS_RESULT_ERROR = "Error processing sentiment results"
-
+    CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR = "Error create and storing into fact and agg tables"
 class Logger:
     LOG_LEVEL = 'INFO'
 
