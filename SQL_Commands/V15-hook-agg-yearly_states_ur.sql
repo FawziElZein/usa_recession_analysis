@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS target_schema.agg_yearly_states_ur(
+CREATE TABLE IF NOT EXISTS target_schema.agg_yearly_states_unemployment_rate(
 
     state_date TEXT PRIMARY KEY NOT NULL,
     state VARCHAR(2),
@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS target_schema.agg_yearly_states_ur(
 );
 
 
-CREATE INDEX IF NOT EXISTS agg_yearly_states_ur_state_date ON target_schema.agg_yearly_states_ur(state_date);
+CREATE INDEX IF NOT EXISTS idx_agg_yearly_states_unemployment_rate_state_date ON target_schema.agg_yearly_states_unemployment_rate(state_date);
 
-TRUNCATE TABLE target_schema.agg_yearly_states_ur;
+TRUNCATE TABLE target_schema.agg_yearly_states_unemployment_rate;
 
 WITH CTE_AGG_YEARLY_STATES_UR AS (
 
@@ -27,7 +27,7 @@ ORDER BY
 	state,date_trunc('year',date)
 )
 
-INSERT INTO target_schema.agg_yearly_states_ur
+INSERT INTO target_schema.agg_yearly_states_unemployment_rate
 SELECT
 	state_date,
 	state,

@@ -33,8 +33,9 @@ def get_html_format(enum_url, enum_tickers):
                 news_table = html.find(id='news-table')
                 news_tables[tick] = news_table
             else:
-                print(
-                    f"Webscrapping failed: Unable to web scrape {url}", response.status_code)
+                error_string_prefix = ErrorHandling.WEBSCRAPE_PAGE_FAILED.value
+                error_string_suffix = f"Unable to web scrape {url} "+ response.status_code
+                show_error_message(error_string_prefix,error_string_suffix)
     except Exception as e:
         if isinstance(e,HTTPError) and e.code ==404:
             error_string_prefix = ErrorHandling.WEBSCRAPE_PAGE_NOT_FOUND.value
@@ -76,8 +77,7 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
     
     if does_etl_exists:
         etl_date = get_last_news_date(db_session,enum_tickers=enum_website.TICKERS)
-        print("latest_date")
-        print(etl_date)
+
 
     for tick, news_table in news_tables.items():
         all_tr = news_table.findAll('tr')
@@ -88,7 +88,6 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
         while i<len(all_tr) and etl_date<current_time:
             tr = all_tr[i]
             i += 1
-            print("counter",i)
             title = text = tr.a.get_text()
             date_scrape = tr.td.text.split()
 
@@ -107,8 +106,6 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
                 current_time_str = f"{date} {time}"
                 current_time = datetime.strptime(
                     current_time_str, "%Y-%m-%d %I:%M%p")
-                print("current_time")
-                print(current_time)
             url = tr.a['href']
             
             try:
@@ -143,53 +140,29 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
     df = pd.DataFrame(news_list, columns=FinvizWebScrape.COLUMNS_NAME.value)
     return df
 
-def store_into_staging_table(db_session,staging_df,source,table_title):
 
-    if len(staging_df):
-        dst_table = f"stg_{source}_{table_title}"
-        insert_stmt = return_insert_into_sql_statement_from_df(staging_df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
-        execute_query(db_session=db_session, query= insert_stmt)
-    
 def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=FinvizWebScrape):
 
     try:
-
         df = get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists)
-        store_into_staging_table(db_session = db_session,staging_df= df, source = enum_website.SOURCE.value,table_title = enum_website.TABLE_TITLE.value)
+        
+        if len(df):
+            source = enum_website.SOURCE.value
+            table_title = enum_website.TABLE_TITLE.value
+            dst_table = f"stg_{source}_{table_title}"
+            insert_stmt = return_insert_into_sql_statement_from_df(staging_df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
+            execute_query(db_session=db_session, query= insert_stmt)
+        
         logger_string_prefix = ETLStep.HOOK.value
         logger_string_postfix = LoggerMessages.WEBSCRAPE_DATA_FROM_FINVIZ.value
         show_logger_message(logger_string_prefix,logger_string_postfix)
+
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_DATA_FROM_FINVIZ.value
         error_string_suffix = str(e)
         show_error_message(error_string_prefix,error_string_suffix)
         raise Exception(error_string_prefix)
 
-def get_gdp_measurements_names(symbol):
-
-    if symbol == 'GDPC1':
-        return 'real_gross_domestic_product'
-    if symbol == 'PCE':
-        return 'personal_consumption_expenditures'
-    if symbol == 'GPDI':
-        return 'gross_private_domestic_investment'
-    if symbol == 'NETEXP':
-        return 'net_exports_of_goods_and_services'
-    if symbol == 'GCEC1':
-        return 'real_government_consumption_expenditures_and_gross_investment'
-    if symbol == 'IMPGS':
-        return 'imports_of_goods_and_services'
-
-def get_kpi_name(symbol):
-    if symbol == 'NGSP':
-        return 'gross_domestic_product'
-    if symbol == 'UR':
-        return 'unemployment_rate'
-    if symbol == 'MEHOINUSXXA672N':
-        return 'real_median_household_income'
-    if symbol == 'PCE':
-        return 'personal_consumption_expenditures'
-    
 def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH.value):
 
     main_url = FredEconomicDataWebScrape.URL.value

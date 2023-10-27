@@ -40,7 +40,8 @@ class ErrorHandling(Enum):
 
 class Logger(Enum):
     LOG_LEVEL = "INFO"
-
+    START = "start"
+    SUCCESS_MESSAGE = "Executed successfully"
 class LoggerMessages(Enum):
     SQL_FOLDER_EXECUTION = "SQL folder successfully executed"
     STOCK_PRICES_RETRIEVAL = "FAANG stock prices successfully fetched"
