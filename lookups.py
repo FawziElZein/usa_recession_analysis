@@ -44,6 +44,8 @@ class LoggerMessages:
     WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A state wise econmic dataset successfully fetched from Fred Economic Website"
     WEBSCRAPE_POLITICIANS_SPEECHES = "U.S Politicians speeches successfully fetched"
     SENTIMENTS_ANALYSIS = "successfully processed text into sentiments scores"
+    CREATE_AND_STORE_INTO_FACT_AGG_TABLE = "successfully created and addded dataframe into fact/agg tables"
+
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     
