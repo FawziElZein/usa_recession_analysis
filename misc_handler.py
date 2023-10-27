@@ -48,7 +48,7 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
 
 
-    logger_string_prefix = ETLStep.PRE_HOOK.value
+    logger_string_prefix = etl_step.value
     logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
     show_logger_message(logger_string_prefix +": "+ error_string_suffix)
 
