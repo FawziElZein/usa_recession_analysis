@@ -7,8 +7,6 @@ def show_error_message(error_string_prefix,error_string_suffix ):
 
 def show_logger_message(logger_string_prefix,logger_string_postfix):
 
-    log_level = Logger.LOG_LEVEL.value
-    logger = logging.getLogger()
-    logging.info(log_level)
-    logger.setLevel(log_level)
-    logger.info(logger_string_prefix +" : "+ logger_string_postfix)
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+    logging.info(logger_string_prefix +" : "+ logger_string_postfix)

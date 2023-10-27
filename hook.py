@@ -1,6 +1,6 @@
 from database_handler import execute_query, create_connection, close_connection, return_data_as_df
 from pandas_data_handler import return_insert_into_sql_statement_from_df, return_create_statement_from_df
-from lookups import LoggerMessages, ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape, TABLE_TYPE
+from lookups import Logger,LoggerMessages, ErrorHandling, InputTypes, ETLStep, DestinationDatabase, FinvizWebScrape, PoliticianSpeeches, FredEconomicDataWebScrape, TABLE_TYPE
 from datetime import datetime
 from misc_handler import execute_sql_folder, create_sql_table_index
 from logging_handler import show_error_message, show_logger_message
@@ -120,7 +120,7 @@ def load_phase(db_session):
 def execute_hook():
 
     logger_string_prefix = ETLStep.HOOK.value
-    logger_string_postfix = "start"
+    logger_string_postfix = Logger.START.value
     show_logger_message(logger_string_prefix, logger_string_postfix)
     schema_name = DestinationDatabase.SCHEMA_NAME
     try:
@@ -140,7 +140,7 @@ def execute_hook():
         close_connection(db_session)
 
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = "executed successfully"
+        logger_string_postfix = Logger.SUCCESS_MESSAGE.value
         show_logger_message(logger_string_prefix, logger_string_postfix)
 
     except Exception as error:

@@ -20,7 +20,7 @@ SELECT
 	state,
 	CAST(date_trunc('year',date) AS date) AS year_start_date,
 	ROUND(CAST(AVG(unemployment_rate) AS DECIMAL),2) AS ur
-FROM dw_reporting.dim_states_ur
+FROM dw_reporting.dim_states_unemployment_rate
 GROUP BY
 	state,date_trunc('year',date)
 ORDER BY 

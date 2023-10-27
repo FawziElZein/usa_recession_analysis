@@ -150,7 +150,7 @@ def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=Finvi
             source = enum_website.SOURCE.value
             table_title = enum_website.TABLE_TITLE.value
             dst_table = f"stg_{source}_{table_title}"
-            insert_stmt = return_insert_into_sql_statement_from_df(staging_df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
+            insert_stmt = return_insert_into_sql_statement_from_df(df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
             execute_query(db_session=db_session, query= insert_stmt)
         
         logger_string_prefix = ETLStep.HOOK.value

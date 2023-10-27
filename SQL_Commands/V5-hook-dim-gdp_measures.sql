@@ -132,7 +132,7 @@ ORDER BY
 	date_trunc('quarter', date)
 )
 
-INSERT INTO target_schema.dim_gdp_all_measures
+INSERT INTO target_schema.dim_gross_domestic_product_all_measures
 SELECT
 	stg_gdp.date,
 	stg_gdp.gdpc1,
