@@ -11,7 +11,7 @@ import requests
 from urllib.request import urlopen, Request
 from urllib.parse import urlparse
 from urllib.error import HTTPError
-from lookups import LoggerMessages,FinvizWebScrape, ErrorHandling,DestinationDatabase,FredEconomicDataWebScrape,PoliticianSpeeches,CHROME_EXECUTOR
+from lookups import ETLStep,LoggerMessages,FinvizWebScrape, ErrorHandling,DestinationDatabase,FredEconomicDataWebScrape,PoliticianSpeeches,CHROME_EXECUTOR
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df,download_webscrape_csv_to_dataframe
@@ -156,9 +156,9 @@ def get_webscrape_data_from_finviz(db_session,etl_date,does_etl_exists,enum_webs
 
         df = get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists)
         store_into_staging_table(db_session = db_session,staging_df= df, source = enum_website.SOURCE.value,table_title = enum_website.TABLE_TITLE.value)
-        error_string_prefix = LoggerMessages.WEBSCRAPE_DATA_FROM_FINVIZ.value
-        error_string_suffix = str(e)
-        show_logger_message(error_string_prefix,error_string_suffix)
+        logger_string_prefix = ETLStep.HOOK.value
+        logger_string_postfix = LoggerMessages.WEBSCRAPE_DATA_FROM_FINVIZ
+        show_logger_message(logger_string_prefix,logger_string_postfix)
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_DATA_FROM_FINVIZ.value
         error_string_suffix = str(e)
@@ -271,9 +271,9 @@ def get_usa_webscrapping_data(db_session,etl_datetime,does_etl_exists,chrome_exe
                 error_string_prefix = ErrorHandling.WEBSCRAPE_UNEXPECTED_ERROR.value
                 error_string_suffix = str(e)
             show_error_message(error_string_prefix,error_string_suffix)
-
-    logger_string_prefix = LoggerMessages.WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE.value
-    logger_string_suffix = str(e)
+    
+    logger_string_prefix = ETLStep.HOOK.value
+    logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE
     show_logger_message(logger_string_prefix,logger_string_suffix)
     driver.quit()
 
@@ -374,8 +374,8 @@ def get_states_webscraping_data(db_session,etl_datetime,does_etl_exists,chrome_e
                     error_string_suffix = str(e)
                 show_error_message(error_string_prefix,error_string_suffix)
 
-    logger_string_prefix = LoggerMessages.WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE.value
-    logger_string_suffix = str(e)
+    logger_string_prefix = ETLStep.HOOK.value
+    logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE
     show_logger_message(logger_string_prefix,logger_string_suffix)
     
     driver.quit()
@@ -491,5 +491,9 @@ def get_politician_speeches(db_session,etl_datetime,chrome_exec_path = CHROME_EX
                 show_error_message(error_string_prefix,error_string_suffix)
             finally:
                 inner_driver.quit()
-        
+
+    logger_string_prefix = ETLStep.HOOK.value
+    logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE
+    show_logger_message(logger_string_prefix,logger_string_suffix)
+      
     driver.quit()

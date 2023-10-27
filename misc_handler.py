@@ -5,6 +5,21 @@ from pandas_data_handler import return_create_statement_from_df,return_insert_in
 from logging_handler import show_error_message,show_logger_message
 
 
+def return_staging_tables_as_list(db_session):
+    
+    get_staging_tables_query = """
+    SELECT 
+        table_name
+    FROM information_schema.tables
+    WHERE
+        table_type = 'BASE TABLE'
+        AND table_schema = 'dw_reporting'
+        AND table_name LIKE 'stg%';
+    """
+    staging_tables = return_query(db_session, get_staging_tables_query)
+
+    table_names = [item[0] for item in staging_tables]
+    return table_names
 
     
 def return_lookup_items_as_dict(lookup_item):
@@ -48,9 +63,9 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
 
 
-    logger_string_prefix = ETLStep.PRE_HOOK.value
-    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
-    show_logger_message(logger_string_prefix +": "+ error_string_suffix)
+    logger_string_prefix = etl_step.value
+    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION
+    show_logger_message(logger_string_prefix,logger_string_suffix)
 
 
 def create_sql_table_index(db_session,source_name, table_name, index_val):

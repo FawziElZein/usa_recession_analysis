@@ -84,10 +84,10 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
             store_into_staging_table(db_session = db_session, staging_df = df, dst_schema = dst_schema ,dst_table = dst_table)
 
         logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL.value
+        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL
         show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
-        error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED.value
+        error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED
         error_string_postfix = str(e)
         show_error_message(error_string_prefix,error_string_postfix)

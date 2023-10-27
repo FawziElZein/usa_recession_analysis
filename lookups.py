@@ -32,7 +32,7 @@ class ErrorHandling(Enum):
     GDP_FORECAST_ERROR = "Error forecasting gdp value"
     OPEN_AI_ERROR = "Error requesting sentiment analysis results from OpenAI"
     SENTIMENTS_RESULT_ERROR = "Error processing sentiment results"
-
+    CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR = "Error create and storing into fact and agg tables"
 class Logger:
     LOG_LEVEL = 'INFO'
 
@@ -42,7 +42,10 @@ class LoggerMessages:
     WEBSCRAPE_DATA_FROM_FINVIZ = "FINVIZ stock news successfully fetched"
     WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A economic dataset successfully fetched from Fred Economic Website"
     WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A state wise econmic dataset successfully fetched from Fred Economic Website"
-    
+    WEBSCRAPE_POLITICIANS_SPEECHES = "U.S Politicians speeches successfully fetched"
+    SENTIMENTS_ANALYSIS = "successfully processed text into sentiments scores"
+    CREATE_AND_STORE_INTO_FACT_AGG_TABLE = "successfully created and addded dataframe into fact/agg tables"
+
 class CHROME_EXECUTOR:
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     
