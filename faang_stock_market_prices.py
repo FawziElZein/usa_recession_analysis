@@ -51,25 +51,17 @@ def convert_local_to_utc(local_datetime):
 def get_faang_historical_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
 
     latest_datetime = get_latest_datetime_from_stock_price_table(db_session,dst_schema)
-    print("latest_datetime")
-    print(latest_datetime)
+
     if not latest_datetime:
         latest_datetime = convert_local_to_utc(etl_datetime)
 
-    print("latest_datetime after processing",latest_datetime)
     if latest_datetime.weekday() == 5:
         latest_datetime += timedelta(days=1)
-    # latest_date_utc = convert_local_to_utc(latest_datetime)
     
     latest_date_str = latest_datetime.strftime('%Y-%m-%d')
-    print('latest_date after conversion')
-    print(latest_date_str)
 
     end_datetime = convert_local_to_utc(datetime.today())
     end_date_str = end_datetime.strftime('%Y-%m-%d')
-
-    print('end_date_str after conversion')
-    print(end_date_str)
 
     tickers = ['META','AMZN','AAPL','NFLX','GOOGL']
     data = {}
@@ -77,11 +69,9 @@ def get_faang_historical_prices(db_session,etl_datetime, dst_schema = Destinatio
         yahoo_financials = YahooFinancials(ticker)
         print("getting data for ",ticker)
         historical_data = yahoo_financials.get_historical_price_data(latest_date_str, end_date_str, "daily")
-        # print(historical_data[ticker])
         if historical_data[ticker]:
             data[ticker] = historical_data[ticker]['prices']
             print(data[ticker])
-    # print(date)
     for ticker, prices in data.items():
         df = pd.DataFrame(prices)
         parse_date_columns(df)
