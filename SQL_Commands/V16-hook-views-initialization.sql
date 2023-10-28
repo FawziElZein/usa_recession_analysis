@@ -18,7 +18,7 @@ CREATE VIEW target_schema.vw_stock_prices AS
 
 DROP VIEW IF EXISTS target_schema.vw_stock_prices_trend;
 
-CREATE VIEW dw_reporting.vw_stock_prices_trend AS
+CREATE VIEW target_schema.vw_stock_prices_trend AS
     SELECT
         ticker_formatted_date,
         ticker,
@@ -26,7 +26,7 @@ CREATE VIEW dw_reporting.vw_stock_prices_trend AS
         avg_day_price,
         price_trend_value,
         price_trend_percentage
-    FROM dw_reporting.fact_faang_stock_prices_trend;
+    FROM target_schema.fact_faang_stock_prices_trend;
 
 
 --- FAANG stock prices vs news sentiments view
@@ -221,6 +221,6 @@ CREATE VIEW target_schema.vw_gross_domestic_product_vs_presidentials_speech_sent
         average_neutral,
         average_positive,
         average_compound
-    FROM dw_reporting.agg_quarterly_gdp_vs_presidentials_speech_sentiments;
+    FROM target_schema.agg_quarterly_gdp_vs_presidentials_speech_sentiments;
 
 

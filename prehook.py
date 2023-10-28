@@ -1,4 +1,4 @@
-from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df,get_online_csv_into_df_list
+from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
 from lookups import Logger, ErrorHandling, InputTypes,DestinationDatabase,ETLStep
 from database_handler import return_query,execute_query, create_connection, close_connection,return_data_as_df
 from misc_handler import execute_sql_folder
