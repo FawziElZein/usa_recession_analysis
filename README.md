@@ -142,7 +142,6 @@ A central dashboard where viewers can check:
 2. ETL Pipeline: using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
 4. Sentiment Analysis: "Using OpenAI's Large Language Model. 
-4. Machine Learning & Predictive Analysis: Model Training - Evaluation and Prediction.  
 
 <br>
 
@@ -212,31 +211,6 @@ A central dashboard where viewers can check:
 | ![fsdaf](./readme/implementation/landing.gif)|
 
   
-
-<br><br>
-
-### Machine Learning (ML) component
-Using Keras, we analyze the historical economic data, training predictive models and deploying them for real-time predictions.
-
-  Data Collection & Preprocessing.
-  Model Selection & Training
-  Model Evaluation.
-  Model Deployment
-  
-
-| ML Flow Diagram|
-
-| ---| ---|
-
-|![fsdaf](./readme/implementation/arduino.gif)|![fsdaf](./readme/implementation/circuit.png)
-
-  
-
-| Data Transfer Demo |
-
-| ---|
-
-| ![fsdaf](./readme/implementation/arduino_data.png) |
 
 <br><br>
 
