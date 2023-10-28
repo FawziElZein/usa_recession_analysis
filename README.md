@@ -18,14 +18,10 @@
 
 > A python based ETL project that would extract, transform data from different web sources and load them into a tabular database (PostgreSQL) in an attempt to provide a full scope analytical understanding of the USA recession. 
 
->USA Recession Analysis and Prediction Project, also aims to predict the probabilities of when this might occur in the near future based on the historical data analyzed.
-<br>
 
   
 
 ### User Types
-
- 
 
 1. Data Engineers.
 2. Data Analysts.
@@ -51,7 +47,6 @@
 	I want to visualize the data using PowerBI.
 3. As an Economist:  
 	I want to access a dataset that provides a holistic view of the US economic landscape post-COVID-19.
-	I want to compare model's projections with other economic forecasts to ensure accuracy and reliability.
 4. As a Policy Maker:  
 	I want to understand if the US is still in recession to make informed decisions about economic policies.
 	I want to view reports highlighting key economic indicators and their trend over time.
