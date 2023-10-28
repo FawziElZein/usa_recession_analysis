@@ -1,19 +1,19 @@
 import os
-from lookups import ErrorHandling,LoggerMessages,ETLStep,InputTypes,DateField,DestinationDatabase,FinvizWebScrape
+from lookups import ErrorHandling,LoggerMessages,ETLStep,InputTypes,DestinationDatabase,FinvizWebScrape
 from database_handler import return_query,execute_query, create_connection, close_connection,return_data_as_df
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
 from logging_handler import show_error_message,show_logger_message
 
 
-def return_staging_tables_as_list(db_session):
+def return_staging_tables_as_list(db_session,target_schema):
     
-    get_staging_tables_query = """
+    get_staging_tables_query = f"""
     SELECT 
         table_name
     FROM information_schema.tables
     WHERE
         table_type = 'BASE TABLE'
-        AND table_schema = 'dw_reporting'
+        AND table_schema = '{target_schema.value}'
         AND table_name LIKE 'stg%';
     """
     staging_tables = return_query(db_session, get_staging_tables_query)
@@ -28,7 +28,7 @@ def is_hook_file_title_executable(etl_step,file_title,table_types):
         return True
     
     for table_type in table_types:
-        if file_title == table_type:
+        if file_title == table_type.value:
             return True
     
     return False
