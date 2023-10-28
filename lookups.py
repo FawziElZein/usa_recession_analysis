@@ -93,15 +93,12 @@ class FredEconomicDataWebScrape(Enum):
 class DestinationDatabase(Enum):
     SCHEMA_NAME = "dw_reporting"
 
-class DateField(Enum):
-    FINVIZ_FINANCIAL_NEWS = "financial_news_date"
-
 class ETLStep(Enum):
     PRE_HOOK = "prehook"
     HOOK = "hook"
     POST_HOOK = "posthook"
 
-class TABLE_TYPE:
+class TABLE_TYPE(Enum):
     DIM = "dim"
     FACT = "fact"
     AGG = "agg"

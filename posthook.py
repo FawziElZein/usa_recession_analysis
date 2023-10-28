@@ -40,7 +40,7 @@ def execute_posthook():
     show_logger_message(logger_string_prefix,logger_string_postfix)
 
     db_session = create_connection()
-    tables = return_staging_tables_as_list(db_session)
+    tables = return_staging_tables_as_list(db_session, DestinationDatabase.SCHEMA_NAME)
     truncate_staging_tables(DestinationDatabase.SCHEMA_NAME, tables, db_session)
 
     logger_string_postfix = Logger.SUCCESS_MESSAGE.value
