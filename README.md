@@ -213,7 +213,7 @@ A central dashboard where viewers can check:
 <img  src="./readme/title6.svg" id="run"/>
   
 
-> To set up ## **USA Recession Analysis and Prediction** follow these steps:
+> To set up **USA Recession Analysis and Prediction** follow these steps:
 
 ### Prerequisites
 
@@ -222,13 +222,11 @@ A central dashboard where viewers can check:
 
 -   A computer/server with sufficient RAM and processing power.
 -   Operating system: Linux (preferred for production) or Windows.
--   Required software: Python (3.x), PostgreSQL, Git (for version control), and any other specific software packages.
+-   Required software: Python (3.x), PostgreSQL, Git (for version control)
   
-  
-
 **Dependencies**:
 
--   Install the necessary Python libraries: `pandas`, `scikit-learn`, `selenium`, `BeautifulSoup`
+-   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `nltk`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`
 -   Install database connectors/drivers for PostgreSQL.
   
 
@@ -239,7 +237,7 @@ A central dashboard where viewers can check:
 
 ```sh
 
-git clone https://github.co/your-repo-link/usa-recession-analysis.git
+git clone https://github.com/FawziElZein/usa_recession_analysis
 
 ```
 
@@ -248,12 +246,21 @@ git clone https://github.co/your-repo-link/usa-recession-analysis.git
 
 -   Start the PostgreSQL server.
 -   Create a new database and user with the appropriate permissions.
--   Run any initialization scripts to set up tables or initial.
+
+**Set Up Environment Variables**:
+-	Create a new file in the project directory titled ".env" which will include all the environment variables related to the ETL: `DATABASE_NAME`, `HOST`, `PORT_NUMBER`, `USER`, `PASSWORD`, `OPENAI_API_KEY`. The below is an example of the file format.
+
+DATABASE_NAME = "*usa_recession_db*"  
+HOST= "*localhost*"  
+PORT_NUMBER= *5432*  
+USER=  "*postgres*"  
+PASSWORD= "*your_password*"  
+OPENAI_API_KEY= "*your_open_ai_api_key*"
 
 ### **Running the Backend**:
 
 **Start the Data Ingestion & ETL Process**:
-`python data_ingestion_script.py`
+`python main.py`
 
 
 You should be able to check the app.log file to see the ETL work.
