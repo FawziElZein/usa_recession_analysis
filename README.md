@@ -69,14 +69,12 @@
 
   
 
-| CLI Logs | Dashboard screen | Bin Management screen |
+| Bins Map screen | Dashboard screen | Bin Management screen |
 
 | ---| ---| ---|
 
 | ![Landing](./readme/wireframes/web/cli_logs.png) | ![Admin Dashboard](./readme/wireframes/web/dashboard.png) | ![User Management](./readme/wireframes/web/bin_crud.png) |
 
-  
-  
 
 ### Data Flow Diagrams
 
@@ -88,7 +86,6 @@
 
 | ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
 
-  
   
 
 | Announcements screen | Login screen | Landing screen |

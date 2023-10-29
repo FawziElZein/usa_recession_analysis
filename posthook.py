@@ -33,7 +33,6 @@ def truncate_staging_tables(schema_name, table_list, db_session):
         execute_query(db_session, truncate_query)
 
 
-
 def execute_posthook():
     logger_string_prefix = ETLStep.POST_HOOK.value
     logger_string_postfix = Logger.START.value
