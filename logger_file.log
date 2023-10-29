@@ -1,0 +1,31 @@
+2023-10-29 09:03:37,961 - INFO - prehook: start
+2023-10-29 09:03:38,024 - INFO - prehook: SQL folder successfully executed
+2023-10-29 09:03:38,024 - INFO - prehook: Executed successfully
+2023-10-29 09:03:38,026 - INFO - hook: start
+2023-10-29 09:03:40,164 - INFO - hook: FAANG stock prices successfully fetched
+2023-10-29 09:09:00,644 - INFO - hook: FINVIZ stock news successfully fetched
+2023-10-29 09:09:13,022 - INFO - hook: U.S.A economic dataset successfully fetched from Fred Economic Website
+2023-10-29 09:14:33,002 - INFO - hook: U.S.A state wise econmic dataset successfully fetched from Fred Economic Website
+2023-10-29 09:15:15,471 - INFO - hook: U.S Politicians speeches successfully fetched
+2023-10-29 09:15:25,787 - INFO - hook: SQL folder successfully executed
+2023-10-29 09:15:27,557 - INFO - hook: successfully created and added dataframe into fact/agg tables
+2023-10-29 09:20:17,605 - INFO - posthook: start
+2023-10-29 09:20:17,764 - INFO - posthook: Executed successfully
+2023-10-29 09:20:59,522 - INFO - posthook: start
+2023-10-29 09:20:59,665 - INFO - posthook: Executed successfully
+2023-10-29 09:21:08,509 - INFO - prehook: start
+2023-10-29 09:21:08,573 - INFO - prehook: SQL folder successfully executed
+2023-10-29 09:21:08,584 - INFO - prehook: Executed successfully
+2023-10-29 09:21:08,584 - INFO - hook: start
+2023-10-29 09:21:10,551 - INFO - hook: FAANG stock prices successfully fetched
+2023-10-29 09:25:50,859 - INFO - hook: FINVIZ stock news successfully fetched
+2023-10-29 09:26:01,969 - INFO - hook: U.S.A economic dataset successfully fetched from Fred Economic Website
+2023-10-29 09:30:04,937 - INFO - hook: U.S.A state wise econmic dataset successfully fetched from Fred Economic Website
+2023-10-29 09:30:42,036 - INFO - hook: U.S Politicians speeches successfully fetched
+2023-10-29 09:30:52,361 - INFO - hook: SQL folder successfully executed
+2023-10-29 09:30:54,028 - INFO - hook: successfully created and added dataframe into fact/agg tables
+2023-10-29 09:30:55,511 - INFO - hook: SQL folder successfully executed
+2023-10-29 09:30:55,526 - INFO - hook: SQL folder successfully executed
+2023-10-29 09:30:55,527 - INFO - hook: Executed successfully
+2023-10-29 09:30:55,527 - INFO - posthook: start
+2023-10-29 09:30:55,667 - INFO - posthook: Executed successfully

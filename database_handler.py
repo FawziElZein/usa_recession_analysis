@@ -5,12 +5,22 @@ from dateutil.parser import parse
 import datetime
 import pandas as pd
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+database_name = os.getenv("DATABASE_NAME")
+host = os.getenv("HOST")
+port = os.getenv("PORT_NUMBER")
+user = os.getenv("USER")
+password = os.getenv("PASSWORD")
+
 config_dict = {
-    "database": "usa_recession_db",
-    "host":"localhost",
-    "port":5432,
-    "user":"postgres",
-    "password": "password"
+    "database": database_name,
+    "host":host,
+    "port":port,
+    "user":user,
+    "password": password
 }
 
 def create_connection():

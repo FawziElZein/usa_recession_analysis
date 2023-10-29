@@ -14,6 +14,9 @@ from misc_handler import create_sql_table_index
 from langchain.llms import OpenAI
 import os
 
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
 
 
 def get_data_from_staging_table(db_session, columns, source_name, table_title, destination_schema_name):
@@ -61,7 +64,7 @@ def get_openAI_sentiment_result(text):
     sentiment_scores = []
     try:
         llm = OpenAI(
-            openai_api_key="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")
+            openai_api_key=openai_api_key)
         request = f'This is a sentiment analysis request. Please send me the negative, neutral, positive and compound scores in a forme of array [negative,neutral,positive,compound]\n\n"{text}"\n\n'
         response = llm(request)
 
@@ -83,6 +86,20 @@ def analyze_sentiment(df, source_name, text_column):
         lambda row: pd.Series(row, index=['neg', 'neu', 'pos', 'compound']))
     return df
 
+def analyze_sentiment_2(df, source_name, text_column):
+    text_column = text_column.value
+    vader = SentimentIntensityAnalyzer()
+    scores = df[text_column].apply(preprocess_text).apply(
+        vader.polarity_scores).tolist()
+
+    scores_df = pd.DataFrame(scores)
+    index_name = df.index.name
+    scores_df[index_name] = df.index
+    df = pd.merge(df, scores_df, on=index_name)
+    df['date'] = pd.to_datetime(df['date'])
+    df.set_index(index_name, inplace=True)
+    return df
+
 def get_sentiment_analysis_results(db_session, resources):
 
     df_sentiment_list = []
@@ -93,7 +110,7 @@ def get_sentiment_analysis_results(db_session, resources):
                                             table_title=resource.TABLE_TITLE, destination_schema_name=DestinationDatabase.SCHEMA_NAME)
 
             if len(df):
-                df_sentiment = analyze_sentiment(
+                df_sentiment = analyze_sentiment_2(
                     df=df, source_name=resource.SOURCE, text_column=resource.TEXT_COLUMN_NAME)
                 df_sentiment_list.append(
                     [resource.TABLE_TITLE.value, df_sentiment])

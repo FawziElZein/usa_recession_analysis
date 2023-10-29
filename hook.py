@@ -74,6 +74,7 @@ def return_etl_last_updated_date(db_session):
 def create_and_store_into_table(db_session, df_table_title, sql_table_type, destination_schema):
 
     target_schema = destination_schema.value
+    sql_table_type = sql_table_type.value
     try:
 
         for table_title, df in df_table_title:
