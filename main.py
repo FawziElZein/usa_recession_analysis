@@ -10,8 +10,8 @@ def etl_job():
     hook.execute_hook()
     posthook.execute_posthook()
 
-schedule.every(1).minutes.do(etl_job)
+schedule.every(15).minutes.do(etl_job)
 
 while True:
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(15)
