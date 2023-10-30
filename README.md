@@ -81,7 +81,13 @@
 |---|
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
-  
+| DataBase Schema |
+|---|
+|![db_schema_1](./readme/db_schema/dim_stock_prices_tables.png)|
+|![db_schema_2](./readme/db_schema/dim_gdp_usa_tables.png)|
+|![db_schema_3](./readme/db_schema/dim_state_usa_fact_tables.png)|
+|![db_schema_4](./readme/db_schema/agg_tables.png)|
+
 
 | Landing Page |
 | ---|
@@ -99,6 +105,7 @@
 | ---|
 | ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
 
+| 
 
 <br><br>
 
