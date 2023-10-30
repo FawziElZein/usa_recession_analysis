@@ -29,10 +29,7 @@
 4. Policy Makers.
 5. Journalist.
   
-
 <br>
-
-  
 
 ### User Stories
 
@@ -59,15 +56,14 @@
 <br><br>
 
 <!-- Prototyping -->
+<a name="prototyping"></a>
 <img  src="./readme/title3.svg"  id="prototyping"/>
 
 > We have designed our projects to webscrape, through an ETL project and including it in a PowerBI Sample Dashboard, 
 
-  
+
 
 ### Logger File
-
-  
 
 | CLI logs |
 |---|
@@ -76,17 +72,34 @@
 
 ### Data Flow Diagrams
 
-
 | ETL-Hook Cycle |
 |---|
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
-| DataBase Schema |
+### Dashboard
+<video width="640" height="360" controls>
+  <source src="path/to/your/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<br><br>
+
+<!-- Implementation -->
+
+<a  name="stacks"></a>
+<img  src="./readme/title4.svg" id="stacks" />
+
+<br>
+
+### DataBase
+
+| usa_recession_db|
 |---|
 |![db_schema_1](./readme/db_schema/dim_stock_prices_tables.png)|
 |![db_schema_2](./readme/db_schema/dim_gdp_usa_tables.png)|
 |![db_schema_3](./readme/db_schema/dim_state_usa_fact_tables.png)|
 |![db_schema_4](./readme/db_schema/agg_tables.png)|
+
 
 
 | Landing Page |
@@ -105,24 +118,20 @@
 | ---|
 | ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
 
-| 
-
 <br><br>
 
-  
 
-<!-- Tech stacks -->
+<!-- Tech Stack -->
 
-<a  name="stacks"></a>
-<img  src="./readme/title4.svg" id="stacks" />
+<a  name="Demo"  ></a>
+<img  src="./readme/title5.svg" id="#demo"/>
 
-<br>
+> Show command line of ETL performance - Logger view
 
   
 
 Bin Tracker is built using the following technologies:
 
-  
 
 ## Frontend
 
@@ -135,18 +144,13 @@ A central dashboard where viewers can check:
 4. Interactive filters: options to filter data by date, region, or specific economic indicatiors for customized views.
 
 
-  
-
-<br>
-
-  
-
 ## Backend
 
 1. Web scraping & Automation.
 2. ETL Pipeline: using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
 4. Sentiment Analysis: "Using OpenAI's Large Language Model. 
+
 
 <br><br>
 
@@ -169,7 +173,7 @@ A central dashboard where viewers can check:
   
 **Dependencies**:
 
--   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `nltk`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`
+-   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`
 -   Install database connectors/drivers for PostgreSQL.
   
 
@@ -208,4 +212,4 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 
 You should be able to check the app.log file to see the ETL work.
 
-As for the dashboard access: Please use this link "https://app.powerbi.com/groups/me/reports/2619453b-8fff-4512-96b7-214d8bea1989/ReportSection?experience=power-bi" to access your data.
+As for the dashboard access: Please use this link "https://app.powerbi.com/view?r=eyJrIjoiM2NlNTA3ZjItOGI4Mi00MGJjLTllNzEtNjZlZjk5ZWNjNDM4IiwidCI6IjJhZDk2OTM0LTQzZTUtNDFjMi05NzYxLWYzMzVmZTIxNGNjMyIsImMiOjl9" to access your data.
