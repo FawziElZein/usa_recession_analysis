@@ -69,22 +69,17 @@
 
   
 
-| Bins Map screen | Dashboard screen | Bin Management screen |
-
-| ---| ---| ---|
-
-| ![Landing](./readme/wireframes/web/cli_logs.png) | ![Admin Dashboard](./readme/wireframes/web/dashboard.png) | ![User Management](./readme/wireframes/web/bin_crud.png) |
+| CLI logs |
+|---|
+|![cli_logs](./readme/cli/cli_logs.png)|
 
 
 ### Data Flow Diagrams
 
-  
 
-| Map screen | Dashboard screen | Bin Management screen |
-
-| ---| ---| ---|
-
-| ![Map](readme/mockups/web/map.png)| ![Map](./readme/mockups/web/dashboard.png)| ![Map](./readme/mockups/web/bin_crud.png)|
+| ETL-Hook Cycle |
+|---|
+|![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
   
 
@@ -92,7 +87,7 @@
 
 | ---| ---| ---|
 
-| ![Map](readme/mockups/web/announcements.png)| ![Map](./readme/mockups/web/login.png)| ![Map](./readme/mockups/web/landing.png)|
+| ![annoucements](readme/mockups/web/announcements.png)| ![login](./readme/mockups/web/login.png)| ![landing](./readme/mockups/web/landing.png)|
 
 <br><br>
 
