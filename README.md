@@ -141,77 +141,7 @@ A central dashboard where viewers can check:
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
 4. Sentiment Analysis: "Using OpenAI's Large Language Model. 
 
-<br>
-
-<br>
-
-  
-
-<!-- Implementation -->
-
-<a  name="Demo"  ></a>
-<img  src="./readme/title5.svg" id="#demo"/>
-
-> Show command line of ETL performance - Logger view
-
-  
-### App
-
-
-| Dashboard Screen | Create Bin Screen |
-
-| ---| ---|
-
-| ![Landing](./readme/implementation/dashboard.gif) | ![fsdaf](./readme/implementation/create_bin.gif) |
-
-  
-
-| Bins to Map Screen |
-
-| ---|
-
-| ![fsdaf](./readme/implementation/map.gif) |
-
-  
-  
-
-| Filter Bins Screen | Update Pickup Time Screen |
-
-| ---| ---|
-
-| ![Landing](./readme/implementation/filter_bins.gif) | ![fsdaf](./readme/implementation/update_pickup.gif) |
-
-  
-  
-
-| Announcements Screen |
-
-| ---|
-
-| ![fsdaf](./readme/implementation/message.gif)|
-
-  
-  
-
-| Change Map Screen | Edit Profile Screen |
-
-| ---| ---|
-
-| ![Landing](./readme/implementation/change_map.gif) | ![fsdaf](./readme/implementation/edit_profile.gif) |
-
-  
-  
-
-| Landing Screen |
-
-| ---|
-
-| ![fsdaf](./readme/implementation/landing.gif)|
-
-  
-
 <br><br>
-
 
 <!-- How to run -->
 
