@@ -201,4 +201,4 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 
 You should be able to check the app.log file to see the ETL work.
 
-As for the dashboard access: Please use this link "public powerbi link" to access your data.
+As for the dashboard access: Please use this link "https://app.powerbi.com/groups/me/reports/2619453b-8fff-4512-96b7-214d8bea1989/ReportSection?experience=power-bi" to access your data.
