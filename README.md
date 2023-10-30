@@ -83,11 +83,17 @@
 
   
 
-| Announcements screen | Login screen | Landing screen |
+| Landing Page |
+| ---|
+| ![landing_page](./readme/pbi/landing_page.png)|
 
-| ---| ---| ---|
+| National Overview |
+| ---|
+| ![national_overview](./readme/pbi/national_overview.png)|
 
-| ![annoucements](readme/mockups/web/announcements.png)| ![login](./readme/mockups/web/login.png)| ![landing](./readme/mockups/web/landing.png)|
+| State Wise Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
 
 <br><br>
 
