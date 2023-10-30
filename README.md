@@ -4,7 +4,7 @@
 <div>
 
 > Hello world! This is the project’s summary that describes the project, plain and simple, limited to the space available.
-**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#prototyping) • [TECH STACKS](#stacks) • [IMPLEMENTATION](#demo) • [HOW TO RUN?](#run)**
+**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#prototyping) • [IMPLEMENTATION](#demo) • [HOW TO RUN?](#run)**
 
 </div> 
   
@@ -184,14 +184,14 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 -   Create a new database and user with the appropriate permissions.
 
 **Set Up Environment Variables**:
--	Create a new file in the project directory titled ".env" which will include all the environment variables related to the ETL: `DATABASE_NAME`, `HOST`, `PORT_NUMBER`, `USER`, `PASSWORD`, `OPENAI_API_KEY`. The below is an example of the file format.
+-	Create a new file in the project directory titled .env, which will include all the environment variables related to the ETL: DATABASE_NAME, HOST, PORT_NUMBER, USER, PASSWORD, and OPENAI_API_KEY. The example below illustrates the file format.  
 
-DATABASE_NAME = "*usa_recession_db*"  
-HOST= "*localhost*"  
-PORT_NUMBER= *5432*  
-USER=  "*postgres*"  
-PASSWORD= "*your_password*"  
-OPENAI_API_KEY= "*your_open_ai_api_key*"
+	- DATABASE_NAME = "*usa_recession_db*"  
+	- HOST= "*localhost*"  
+	- PORT_NUMBER= *5432*  
+	- USER=  "*postgres*"  
+	- PASSWORD= "*your_password*"  
+	- OPENAI_API_KEY= "*your_open_ai_api_key*"
 
 ### **Running the Backend**:
 
