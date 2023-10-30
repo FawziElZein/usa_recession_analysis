@@ -95,6 +95,11 @@
 | ---|
 | ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
 
+| FAANG Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
+
+
 <br><br>
 
   
