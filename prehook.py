@@ -4,22 +4,24 @@ from database_handler import return_query,execute_query, create_connection, clos
 from misc_handler import execute_sql_folder
 from logging_handler import show_error_message,show_logger_message
 import datetime
-import os
 
 
 def execute_prehook(sql_command_directory_path = './SQL_Commands'):
 
-    logger_string_prefix = ETLStep.PRE_HOOK.value
-    logger_string_postfix = Logger.START.value
-    show_logger_message(logger_string_prefix,logger_string_postfix)
+    etl_step = ETLStep.PRE_HOOK.value
+    logger_string_postfix = Logger.EXECUTE.value
+    show_logger_message(etl_step,logger_string_postfix)
 
     try:
+        logger_string_postfix = Logger.CREATE_CONNECTION.value
+        show_logger_message(etl_step,logger_string_postfix)
         db_session = create_connection()
+        logger_string_postfix = Logger.EXECUTE_SQL_FOLDER.value
+        show_logger_message(etl_step,logger_string_postfix)
         execute_sql_folder(db_session, sql_command_directory_path, ETLStep.PRE_HOOK, table_types = None, target_schema= DestinationDatabase.SCHEMA_NAME)
+        logger_string_postfix = Logger.CLOSE_DB_CONNECTION.value
+        show_logger_message(etl_step,logger_string_postfix)
         close_connection(db_session)
-
-        logger_string_postfix = Logger.SUCCESS_MESSAGE.value
-        show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as error:
         suffix = str(error)
