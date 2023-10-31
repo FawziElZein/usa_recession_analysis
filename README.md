@@ -17,7 +17,7 @@
 <a  name="philosophy" ></a>
 <img  src="./readme/title2.svg" id="project-philosophy"/>
 
-> A python based ETL project that would extract, transform data from different web sources and load them into a tabular database (PostgreSQL) in an attempt to provide a full scope analytical understanding of the USA recession. 
+> A Python based ETL project that would extract, transform data from different web sources and load them into a tabular database (PostgreSQL) in an attempt to provide a full scope analytical understanding of the USA recession. 
 
 
   
@@ -36,22 +36,22 @@
 
   
 1. As a Data Engineer:  
-	I want to automatically scrape various economic indicators from reputable sources so that our dataset is always up-to-date.
-	I want to integrate different data sources seamlessly.
-	Ensure fault tolerance in our data pipelines, so that potential failures don't interrupt our analyses.
+	- I want to automatically scrape various economic indicators from reputable sources so that our dataset is always up-to-date.
+	- I want to integrate different data sources seamlessly.
+	- Ensure fault tolerance in our data pipelines, so that potential failures don't interrupt our analyses.
 2. As an Analyst:  
-	I want to query the database.
-	I want to view the sentiment analysis results to understand public sentiment around economic conditions.
-	I want to visualize the data using PowerBI.
+	- I want to query the database.
+	- I want to view the sentiment analysis results to understand public sentiment around economic conditions.
+	- I want to visualize the data using PowerBI.
 3. As an Economist:  
-	I want to access a dataset that provides a holistic view of the US economic landscape post-COVID-19.
+	- I want to access a dataset that provides a holistic view of the US economic landscape post-COVID-19.
 4. As a Policy Maker:  
-	I want to understand if the US is still in recession to make informed decisions about economic policies.
-	I want to view reports highlighting key economic indicators and their trend over time.
+	- I want to understand if the US is still in recession to make informed decisions about economic policies.
+	- I want to view reports highlighting key economic indicators and their trend over time.
 5. As a Journalist:  
-	I want to access clear visualizations.
-	I want to understand public sentiments.
-	I want an access on the historical view of the economic indicators to showcase trends.
+	- I want to access clear visualizations.
+	- I want to understand public sentiments.
+	- I want an access on the historical view of the economic indicators to showcase trends.
 
 
 <br><br>
@@ -75,21 +75,21 @@ ETL runtime duration: 10 minutes
 ### Data Flow Diagrams
 
 - Prehook:  
-	- initialize staging tables
-	- create UDFs
-	- create schema
+	- Initialize staging tables
+	- Create UDFs
+	- Create schema
 - Hook:
 	- Extract:
-		- politician speeches
+		- Politician speeches
 		- U.S.A economic data
-		- stock market prices
+		- Stock market prices
 	- Transform:
-		- initialize dimension, fact and aggregate tables
-		- analyze stocks news and politicians speeches sentiments
+		- Initialize dimension, fact and aggregate tables
+		- Analyze stocks news and politicians speeches sentiments
 	- Load:
-		- initialize and load data into views
+		- Initialize and load data into views
 - Posthook:
-	- truncate staging tables
+	- Truncate staging tables
 
 | ETL-Hook Cycle |
 |---|
@@ -176,13 +176,13 @@ A central dashboard where viewers can check:
 1. Economic Indicators: Graphs, charts and visualizations displaying key economic metrics over time.
 2. Sentiment Analysis: Representations of public sentiment about economic conditions through pie charts, and sentiment bars.
 3. Predictive Analysis: A visualization of the ML model's performance about the US economic recovery compared to actual data.
-4. Interactive filters: options to filter data by date, region, or specific economic indicatiors for customized views.
+4. Interactive filters: Options to filter data by date, region, or specific economic indicators for customized views.
 
 
 ## Backend
 
 1. Web scraping & Automation.
-2. ETL Pipeline: using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
+2. ETL Pipeline: Using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
 4. Sentiment Analysis: using OpenAI's Large Language Model. 
 
@@ -275,4 +275,4 @@ I have temporarily disabled the scheduler and the infinite loop (while True) to 
 
 You should be able to check the app.log file to see the ETL work.
 
-As for the dashboard access: Please use this link "https://app.powerbi.com/view?r=eyJrIjoiNmI2ZDMzZDEtYjI3Ny00M2Y3LTg2NGItNmJmOTE2MWYzZWI2IiwidCI6IjJhZDk2OTM0LTQzZTUtNDFjMi05NzYxLWYzMzVmZTIxNGNjMyIsImMiOjl9" to access the data.
+As for the dashboard access: Please use this [link]("https://app.powerbi.com/view?r=eyJrIjoiNmI2ZDMzZDEtYjI3Ny00M2Y3LTg2NGItNmJmOTE2MWYzZWI2IiwidCI6IjJhZDk2OTM0LTQzZTUtNDFjMi05NzYxLWYzMzVmZTIxNGNjMyIsImMiOjl9") to access the data.
