@@ -94,7 +94,7 @@ Part1:
 
 | Webscrape USA politician speeches (part1) |
 | ------------------------------------------|
-| <img src="https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875" width = "100%">|
+<img src="https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875" width = "100%">
 
 Part2:
 
