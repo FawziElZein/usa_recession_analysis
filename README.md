@@ -81,11 +81,11 @@
 #### Webscrape USA economic data
 
 -	Leverage Selenium to automatically set the date into the ETL date, enabling the retrieval of all data from that specified date onward.
--	Retrieve the downloadable csv link and ingest its contents into the database
+-	Retrieve the downloadable csv link and ingest its contents into the database  
 
 
 | Webscrape USA economic data demo |
-| ----------------------------------------------------------------------------------|
+| --------------------|
 |![webscrape usa economic data](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c)|
 
 #### Webscrape USA politician speeches
