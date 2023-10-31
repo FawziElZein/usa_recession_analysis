@@ -66,6 +66,7 @@
 
 ### Logger File
 
+ETL runtime duration: 10 minutes
 | CLI logs |
 |---|
 |![cli_logs](./readme/cli/cli_logs.png)|
@@ -77,9 +78,44 @@
 |---|
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
-### Extract Phase
 
-#### Webscrape USA economic data
+
+<br>
+<br>
+
+<!-- Implementation -->
+
+<a  name="implementation"></a>
+<img  src="./readme/title4.svg" id="implementation" />
+
+<br>
+
+### Dashboard Slides
+
+| Landing Page |
+| ---|
+| ![landing_page](./readme/pbi/landing_page.png)|
+
+| National Overview |
+| ---|
+| ![national_overview](./readme/pbi/national_overview.png)|
+
+| State Wise Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
+
+| FAANG Stocks Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
+
+### Dashboard - Quick Demo
+
+https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3b75-4745-a990-db0f9193264d
+
+
+### Data Extraction
+
+#### Webscrape USA Economic Data
 
 -	Leverage Selenium to automatically set the date into the ETL date, enabling the retrieval of all data from that specified date onward.
 -	Retrieve the downloadable csv link and ingest its contents into the database  
@@ -90,24 +126,18 @@
 | --------------------|
 |![webscrape usa economic data](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c)|
 
-#### Webscrape USA politician speeches
-
+#### Webscrape USA Ppolitician Speeches
 
 -	Part 1: Utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
 -	Part 2: Access the headlines one by one and webscrape the transcript text of the speeches.
 
 
-| Webscrape USA politician speeches (part1) | Webscrape USA politician speeches (part2) |
+| Webscrape USA politician speeches (part 1) | Webscrape USA politician speeches (part 2) |
 | ---| ---|
 | ![webscrape politicians speeches part 1](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875) | ![webscrape politicians speeches part 2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4bd65616-4d4d-44a4-ab14-2df3413b58a2)| 
 
 
-
-### Dashboard
-
-https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3b75-4745-a990-db0f9193264d
-
-
+<br><br>
 
 <!-- Tech Stacks -->
 
@@ -143,34 +173,6 @@ A central dashboard where viewers can check:
 <br><br>
 
 
-<!-- Implementation -->
-
-<a  name="implementation"></a>
-<img  src="./readme/title4.svg" id="implementation" />
-
-<br>
-
-### Power Bi Dashboard
-
-
-
-| Landing Page |
-| ---|
-| ![landing_page](./readme/pbi/landing_page.png)|
-
-| National Overview |
-| ---|
-| ![national_overview](./readme/pbi/national_overview.png)|
-
-| State Wise Overview |
-| ---|
-| ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
-
-| FAANG Overview |
-| ---|
-| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
-
-<br><br>
 
 
 <!-- How to run -->
