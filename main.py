@@ -5,13 +5,13 @@ import schedule
 import time
 
 def etl_job():
-
     prehook.execute_prehook()
     hook.execute_hook()
     posthook.execute_posthook()
 
-schedule.every(15).minutes.do(etl_job)
+etl_job()
+# schedule.every(1).minutes.do(etl_job)
 
-while True:
-    schedule.run_pending()
-    time.sleep(15)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(15)

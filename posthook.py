@@ -1,4 +1,4 @@
-from database_handler import execute_query, create_connection,return_query
+from database_handler import execute_query, create_connection,return_query, close_connection
 import misc_handler
 from lookups import DestinationDatabase,ETLStep,Logger
 from misc_handler import return_staging_tables_as_list
@@ -34,14 +34,20 @@ def truncate_staging_tables(schema_name, table_list, db_session):
 
 
 def execute_posthook():
-    logger_string_prefix = ETLStep.POST_HOOK.value
-    logger_string_postfix = Logger.START.value
-    show_logger_message(logger_string_prefix,logger_string_postfix)
+    etl_step = ETLStep.POST_HOOK.value
+    logger_string_postfix = Logger.EXECUTE.value
+    show_logger_message(etl_step,logger_string_postfix)
 
     db_session = create_connection()
+
+    logger_string_postfix = Logger.CREATE_CONNECTION.value
+    show_logger_message(etl_step,logger_string_postfix)
+
+    logger_string_postfix = Logger.TRUNCATE_STG_TABLES.value
+    show_logger_message(etl_step,logger_string_postfix)
     tables = return_staging_tables_as_list(db_session, DestinationDatabase.SCHEMA_NAME)
     truncate_staging_tables(DestinationDatabase.SCHEMA_NAME, tables, db_session)
 
-    logger_string_postfix = Logger.SUCCESS_MESSAGE.value
-    show_logger_message(logger_string_prefix,logger_string_postfix)
-    
+    logger_string_postfix = Logger.CLOSE_DB_CONNECTION.value
+    show_logger_message(etl_step,logger_string_postfix)
+    close_connection(db_session)

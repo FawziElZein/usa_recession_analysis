@@ -11,7 +11,7 @@ import requests
 from urllib.request import urlopen, Request
 from urllib.parse import urlparse
 from urllib.error import HTTPError
-from lookups import ETLStep,LoggerMessages,FinvizWebScrape, ErrorHandling,DestinationDatabase,FredEconomicDataWebScrape,PoliticianSpeeches,CHROME_EXECUTOR
+from lookups import Logger,ETLStep,FinvizWebScrape, ErrorHandling,DestinationDatabase,FredEconomicDataWebScrape,PoliticianSpeeches,CHROME_EXECUTOR
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df,download_webscrape_csv_to_dataframe
@@ -143,6 +143,10 @@ def get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists,enum_w
 
 def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=FinvizWebScrape):
 
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = f"{Logger.EXTRACT_DATA_FROM_WEBSITE.value} {FinvizWebScrape.SOURCE.value}"
+    show_logger_message(etl_step, logger_string_postfix)
+
     try:
         df = get_finviz_news_webscrapping_data(db_session,etl_date,does_etl_exists)
         
@@ -153,9 +157,6 @@ def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=Finvi
             insert_stmt = return_insert_into_sql_statement_from_df(df, DestinationDatabase.SCHEMA_NAME.value, dst_table)
             execute_query(db_session=db_session, query= insert_stmt)
         
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.WEBSCRAPE_DATA_FROM_FINVIZ.value
-        show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_DATA_FROM_FINVIZ.value
@@ -164,6 +165,11 @@ def get_stock_market_news(db_session,etl_date,does_etl_exists,enum_website=Finvi
         raise Exception(error_string_prefix)
 
 def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH.value):
+
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = f"{Logger.EXTRACT_DATA_FROM_WEBSITE.value} {FinvizWebScrape.SOURCE.value} website"
+    show_logger_message(etl_step, logger_string_postfix)
+
 
     main_url = FredEconomicDataWebScrape.URL.value
     schema_name = DestinationDatabase.SCHEMA_NAME.value
@@ -197,17 +203,17 @@ def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_pa
                     if etl_datetime < datetime.strptime(end_date_input_value, '%Y-%m-%d'):
 
                         input_field = driver.find_element(By.ID, "input-cosd")
-                        time.sleep(2)
+                        time.sleep(1)
                         input_field.clear()
-                        time.sleep(2)
+                        time.sleep(1)
 
                         etl_date_str = etl_datetime.strftime('%Y-%m-%d')
                         input_field.send_keys(etl_date_str)
-                        time.sleep(2)
+                        time.sleep(1)
                         download_button = driver.find_element(By.ID, "download-button")
                         download_button.click()
 
-                        time.sleep(2)
+                        time.sleep(1)
 
 
                         download_menu = driver.find_element(By.ID, "fg-download-menu")
@@ -242,9 +248,7 @@ def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_pa
                     error_string_suffix = str(e)
                 show_error_message(error_string_prefix,error_string_suffix)
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE.value
-        show_logger_message(logger_string_prefix,logger_string_suffix)
+
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_USA_DATA_ERROR.value
         error_string_suffix = str(e)
@@ -256,6 +260,8 @@ def get_usa_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_pa
 
 def get_states_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec_path = CHROME_EXECUTOR.PATH.value):
 
+
+
     main_url = FredEconomicDataWebScrape.URL.value
     df_list = []
 
@@ -263,6 +269,10 @@ def get_states_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec
     schema_name = DestinationDatabase.SCHEMA_NAME.value
     kpis = FredEconomicDataWebScrape.KPIS_PER_STATE.value
     states = FredEconomicDataWebScrape.STATE_INITIALS.value
+
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = f"{Logger.EXTRACT_DATA_FROM_WEBSITE.value} {source} website"
+    show_logger_message(etl_step, logger_string_postfix)
 
     try:
 
@@ -353,9 +363,7 @@ def get_states_economic_data(db_session,etl_datetime,does_etl_exists,chrome_exec
                     show_error_message(error_string_prefix,error_string_suffix)
     
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE.value
-        show_logger_message(logger_string_prefix,logger_string_suffix)
+
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_USA_STATES_DATA_ERROR.value
         error_string_suffix = str(e)
@@ -370,6 +378,11 @@ def get_politician_speeches(db_session,etl_datetime,chrome_exec_path = CHROME_EX
     source_title = PoliticianSpeeches.SOURCE.value
     table_title = PoliticianSpeeches.TABLE_TITLE.value
     table_name = f"stg_{source_title}_{table_title}"
+
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = f"{Logger.EXTRACT_DATA_FROM_WEBSITE.value} {source_title} website"
+    show_logger_message(etl_step, logger_string_postfix)
+
 
     try:
         
@@ -479,9 +492,6 @@ def get_politician_speeches(db_session,etl_datetime,chrome_exec_path = CHROME_EX
                     inner_driver.quit()
             
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.WEBSCRAPE_POLITICIANS_SPEECHES.value
-        show_logger_message(logger_string_prefix,logger_string_suffix)
     except Exception as e:
         error_string_prefix = ErrorHandling.WEBSCRAPE_POLITICIANS_SPEECHES_DATA_ERROR.value
         error_string_suffix = str(e)

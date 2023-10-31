@@ -24,8 +24,8 @@ def show_logger_message(etl_step,logger_string_postfix):
         logger_string_postfix = f'{logger_string_postfix} {etl_step}'
         counter = 0
     else:
-        logger_string_prefix = f"Step {counter}: "
         counter +=1
+        logger_string_prefix = f"Step {counter}: "
         
     logging.basicConfig(filename = "app.log",level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     console_handler.setLevel(logging.INFO)

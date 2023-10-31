@@ -1,5 +1,5 @@
 import os
-from lookups import ErrorHandling,LoggerMessages,ETLStep,InputTypes,DestinationDatabase,FinvizWebScrape
+from lookups import ErrorHandling,Logger,ETLStep,InputTypes,DestinationDatabase,FinvizWebScrape
 from database_handler import return_query,execute_query, create_connection, close_connection,return_data_as_df
 from pandas_data_handler import return_create_statement_from_df,return_insert_into_sql_statement_from_df
 from logging_handler import show_error_message,show_logger_message
@@ -48,11 +48,6 @@ def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_t
                 return_val = execute_query(db_session= db_session, query= sql_query)
                 if not return_val == ErrorHandling.NO_ERROR:
                     raise Exception(f"Error executing SQL File on = " +  str(sql_file))
-
-    logger_string_prefix = etl_step.value
-    logger_string_suffix = LoggerMessages.SQL_FOLDER_EXECUTION.value
-    show_logger_message(logger_string_prefix,logger_string_suffix)
-
 
 def create_sql_table_index(db_session,source_name, table_name, index_val):
     query = f"CREATE INDEX IF NOT EXISTS idx_{table_name}_{index_val} ON {source_name}.{table_name} ({index_val});"

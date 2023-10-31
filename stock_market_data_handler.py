@@ -2,13 +2,14 @@ from yahoofinancials import YahooFinancials
 import pandas as pd
 from database_handler import execute_query,return_query,parse_date_columns
 from pandas_data_handler import return_insert_into_sql_statement_from_df
-from lookups import DestinationDatabase,ErrorHandling,LoggerMessages,ETLStep
+from lookups import Logger,DestinationDatabase,ErrorHandling,ETLStep
 from datetime import datetime,timedelta
 from logging_handler import show_error_message,show_logger_message
 import pytz
 
 
 def get_latest_datetime_from_stock_price_table(db_session,dst_schema):
+
 
     latest_date = None
     query = f"""
@@ -39,6 +40,10 @@ def convert_local_to_utc(local_datetime):
 
 
 def get_stock_market_prices(db_session,etl_datetime, dst_schema = DestinationDatabase.SCHEMA_NAME.value):
+
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = Logger.EXTRACT_DATA_FROM_YAHOO_FINANCE.value
+    show_logger_message(etl_step, logger_string_postfix)
 
     latest_datetime = get_latest_datetime_from_stock_price_table(db_session,dst_schema)
     try:
@@ -72,10 +77,6 @@ def get_stock_market_prices(db_session,etl_datetime, dst_schema = DestinationDat
             if len(df):
                 insert_stmt = return_insert_into_sql_statement_from_df( df, dst_schema, dst_table)
                 execute_query(db_session=db_session, query= insert_stmt)
-            
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.STOCK_PRICES_RETRIEVAL.value
-        show_logger_message(logger_string_prefix,logger_string_postfix)
 
     except Exception as e:
         error_string_prefix = ErrorHandling.GET_YAHOO_FINANCE_STOCK_PRICE_FAILED

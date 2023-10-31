@@ -39,19 +39,18 @@ class ErrorHandling(Enum):
 
 
 class Logger(Enum):
-    START = "start"
-    SUCCESS_MESSAGE = "Executed successfully"
+    EXECUTE = "Executing"
+    CREATE_CONNECTION = "Creating a database connection"
+    CREATE_CHECKPOINT = "Creating ETL checkpoint"
+    RETRIEVE_LAST_ETL = "Retrieving ETL last updated date"
+    EXECUTE_SQL_FOLDER = "Executing SQL folder"
+    CLOSE_DB_CONNECTION = "Closing the database connection"
+    TRUNCATE_STG_TABLES = "Truncating staging table"
+    EXTRACT_DATA_BY_WEBSCRAPING = "Extracting phase"
+    EXTRACT_DATA_FROM_YAHOO_FINANCE = "Extracting data from yahoo finance"
+    EXTRACT_DATA_FROM_WEBSITE = "Extracting data from "
+    ANALYZE_SENTIMENTS = "Performing sentiment analysis on data"
     
-class LoggerMessages(Enum):
-    SQL_FOLDER_EXECUTION = "SQL folder successfully executed"
-    STOCK_PRICES_RETRIEVAL = "FAANG stock prices successfully fetched"
-    WEBSCRAPE_DATA_FROM_FINVIZ = "FINVIZ stock news successfully fetched"
-    WEBSCRAPE_USA_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A economic dataset successfully fetched from Fred Economic Website"
-    WEBSCRAPE_USA_STATES_DATA_FROM_FRED_ECONMIC_WEBSITE = "U.S.A state wise econmic dataset successfully fetched from Fred Economic Website"
-    WEBSCRAPE_POLITICIANS_SPEECHES = "U.S Politicians speeches successfully fetched"
-    SENTIMENTS_ANALYSIS = "successfully processed text into sentiments scores"
-    CREATE_AND_STORE_INTO_FACT_AGG_TABLE = "successfully created and added dataframe into fact/agg tables"
-
 class CHROME_EXECUTOR(Enum):
     PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
     

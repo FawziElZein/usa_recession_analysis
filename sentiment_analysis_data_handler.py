@@ -1,4 +1,4 @@
-from lookups import ETLStep,LoggerMessages,FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches,ErrorHandling
+from lookups import Logger,ETLStep,FinvizWebScrape, DestinationDatabase, InputTypes, PoliticianSpeeches,ErrorHandling
 from pandas_data_handler import return_data_as_df, return_insert_into_sql_statement_from_df, return_create_statement_from_df
 from database_handler import execute_query
 import os
@@ -13,6 +13,8 @@ import pandas as pd
 from misc_handler import create_sql_table_index
 from langchain.llms import OpenAI
 import os
+from dotenv import load_dotenv
+from logging_handler import show_logger_message, show_error_message
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -86,9 +88,25 @@ def analyze_sentiment(df, source_name, text_column):
         lambda row: pd.Series(row, index=['neg', 'neu', 'pos', 'compound']))
     return df
 
+def analyze_sentiment_2(df, source_name, text_column):
+    text_column = text_column.value
+    vader = SentimentIntensityAnalyzer()
+    scores = df[text_column].apply(preprocess_text).apply(
+        vader.polarity_scores).tolist()
+
+    scores_df = pd.DataFrame(scores)
+    index_name = df.index.name
+    scores_df[index_name] = df.index
+    df = pd.merge(df, scores_df, on=index_name)
+    df['date'] = pd.to_datetime(df['date'])
+    df.set_index(index_name, inplace=True)
+    return df
 
 
 def get_sentiment_analysis_results(db_session, resources):
+    etl_step = ETLStep.HOOK.value
+    logger_string_postfix = Logger.ANALYZE_SENTIMENTS.value
+    show_logger_message(etl_step, logger_string_postfix)
 
     df_sentiment_list = []
     try:
@@ -98,16 +116,13 @@ def get_sentiment_analysis_results(db_session, resources):
                                             table_title=resource.TABLE_TITLE, destination_schema_name=DestinationDatabase.SCHEMA_NAME)
 
             if len(df):
-                df_sentiment = analyze_sentiment(
+                df_sentiment = analyze_sentiment_2(
                     df=df, source_name=resource.SOURCE, text_column=resource.TEXT_COLUMN_NAME)
                 df_sentiment_list.append(
                     [resource.TABLE_TITLE.value, df_sentiment])
         
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_suffix = LoggerMessages.SENTIMENTS_ANALYSIS.value
-        show_logger_message(logger_string_prefix,logger_string_suffix)
-        
+
     except Exception as e:
         error_string_prefix = ErrorHandling.SENTIMENTS_RESULT_ERROR.value
         error_string_suffix = str(e)

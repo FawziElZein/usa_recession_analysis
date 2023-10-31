@@ -29,3 +29,73 @@
 2023-10-29 09:30:55,527 - INFO - hook: Executed successfully
 2023-10-29 09:30:55,527 - INFO - posthook: start
 2023-10-29 09:30:55,667 - INFO - posthook: Executed successfully
+2023-10-31 09:57:01,622 - INFO - Executing prehook
+2023-10-31 09:57:01,622 - INFO - Step 0: Creating a database connection
+2023-10-31 09:57:01,648 - INFO - Step 1: Executing SQL folder
+2023-10-31 09:58:09,434 - INFO - Executing prehook
+2023-10-31 09:58:09,434 - INFO - Step 0: Creating a database connection
+2023-10-31 09:58:09,460 - INFO - Step 1: Executing SQL folder
+2023-10-31 10:00:24,616 - INFO - Executing prehook
+2023-10-31 10:00:24,617 - INFO - Step 0: Creating a database connection
+2023-10-31 10:00:24,655 - INFO - Step 1: Closing the database connection
+2023-10-31 10:01:26,905 - INFO - Executing prehook
+2023-10-31 10:01:26,905 - INFO - Step 0: Creating a database connection
+2023-10-31 10:01:26,945 - INFO - Step 1: Closing the database connection
+2023-10-31 10:01:26,946 - INFO - Executing hook
+2023-10-31 10:01:26,973 - INFO - Step 0: Extracting data from yahoo finance
+2023-10-31 10:01:31,789 - INFO - Step 1: Extracting data from  finviz
+2023-10-31 10:02:27,536 - INFO - Executing posthook
+2023-10-31 10:02:27,567 - INFO - Step 0: Creating a database connection
+2023-10-31 10:02:27,568 - INFO - Step 1: Truncating staging table
+2023-10-31 10:02:27,688 - INFO - Step 2: Closing the database connection
+2023-10-31 10:02:34,244 - INFO - Step 3: Executing
+2023-10-31 10:02:34,276 - INFO - Step 4: Creating a database connection
+2023-10-31 10:02:34,277 - INFO - Step 5: Truncating staging table
+2023-10-31 10:02:34,367 - INFO - Step 6: Closing the database connection
+2023-10-31 10:02:38,379 - INFO - Executing prehook
+2023-10-31 10:02:38,379 - INFO - Step 0: Creating a database connection
+2023-10-31 10:02:38,427 - INFO - Step 1: Closing the database connection
+2023-10-31 10:02:38,428 - INFO - Executing hook
+2023-10-31 10:02:38,458 - INFO - Step 0: Extracting data from yahoo finance
+2023-10-31 10:03:04,266 - INFO - Executing prehook
+2023-10-31 10:03:04,266 - INFO - Step 1: Creating a database connection
+2023-10-31 10:03:04,299 - INFO - Step 2: Closing the database connection
+2023-10-31 10:03:04,300 - INFO - Executing hook
+2023-10-31 10:03:04,329 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 10:03:09,074 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 10:24:26,804 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:25:00,468 - INFO - Step 0: Extracting data from  finviz website
+2023-10-31 10:25:23,361 - INFO - Step 1: Extracting data from  finviz website
+2023-10-31 10:25:49,479 - INFO - Step 2: Extracting data from  finviz website
+2023-10-31 10:26:38,401 - INFO - Step 3: Extracting data from  finviz website
+2023-10-31 10:27:04,129 - INFO - Executing posthook
+2023-10-31 10:27:04,164 - INFO - Step 0: Creating a database connection
+2023-10-31 10:27:04,165 - INFO - Step 1: Truncating staging table
+2023-10-31 10:27:04,305 - INFO - Step 2: Closing the database connection
+2023-10-31 10:27:11,091 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:27:57,025 - INFO - Executing posthook
+2023-10-31 10:27:57,059 - INFO - Step 1: Creating a database connection
+2023-10-31 10:27:57,060 - INFO - Step 2: Truncating staging table
+2023-10-31 10:27:57,156 - INFO - Step 3: Closing the database connection
+2023-10-31 10:42:54,462 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:43:00,377 - INFO - Executing posthook
+2023-10-31 10:43:00,411 - INFO - Step 1: Creating a database connection
+2023-10-31 10:43:00,411 - INFO - Step 2: Truncating staging table
+2023-10-31 10:43:00,505 - INFO - Step 3: Closing the database connection
+2023-10-31 10:43:07,211 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:43:32,672 - INFO - Executing posthook
+2023-10-31 10:43:32,708 - INFO - Step 1: Creating a database connection
+2023-10-31 10:43:32,709 - INFO - Step 2: Truncating staging table
+2023-10-31 10:43:32,812 - INFO - Step 3: Closing the database connection
+2023-10-31 10:43:34,786 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:44:24,446 - INFO - Executing posthook
+2023-10-31 10:44:24,483 - INFO - Step 1: Creating a database connection
+2023-10-31 10:44:24,484 - INFO - Step 2: Truncating staging table
+2023-10-31 10:44:24,569 - INFO - Step 3: Closing the database connection
+2023-10-31 10:44:27,216 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:44:57,187 - INFO - Executing posthook
+2023-10-31 10:44:57,219 - INFO - Step 1: Creating a database connection
+2023-10-31 10:44:57,220 - INFO - Step 2: Truncating staging table
+2023-10-31 10:44:57,314 - INFO - Step 3: Closing the database connection
+2023-10-31 10:44:58,600 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:45:25,892 - INFO - Extracting data from  finviz website hook
