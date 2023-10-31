@@ -85,24 +85,21 @@
 
 | Webscrape USA economic data demo |
 | ---------------------------------|
-| <img src="https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c" width="100%">|
+|![webscrape usa economic data](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c)|
 
 #### Webscrape USA politician speeches
 
-Part1:
--	Utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
 
-| Webscrape USA politician speeches (part1) |
-| ------------------------------------------|
-<img src="https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875" width = "100%">
+-	Part 1: Utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
+-	Part 2: Access the headlines one by one and webscrape the transcript text of the speeches.
 
-Part2:
 
--	Access the headlines one by one and webscrape the transcript text of the speeches.
+| Webscrape USA politician speeches (part1) | Webscrape USA politician speeches (part2) |
+| ---| ---|
+| ![webscrape politicians speeches part 1](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875) | ![webscrape politicians speeches part 2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4bd65616-4d4d-44a4-ab14-2df3413b58a2)| 
 
-| Webscrape USA politician speeches (part2) |
-| ------------------------------------------|
-| <img src="https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4bd65616-4d4d-44a4-ab14-2df3413b58a2" width = "100%">|
+
+
 ### Dashboard
 
 https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3b75-4745-a990-db0f9193264d
