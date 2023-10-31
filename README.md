@@ -93,20 +93,20 @@ ETL runtime duration: 10 minutes
 ### Dashboard Slides
 
 | Landing Page |
-| ---|
+| -----------------|
 | ![landing_page](./readme/pbi/landing_page.png)|
 
 | National Overview |
-| ---|
+| -----------------|
 | ![national_overview](./readme/pbi/national_overview.png)|
 
 | State Wise Overview |
-| ---|
+| -----------------|
 | ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
 
 | FAANG Stocks Overview |
-| ---|
-| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
+| -----------------|
+| ![state_wise_overview_2](./readme/pbi/FAANG_stock_prices.png)|
 
 ### Dashboard - Quick Demo
 
