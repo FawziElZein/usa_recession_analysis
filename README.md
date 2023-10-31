@@ -92,6 +92,9 @@ ETL runtime duration: 10 minutes
 
 ### Dashboard Slides
 
+| Landing Page |
+| -----------------|
+| ![landing_page](./readme/pbi/landing_page.png)|
 
 | National Overview |
 | -----------------|
