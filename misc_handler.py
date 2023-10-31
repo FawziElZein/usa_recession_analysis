@@ -34,6 +34,9 @@ def is_hook_file_title_executable(etl_step,file_title,table_types):
     return False
 
 def execute_sql_folder(db_session, sql_command_directory_path, etl_step, table_types, target_schema = DestinationDatabase.SCHEMA_NAME):
+    
+    logger_string_postfix = f'{Logger.EXECUTE_SQL_FOLDER.value}-{etl_step.value}'
+    show_logger_message(etl_step.value,logger_string_postfix)
 
     sql_files = [sqlfile for sqlfile in os.listdir(sql_command_directory_path) if sqlfile.endswith('.sql')]
     sorted_sql_files = sorted(sql_files, key=lambda x: int(x[1:x.index('-')]))

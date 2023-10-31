@@ -103,7 +103,7 @@ ETL runtime duration: 10 minutes
 <!-- Implementation -->
 
 <a  name="demo"></a>
-<img  src="./readme/title4.svg" id="#demo" />
+<img  src="./readme/title4.svg" id="demo" />
 
 <br>
 

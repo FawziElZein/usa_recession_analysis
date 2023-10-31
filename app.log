@@ -110,3 +110,139 @@
 2023-10-31 11:00:30,534 - INFO - Step 3: Closing the database connection
 2023-10-31 11:00:31,948 - INFO - Extracting data from  miller_center website hook
 2023-10-31 11:04:05,439 - INFO - Extracting data from  miller_center website hook
+2023-10-31 14:47:19,731 - INFO - Executing prehook
+2023-10-31 14:47:19,732 - INFO - Step 1: Creating a database connection
+2023-10-31 14:47:19,797 - INFO - Step 2: Closing the database connection
+2023-10-31 14:47:19,797 - INFO - Executing hook
+2023-10-31 14:47:19,951 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:47:22,008 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 14:53:02,525 - INFO - Executing posthook
+2023-10-31 14:53:02,558 - INFO - Step 1: Creating a database connection
+2023-10-31 14:53:02,559 - INFO - Step 2: Truncating staging table
+2023-10-31 14:53:02,685 - INFO - Step 3: Closing the database connection
+2023-10-31 14:53:11,152 - INFO - Executing prehook
+2023-10-31 14:53:11,152 - INFO - Step 1: Creating a database connection
+2023-10-31 14:53:11,216 - INFO - Step 2: Closing the database connection
+2023-10-31 14:53:11,217 - INFO - Executing hook
+2023-10-31 14:53:11,244 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:53:15,421 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 14:54:31,129 - INFO - Executing prehook
+2023-10-31 14:54:31,129 - INFO - Step 1: Creating a database connection
+2023-10-31 14:54:31,169 - INFO - Step 2: Closing the database connection
+2023-10-31 14:54:31,169 - INFO - Executing hook
+2023-10-31 14:55:08,182 - INFO - Executing prehook
+2023-10-31 14:55:08,182 - INFO - Step 1: Creating a database connection
+2023-10-31 14:55:08,220 - INFO - Step 2: Closing the database connection
+2023-10-31 14:55:08,221 - INFO - Executing hook
+2023-10-31 14:55:08,251 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:55:10,219 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 14:55:16,852 - INFO - Executing posthook
+2023-10-31 14:55:16,892 - INFO - Step 1: Creating a database connection
+2023-10-31 14:55:16,892 - INFO - Step 2: Truncating staging table
+2023-10-31 14:55:17,058 - INFO - Step 3: Closing the database connection
+2023-10-31 14:55:20,867 - INFO - Executing prehook
+2023-10-31 14:55:20,867 - INFO - Step 1: Creating a database connection
+2023-10-31 14:55:20,919 - INFO - Step 2: Closing the database connection
+2023-10-31 14:55:20,919 - INFO - Executing hook
+2023-10-31 14:55:20,946 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:55:22,870 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 14:56:03,881 - INFO - Executing prehook
+2023-10-31 14:56:03,882 - INFO - Step 1: Creating a database connection
+2023-10-31 14:56:03,923 - INFO - Step 2: Closing the database connection
+2023-10-31 14:56:03,923 - INFO - Executing hook
+2023-10-31 14:56:03,952 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:56:07,434 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 14:56:15,403 - INFO - Executing posthook
+2023-10-31 14:56:15,438 - INFO - Step 1: Creating a database connection
+2023-10-31 14:56:15,438 - INFO - Step 2: Truncating staging table
+2023-10-31 14:56:15,558 - INFO - Step 3: Closing the database connection
+2023-10-31 14:56:22,407 - INFO - Executing prehook
+2023-10-31 14:56:22,407 - INFO - Step 1: Creating a database connection
+2023-10-31 14:56:22,461 - INFO - Step 2: Closing the database connection
+2023-10-31 14:56:22,469 - INFO - Executing hook
+2023-10-31 14:56:22,496 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 14:56:24,573 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 15:06:53,023 - INFO - Step 3: Extracting data from  finviz website
+2023-10-31 15:07:13,827 - INFO - Step 4: Extracting data from  fred_economic_data website
+2023-10-31 15:13:01,853 - INFO - Step 5: Extracting data from  miller_center website
+2023-10-31 15:13:48,038 - INFO - Step 6: Performing sentiment analysis on data
+2023-10-31 15:14:55,529 - INFO - Executing posthook
+2023-10-31 15:14:55,557 - INFO - Step 1: Creating a database connection
+2023-10-31 15:14:55,558 - INFO - Step 2: Truncating staging table
+2023-10-31 15:14:55,692 - INFO - Step 3: Closing the database connection
+2023-10-31 15:15:07,102 - INFO - Executing prehook
+2023-10-31 15:15:07,103 - INFO - Step 1: Creating a database connection
+2023-10-31 15:15:07,167 - INFO - Step 2: Closing the database connection
+2023-10-31 15:15:07,168 - INFO - Executing hook
+2023-10-31 15:15:07,196 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 15:15:09,254 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 15:16:41,714 - INFO - Step 3: Extracting data from  finviz website
+2023-10-31 15:17:38,188 - INFO - Step 4: Extracting data from  fred_economic_data website
+2023-10-31 15:24:40,171 - INFO - Step 5: Extracting data from  miller_center website
+2023-10-31 15:25:18,256 - INFO - Step 6: Performing sentiment analysis on data
+2023-10-31 15:44:09,806 - INFO - Step 4: Executing
+2023-10-31 15:44:09,837 - INFO - Step 5: Creating a database connection
+2023-10-31 15:44:09,838 - INFO - Step 6: Truncating staging table
+2023-10-31 15:44:09,971 - INFO - Step 7: Closing the database connection
+2023-10-31 15:44:14,616 - INFO - Executing prehook
+2023-10-31 15:44:14,617 - INFO - Step 1: Creating a database connection
+2023-10-31 15:44:14,641 - INFO - Step 2: Executing SQL folder
+2023-10-31 15:44:14,668 - INFO - Step 3: Closing the database connection
+2023-10-31 15:44:14,669 - INFO - Executing hook
+2023-10-31 15:44:14,705 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 15:44:16,874 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 15:45:54,883 - INFO - Step 8: Executing
+2023-10-31 15:45:54,921 - INFO - Step 9: Creating a database connection
+2023-10-31 15:45:54,922 - INFO - Step 10: Truncating staging table
+2023-10-31 15:45:55,044 - INFO - Step 11: Closing the database connection
+2023-10-31 15:46:02,949 - INFO - Executing prehook
+2023-10-31 15:46:02,950 - INFO - Step 1: Creating a database connection
+2023-10-31 15:46:02,980 - INFO - Step 2: Executing SQL folderprehook
+2023-10-31 15:46:03,005 - INFO - Step 3: Closing the database connection
+2023-10-31 15:46:03,006 - INFO - Executing hook
+2023-10-31 15:46:03,039 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 15:46:05,089 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 15:46:21,666 - INFO - Step 12: Executing
+2023-10-31 15:46:21,699 - INFO - Step 13: Creating a database connection
+2023-10-31 15:46:21,700 - INFO - Step 14: Truncating staging table
+2023-10-31 15:46:21,843 - INFO - Step 15: Closing the database connection
+2023-10-31 15:46:45,468 - INFO - Step 16: Executing
+2023-10-31 15:46:45,506 - INFO - Step 17: Creating a database connection
+2023-10-31 15:46:45,507 - INFO - Step 18: Truncating staging table
+2023-10-31 15:46:45,612 - INFO - Step 19: Closing the database connection
+2023-10-31 15:46:50,294 - INFO - Executing prehook
+2023-10-31 15:46:50,295 - INFO - Step 1: Creating a database connection
+2023-10-31 15:46:50,322 - INFO - Step 2: Executing SQL folder-prehook
+2023-10-31 15:46:50,347 - INFO - Step 3: Closing the database connection
+2023-10-31 15:46:50,351 - INFO - Executing hook
+2023-10-31 15:46:50,380 - INFO - Step 1: Extracting data from yahoo finance
+2023-10-31 15:46:52,415 - INFO - Step 2: Extracting data from  finviz
+2023-10-31 15:47:42,881 - INFO - Step 3: Extracting data from  finviz website
+2023-10-31 15:47:59,989 - INFO - Step 4: Extracting data from  fred_economic_data website
+2023-10-31 15:54:18,509 - INFO - Executing posthook
+2023-10-31 15:54:18,541 - INFO - Step 1: Creating a database connection
+2023-10-31 15:54:18,541 - INFO - Step 2: Truncating staging table
+2023-10-31 15:54:18,674 - INFO - Step 3: Closing the database connection
+2023-10-31 15:54:29,027 - INFO - Executing prehook
+2023-10-31 15:54:29,027 - INFO - Step 1: Creating a database connection
+2023-10-31 15:54:29,056 - INFO - Step 2: Executing SQL folder-prehook
+2023-10-31 15:54:29,082 - INFO - Step 3: Closing the database connection
+2023-10-31 15:54:29,092 - INFO - Executing hook
+2023-10-31 15:54:29,093 - INFO - Step 1: Creating a database connection
+2023-10-31 15:54:29,126 - INFO - Step 2: Creating ETL checkpoint
+2023-10-31 15:54:29,127 - INFO - Step 3: Retrieving ETL last updated date
+2023-10-31 15:54:29,129 - INFO - Step 4: Extracting data from yahoo finance
+2023-10-31 15:54:32,493 - INFO - Step 5: Extracting data from  finviz
+2023-10-31 15:57:26,062 - INFO - Step 6: Extracting data from  finviz website
+2023-10-31 15:57:43,959 - INFO - Step 7: Extracting data from  fred_economic_data website
+2023-10-31 16:02:08,866 - INFO - Step 8: Extracting data from  miller_center website
+2023-10-31 16:02:51,158 - INFO - Step 9: Executing SQL folder-hook
+2023-10-31 16:02:51,198 - INFO - Step 10: Performing sentiment analysis on data
+2023-10-31 16:02:52,221 - INFO - Step 11: Executing SQL folder-hook
+2023-10-31 16:02:53,581 - INFO - Step 12: Executing SQL folder-hook
+2023-10-31 16:02:53,595 - INFO - Step 13: Upserting ETL checkpoint
+2023-10-31 16:02:53,595 - INFO - Step 14: Closing the database connection
+2023-10-31 16:02:53,595 - INFO - Executing posthook
+2023-10-31 16:02:53,627 - INFO - Step 1: Creating a database connection
+2023-10-31 16:02:53,628 - INFO - Step 2: Truncating staging table
+2023-10-31 16:02:53,745 - INFO - Step 3: Closing the database connection

@@ -43,6 +43,7 @@ class Logger(Enum):
     CREATE_CONNECTION = "Creating a database connection"
     CREATE_CHECKPOINT = "Creating ETL checkpoint"
     RETRIEVE_LAST_ETL = "Retrieving ETL last updated date"
+    UPSERT_ETL = "Upserting ETL checkpoint"
     EXECUTE_SQL_FOLDER = "Executing SQL folder"
     CLOSE_DB_CONNECTION = "Closing the database connection"
     TRUNCATE_STG_TABLES = "Truncating staging table"

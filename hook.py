@@ -92,9 +92,7 @@ def create_and_store_into_table(db_session, df_table_title, sql_table_type, dest
                 df, target_schema, dst_table, is_upsert=True)
             execute_query(db_session, upsert_query)
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = LoggerMessages.CREATE_AND_STORE_INTO_FACT_AGG_TABLE.value
-        show_logger_message(logger_string_prefix, logger_string_postfix)
+
     except Exception as e:
         error_prefix = ErrorHandling.CREATE_AND_STORE_INTO_FACT_AGG_TABLE_ERROR
         suffix = str(error)
@@ -120,13 +118,25 @@ def load_phase(db_session):
 
 def execute_hook():
 
+    schema_name = DestinationDatabase.SCHEMA_NAME
+
     etl_step = ETLStep.HOOK.value
     logger_string_postfix = Logger.EXECUTE.value
     show_logger_message(etl_step, logger_string_postfix)
-    schema_name = DestinationDatabase.SCHEMA_NAME
+
+    
     try:
+        logger_string_postfix = Logger.CREATE_CONNECTION.value
+        show_logger_message(etl_step, logger_string_postfix)
         db_session = create_connection()
+
+        logger_string_postfix = Logger.CREATE_CHECKPOINT.value
+        show_logger_message(etl_step, logger_string_postfix)
         create_etl_checkpoint(db_session,schema_name)
+
+        logger_string_postfix = Logger.RETRIEVE_LAST_ETL.value
+        show_logger_message(etl_step, logger_string_postfix)
+
         etl_date, does_etl_time_exists = return_etl_last_updated_date(
             db_session)
 
@@ -136,13 +146,14 @@ def execute_hook():
         
         load_phase(db_session = db_session)
     
-        insert_or_update_etl_checkpoint(db_session, schema_name, does_etl_time_exists, datetime.now())
-        
-        close_connection(db_session)
+        logger_string_postfix = Logger.UPSERT_ETL.value
+        show_logger_message(etl_step, logger_string_postfix)
 
-        logger_string_prefix = ETLStep.HOOK.value
-        logger_string_postfix = Logger.SUCCESS_MESSAGE.value
-        show_logger_message(logger_string_prefix, logger_string_postfix)
+        insert_or_update_etl_checkpoint(db_session, schema_name, does_etl_time_exists, datetime.now())
+
+        logger_string_postfix = Logger.CLOSE_DB_CONNECTION.value
+        show_logger_message(etl_step, logger_string_postfix)
+        close_connection(db_session)
 
     except Exception as error:
         suffix = str(error)

@@ -3,15 +3,14 @@ import prehook
 import posthook
 import schedule
 import time
+import warnings
 
 def etl_job():
     prehook.execute_prehook()
     hook.execute_hook()
     posthook.execute_posthook()
 
-etl_job()
-# schedule.every(1).minutes.do(etl_job)
+schedule.every().day.at("10:00").do(etl_job)
 
-# while True:
-#     schedule.run_pending()
-#     time.sleep(15)
+while True:
+    schedule.run_pending()

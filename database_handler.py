@@ -4,7 +4,6 @@ from logging_handler import show_error_message
 from dateutil.parser import parse
 import datetime
 import pandas as pd
-
 import os
 from dotenv import load_dotenv
 
@@ -58,7 +57,7 @@ def parse_date_columns(dataframe,first_row):
         except Exception as e:
             suffix = str(e)
             error_prefix = ErrorHandling.DATE_CONVERSION_ERROR.value
-            # show_error_message(error_prefix,suffix)
+            show_error_message(error_prefix,suffix)
     
 def return_data_as_df(file_executor, input_type, db_session = None):
     return_dataframe = None
@@ -114,8 +113,6 @@ def execute_query(db_session, query):
         error_prefix = ErrorHandling.EXECUTE_QUERY_ERROR
         return_val = error_prefix
         suffix = str(e)
-        print(query)
-        print(suffix)
         show_error_message(error_prefix.value, suffix)
         
     finally:
