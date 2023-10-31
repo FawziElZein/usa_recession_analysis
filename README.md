@@ -4,7 +4,7 @@
 <div>
 
 > Hello world! This is the project’s summary that describes the project, plain and simple, limited to the space available.
-**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#prototyping) • [IMPLEMENTATION](#demo) • [HOW TO RUN?](#run)**
+**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#prototyping) • [TECH STACKS](#stacks) • [IMPLEMENTATION](#demo) • [HOW TO RUN?](#run)**
 
 </div> 
   
@@ -18,8 +18,6 @@
 
 > A python based ETL project that would extract, transform data from different web sources and load them into a tabular database (PostgreSQL) in an attempt to provide a full scope analytical understanding of the USA recession. 
 
-
-  
 
   
 
@@ -79,54 +77,15 @@
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
 ### Dashboard
-<video width="640" height="360" controls>
-  <source src="path/to/your/video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
-<br><br>
-
-<!-- Implementation -->
-
-<a  name="stacks"></a>
-<img  src="./readme/title4.svg" id="stacks" />
-
-<br>
-
-### DataBase
-
-| usa_recession_db|
-|---|
-|![db_schema_1](./readme/db_schema/dim_stock_prices_tables.png)|
-|![db_schema_2](./readme/db_schema/dim_gdp_usa_tables.png)|
-|![db_schema_3](./readme/db_schema/dim_state_usa_fact_tables.png)|
-|![db_schema_4](./readme/db_schema/agg_tables.png)|
+https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3b75-4745-a990-db0f9193264d
 
 
 
-| Landing Page |
-| ---|
-| ![landing_page](./readme/pbi/landing_page.png)|
+<!-- Tech Stacks -->
 
-| National Overview |
-| ---|
-| ![national_overview](./readme/pbi/national_overview.png)|
-
-| State Wise Overview |
-| ---|
-| ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
-
-| FAANG Overview |
-| ---|
-| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
-
-<br><br>
-
-
-<!-- Tech Stack -->
-
-<a  name="Demo"  ></a>
-<img  src="./readme/title5.svg" id="#demo"/>
+<a  name="Stacks"  ></a>
+<img  src="./readme/title5.svg" id="#stacks"/>
 
 > Show command line of ETL performance - Logger view
 
@@ -155,6 +114,37 @@ A central dashboard where viewers can check:
 
 
 <br><br>
+
+
+<!-- Implementation -->
+
+<a  name="implementation"></a>
+<img  src="./readme/title4.svg" id="implementation" />
+
+<br>
+
+### Power Bi Dashboard
+
+
+
+| Landing Page |
+| ---|
+| ![landing_page](./readme/pbi/landing_page.png)|
+
+| National Overview |
+| ---|
+| ![national_overview](./readme/pbi/national_overview.png)|
+
+| State Wise Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/state_wise_overview_1.png)|
+
+| FAANG Overview |
+| ---|
+| ![state_wise_overview_1](./readme/pbi/FAANG_stock_prices.png)|
+
+<br><br>
+
 
 <!-- How to run -->
 
