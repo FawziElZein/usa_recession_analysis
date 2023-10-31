@@ -74,6 +74,23 @@ ETL runtime duration: 10 minutes
 
 ### Data Flow Diagrams
 
+- Prehook:  
+	- Initialze staging tables
+	- Create UDFs
+	- Create Schema
+- Hook:
+	- Extract:
+		- politician Speeches
+		- U.S.A Economic Data
+		- Stock Market Prices
+	- Transform:
+		- Initialize dimension, fact and aggregate tables
+		- Analyze stocks news and politicians speeches sentiments
+	- Load:
+		- Initialize and load data into views
+- Posthook:
+	- Truncate staging tables
+
 | ETL-Hook Cycle |
 |---|
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
