@@ -99,3 +99,14 @@
 2023-10-31 10:44:57,314 - INFO - Step 3: Closing the database connection
 2023-10-31 10:44:58,600 - INFO - Extracting data from  finviz website hook
 2023-10-31 10:45:25,892 - INFO - Extracting data from  finviz website hook
+2023-10-31 10:59:40,680 - INFO - Executing posthook
+2023-10-31 10:59:40,707 - INFO - Step 1: Creating a database connection
+2023-10-31 10:59:40,709 - INFO - Step 2: Truncating staging table
+2023-10-31 10:59:40,804 - INFO - Step 3: Closing the database connection
+2023-10-31 11:00:07,317 - INFO - Extracting data from  miller_center website hook
+2023-10-31 11:00:30,394 - INFO - Executing posthook
+2023-10-31 11:00:30,432 - INFO - Step 1: Creating a database connection
+2023-10-31 11:00:30,433 - INFO - Step 2: Truncating staging table
+2023-10-31 11:00:30,534 - INFO - Step 3: Closing the database connection
+2023-10-31 11:00:31,948 - INFO - Extracting data from  miller_center website hook
+2023-10-31 11:04:05,439 - INFO - Extracting data from  miller_center website hook
