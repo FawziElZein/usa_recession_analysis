@@ -83,6 +83,7 @@
 -	Leverage Selenium to automatically set the date into the ETL date, enabling the retrieval of all data from that specified date onward.
 -	Retrieve the downloadable csv link and ingest its contents into the database  
 
+<br>
 
 | Webscrape USA economic data demo |
 | --------------------|
