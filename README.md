@@ -211,7 +211,7 @@ A central dashboard where viewers can check:
   
 **Dependencies**:
 
--   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`
+-   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`,`schedule`
 -   Install database connectors/drivers for PostgreSQL.
   
 
@@ -243,6 +243,31 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 	- OPENAI_API_KEY= "*your_open_ai_api_key*"
 
 ### **Running the Backend**:
+
+Note: This ETL is scheduled to run on a daily basis at 10 AM. For testing purposes, please update the main file with the code below:
+
+```
+import hook
+import prehook
+import posthook
+import schedule
+import time
+import warnings
+
+def etl_job():
+    prehook.execute_prehook()
+    hook.execute_hook()
+    posthook.execute_posthook()
+
+etl_job()
+
+# schedule.every().day.at("10:00").do(etl_job)
+
+# while True:
+#     schedule.run_pending()
+
+```
+I have temporarily disabled the scheduler and the infinite loop (while True) to facilitate immediate testing. This adjustment allows users to promptly evaluate the functionality of the code upon download.
 
 **Start the Data Ingestion & ETL Process**:
 `python main.py`

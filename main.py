@@ -2,8 +2,6 @@ import hook
 import prehook
 import posthook
 import schedule
-import time
-import warnings
 
 def etl_job():
     prehook.execute_prehook()
