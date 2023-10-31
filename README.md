@@ -91,12 +91,15 @@
 
 Part1:
 -	Utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
+
 | Webscrape USA politician speeches (part1) |
 | ------------------------------------------|
 | ![webscrape politicians speeches part 1](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/95d6cbbc-19d4-4bd0-ae6d-a2ff744ee875)|
 
 Part2:
+
 -	Access the headlines one by one and webscrape the transcript text of the speeches.
+
 | Webscrape USA politician speeches (part2) |
 | ------------------------------------------|
 | ![webscrape politicians speeches part 2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4bd65616-4d4d-44a4-ab14-2df3413b58a2)|
