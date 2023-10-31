@@ -9,6 +9,7 @@
 </div> 
   
 
+><i> Disclamer: The analysis presented here is solely for educational purposes. The author maintains an unbiased perspective and has no religious or political affiliations influencing the interpretation of the data. Readers are encouraged to conduct their own research and seek professional advice before making any financial decisions. The author disclaims responsibility for the accuracy or completeness of the information and is not liable for actions taken based on the content of this analysis.</i>
 <br><br>
 
 <!-- project philosophy -->
