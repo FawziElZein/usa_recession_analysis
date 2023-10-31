@@ -102,8 +102,8 @@ ETL runtime duration: 10 minutes
 
 <!-- Implementation -->
 
-<a  name="implementation"></a>
-<img  src="./readme/title4.svg" id="implementation" />
+<a  name="demo"></a>
+<img  src="./readme/title4.svg" id="#demo" />
 
 <br>
 
@@ -145,8 +145,8 @@ https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3
 
 #### Webscrape USA Ppolitician Speeches
 
--	Part 1: Utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
--	Part 2: Access the headlines one by one and webscrape the transcript text of the speeches.
+-	Part 1: utilize Selenium to automatically access the main politician speeches page and scroll down until reaching the ETL date. 
+-	Part 2: access the headlines one by one and webscrape the transcript text of the speeches.
 
 
 | Webscrape USA politician speeches (part 1) | Webscrape USA politician speeches (part 2) |
@@ -184,7 +184,7 @@ A central dashboard where viewers can check:
 1. Web scraping & Automation.
 2. ETL Pipeline: using Python and pandas, raw data is extracted, transformed into a usable format and loaded into PostgreSQL database.
 3. Database: Schema Design - Indexing - Data Integrity - Backup & Recovery.
-4. Sentiment Analysis: "Using OpenAI's Large Language Model. 
+4. Sentiment Analysis: using OpenAI's Large Language Model. 
 
 
 <br><br>
