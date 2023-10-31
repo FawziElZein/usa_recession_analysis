@@ -78,6 +78,12 @@
 
 ### Extract Phase
 
+#### Webscrape USA economic data
+
+-	Access the webpage using Selenium
+-	Automatically set the date into the ETL datetime in order to retreive all data starting from that date
+-	Retrieve the downloadable csv link and ingest its contents into the database
+
 | Webscrape USA economic data demo |
 | ---------------------------------|
 |![webscrape usa economic data](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c)|
