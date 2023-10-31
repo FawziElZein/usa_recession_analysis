@@ -76,6 +76,12 @@
 |---|
 |![etl_hook](./readme/etl_hook_diagram/etl_hook.png)|
 
+### Extract Phase
+
+| Webscrape USA economic data demo |
+| ---------------------------------|
+|![webscrape usa economic data](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/4e9102ff-7fe4-4b35-8da4-c32ca7dc839c)|
+
 ### Dashboard
 
 https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/6d9124e2-3b75-4745-a990-db0f9193264d
