@@ -6,6 +6,7 @@ import datetime
 import pandas as pd
 import os
 from dotenv import load_dotenv
+import warnings
 
 load_dotenv()
 database_name = os.getenv("DATABASE_NAME")
@@ -69,7 +70,9 @@ def return_data_as_df(file_executor, input_type, db_session = None):
             return_dataframe = pd.read_excel(file_executor)
             parse_date_columns(return_dataframe,return_dataframe.iloc[0])
         elif input_type == InputTypes.SQL:
-            return_dataframe = pd.read_sql_query(con= db_session, sql= file_executor)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return_dataframe = pd.read_sql_query(con= db_session, sql= file_executor)
         else:
             raise Exception("The file type does not exist, please check main function")
     except Exception as e:
