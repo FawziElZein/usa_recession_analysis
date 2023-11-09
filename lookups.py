@@ -50,10 +50,12 @@ class Logger(Enum):
     EXTRACT_DATA_BY_WEBSCRAPING = "Extracting phase"
     EXTRACT_DATA_FROM_YAHOO_FINANCE = "Extracting data from yahoo finance"
     EXTRACT_DATA_FROM_WEBSITE = "Extracting data from "
+    EXTRACT_US_DATA_FROM_WEBSITE = "Extracting U.S.A data from "
+    EXTRACT_US_STATES_DATA_FROM_WEBSITE = "Extracting U.S state-wise data from "
     ANALYZE_SENTIMENTS = "Performing sentiment analysis on data"
     
 class CHROME_EXECUTOR(Enum):
-    PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    PATH = "./headless-chromium"
     
 class InputTypes(Enum):
     SQL = "SQL"
@@ -61,13 +63,12 @@ class InputTypes(Enum):
     EXCEL = "Excel"
     HTTP = "Http"
     
-
 class PoliticianSpeeches(Enum):
     URL = 'https://millercenter.org/the-presidency/presidential-speeches'
     SOURCE = "miller_center"
     TABLE_TITLE = "presidential_speeches"
-    COLUMNS_NAME = ['date', 'speech_title','speaker_name', 'speech']
-    TEXT_COLUMN_NAME = 'speech'
+    COLUMNS_NAME = ['date', 'speech_title','speaker_name']
+    TEXT_COLUMN_NAME = 'speech_title'
 
 
 class FinvizWebScrape(Enum):
@@ -82,7 +83,8 @@ class FredEconomicDataWebScrape(Enum):
     URL = "https://fred.stlouisfed.org/series/"
     SOURCE = "fred_economic_data"
     KPI = ['GDPC1','PCE','GPDI','NETEXP','GCEC1','IMPGS']
-    KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
+    KPIS_PER_STATE = ['NGSP']
+    # KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
     STATE_INITIALS = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
     'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
