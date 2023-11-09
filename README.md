@@ -258,7 +258,7 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 
 ### **Running the Backend**:
 
-Note: This ETL was containerized using Docker and packaged into a container image so it can be used to create a deployment package for an AWS Lambda function. For local testing purposes, please update the main file by calling the lambda_handler() function at the end of it, the final version should look like below:
+This ETL process has been containerized using Docker and packaged into a container image to facilitate the creation of a deployment package for an AWS Lambda function. For local testing purposes, please update the main file by adding a call to the lambda_handler() function at the end of it. The final version should look like the example below:
 
 ```
 import hook
