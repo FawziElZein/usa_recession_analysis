@@ -62,14 +62,31 @@
 
 > We have designed our projects to webscrape, through an ETL project and including it in a PowerBI Sample Dashboard, 
 
+### AWS Lambda Logs
 
+The ETL (Extract, Transform, Load) files, along with their dependencies, have been containerized using Docker and packaged into a container image. This Docker image has been used to create a deployment package for an AWS Lambda function. The deployment package, including the Lambda function code and dependencies, has been uploaded to AWS Lambda for serverless execution. 
+
+ETL runtime duration on AWS: 12 minutes
+
+
+| AWS Lambda Full Result |
+|---|
+|![aws_lambda_logs_part_1](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/fc91642c-4def-46df-baa0-5aea07fb8967)
+![aws_lambda_logs_part_2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/515c8ba0-a675-428b-8083-f08f673b7e62)
+|
+
+| AWS Lambda Log Output |
+|---|
+|![AWS_lambda_logs](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/78db472d-b96d-4f88-88f1-ab9be2e42d54)|
 
 ### Logger File
 
-ETL runtime duration: 10 minutes
+ETL runtime duration locally: 10 minutes
+
+
 | CLI logs |
 |---|
-|![cli_logs](./readme/cli/cli_logs.png)|
+|![cli_logs](./readme/logs/cli_logs.png)|
 
 
 ### Data Flow Diagrams
@@ -189,9 +206,6 @@ A central dashboard where viewers can check:
 
 <br><br>
 
-
-
-
 <!-- How to run -->
 
 <a  name="run"  ></a>
@@ -211,7 +225,7 @@ A central dashboard where viewers can check:
   
 **Dependencies**:
 
--   Install the necessary Python libraries: `psycopg2-binary`, `pandas`, `selenium`, `requests`, `yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`,`schedule`
+-   Install the necessary Python libraries: `psycopg2-binary`, `boto3`,`pandas`, `requests`, `urllib3`,`yahoofinancials`,`langchain`,`tqdm`,`python-dotenv`, `selenium`,`bs4`,`pytz`
 -   Install database connectors/drivers for PostgreSQL.
   
 
@@ -244,33 +258,25 @@ git clone https://github.com/FawziElZein/usa_recession_analysis
 
 ### **Running the Backend**:
 
-Note: This ETL is scheduled to run on a daily basis at 10 AM. For testing purposes, please update the main file with the code below:
+Note: This ETL was containerized using Docker and packaged into a container image so it can be used to create a deployment package for an AWS Lambda function. For local testing purposes, please update the main file by calling the lambda_handler() function at the end of it, the final version should look like below:
 
 ```
 import hook
 import prehook
 import posthook
-import schedule
-import time
-import warnings
 
-def etl_job():
+def lambda_handler(event=None, context=None):
     prehook.execute_prehook()
     hook.execute_hook()
     posthook.execute_posthook()
 
-etl_job()
-
-# schedule.every().day.at("10:00").do(etl_job)
-
-# while True:
-#     schedule.run_pending()
+lambda_handler()
 
 ```
-I have temporarily disabled the scheduler and the infinite loop (while True) to facilitate immediate testing. This adjustment allows users to promptly evaluate the functionality of the code upon download.
+
 
 **Start the Data Ingestion & ETL Process**:
-`python main.py`
+`python lambda_function.py`
 
 
 You should be able to check the app.log file to see the ETL work.

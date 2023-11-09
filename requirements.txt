@@ -4,9 +4,9 @@ pandas
 requests
 urllib3
 yahoofinancials
+langchain
 tqdm
 python-dotenv
 selenium
 bs4
 pytz
-nltk

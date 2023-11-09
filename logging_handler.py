@@ -1,6 +1,5 @@
 from lookups import Logger
 import logging
-from datetime import datetime
 
 logger = logging.getLogger()
 console_handler = logging.StreamHandler()
@@ -33,6 +32,4 @@ def show_logger_message(etl_step,logger_string_postfix):
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
     logger.info(f'{logger_string_prefix}{logger_string_postfix}')
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]
-    log_message = f'{current_time} - INFO - {logger_string_prefix}{logger_string_postfix}'
-    print(log_message)
+
