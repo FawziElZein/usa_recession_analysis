@@ -83,8 +83,7 @@ class FredEconomicDataWebScrape(Enum):
     URL = "https://fred.stlouisfed.org/series/"
     SOURCE = "fred_economic_data"
     KPI = ['GDPC1','PCE','GPDI','NETEXP','GCEC1','IMPGS']
-    KPIS_PER_STATE = ['NGSP']
-    # KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
+    KPIS_PER_STATE = ['NGSP','UR','MEHOINUSXXA672N','PCE']
     STATE_INITIALS = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
     'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
