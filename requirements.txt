@@ -1,9 +1,11 @@
 psycopg2-binary==2.9.6
-pandas==1.5.3
-selenium
+boto3
+pandas
 requests
-yahoofinancials == 1.16
-langchain
-tqdm==4.64.1
+urllib3
+yahoofinancials
+tqdm
 python-dotenv
-schedule
+bs4
+pytz
+nltk
