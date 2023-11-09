@@ -6,6 +6,7 @@ urllib3
 yahoofinancials
 tqdm
 python-dotenv
+selenium
 bs4
 pytz
 nltk
