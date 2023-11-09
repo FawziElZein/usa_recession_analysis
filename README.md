@@ -72,7 +72,7 @@ ETL runtime duration on AWS: 12 minutes
 | AWS Lambda Full Result |
 |---|
 |![aws_lambda_logs_part_1](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/fc91642c-4def-46df-baa0-5aea07fb8967)
-![aws_lambda_logs_part_2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/515c8ba0-a675-428b-8083-f08f673b7e62)
+![aws_lambda_logs_part_2](https://github.com/FawziElZein/usa_recession_analysis/assets/56543752/a93cecee-2e73-424f-9e90-459c0a7dd354)
 |
 
 | AWS Lambda Log Output |
