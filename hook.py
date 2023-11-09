@@ -8,6 +8,8 @@ from webscrape_data_handler import get_stock_market_news, get_usa_economic_data,
 from sentiment_analysis_data_handler import get_sentiment_analysis_results
 from stock_market_data_handler import get_stock_market_prices
 import logging
+from selenium import webdriver
+from tempfile import mkdtemp
 
 
 def create_etl_checkpoint(db_session, schema_name):
@@ -98,13 +100,32 @@ def create_and_store_into_table(db_session, df_table_title, sql_table_type, dest
         suffix = str(error)
         show_error_message(error_prefix.value, suffix)
 
+def intialize_chrome_webdriver():
+
+    options = webdriver.ChromeOptions()
+    options.binary_location = '/opt/chrome/chrome'
+    options.add_argument("--headless=new")
+    options.add_argument('--no-sandbox')
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1280x1696")
+    options.add_argument("--single-process")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-dev-tools")
+    options.add_argument("--no-zygote")
+    options.add_argument(f"--user-data-dir={mkdtemp()}")
+    options.add_argument(f"--data-path={mkdtemp()}")
+    options.add_argument(f"--disk-cache-dir={mkdtemp()}")
+    options.add_argument("--remote-debugging-port=9222")
+    return options
+
 def extract_phase(db_session,etl_date,does_etl_exists):
 
+    options = intialize_chrome_webdriver()
     get_stock_market_prices(db_session = db_session, etl_datetime = etl_date)
     get_stock_market_news( db_session = db_session, etl_date = etl_date, does_etl_exists = does_etl_exists)
-    get_usa_economic_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_exists)
-    get_states_economic_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_exists)
-    get_politician_speeches(db_session = db_session, etl_datetime = etl_date)
+    get_usa_economic_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_exists, options = options)
+    get_states_economic_data( db_session = db_session, etl_datetime = etl_date, does_etl_exists = does_etl_exists, options = options)
+    get_politician_speeches(db_session = db_session, etl_datetime = etl_date, options = options)
 
 def transform_phase(db_session,schema_name):
 
