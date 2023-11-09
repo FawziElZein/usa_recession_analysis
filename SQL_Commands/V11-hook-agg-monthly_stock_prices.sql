@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS target_schema.agg_monthly_stock_prices_vs_sentiments
     compound FLOAT
 );
 
-CREATE INDEX IF NOT EXISTS idx_agg_monthly_stock_prices_vs_sentiments_ticker_formatted_date ON target_schema.agg_monthly_stock_prices_vs_sentiments(ticker_formatted_date);
+CREATE INDEX IF NOT EXISTS idx_agg_monthly_stock_prices_vs_sentiments_date_ticker ON target_schema.agg_monthly_stock_prices_vs_sentiments(date_ticker);
 
 TRUNCATE TABLE target_schema.agg_monthly_stock_prices_vs_sentiments;
 

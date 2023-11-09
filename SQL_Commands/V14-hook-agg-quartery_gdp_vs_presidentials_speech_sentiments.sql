@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS target_schema.agg_quarterly_gdp_vs_presidentials_spee
     personal_consumption_expenditures DOUBLE PRECISION,
     gross_private_domestic_investment DOUBLE PRECISION,
     net_exports_of_goods_and_services DOUBLE PRECISION,
-    government_consumption_expenditures_and_gross_investment DOUBLE PRECISION,
+    government_consumption_expenditures DOUBLE PRECISION,
     imports_of_goods_and_services DOUBLE PRECISION,
     number_of_speeches_per_president TEXT,
     average_negative DECIMAL,

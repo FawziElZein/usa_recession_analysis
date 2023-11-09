@@ -39,7 +39,6 @@ CREATE VIEW target_schema.vw_stock_prices_vs_sentiments AS
         ticker,
         title,
         date,
-        time,
         stock_price,
         neg,
         neu,
@@ -49,7 +48,7 @@ CREATE VIEW target_schema.vw_stock_prices_vs_sentiments AS
         text
     FROM target_schema.fact_stock_prices_vs_sentiments
     ORDER BY 
-        ticker,date,time;
+        ticker,date;
 
 --- Daily stock prices vs sentiments view
 DROP VIEW IF EXISTS target_schema.vw_daily_stock_prices_vs_sentiments;

@@ -180,8 +180,7 @@ CREATE INDEX IF NOT EXISTS idx_stg_meta_finance_nflx_stock_price_formatted_date 
 CREATE TABLE IF NOT EXISTS target_schema.stg_miller_center_presidential_speeches(
     date DATE PRIMARY KEY NOT NULL,
     speech_title TEXT,
-    speaker_name VARCHAR(200),
-    speech TEXT
+    speaker_name VARCHAR(40)
 );
 
 CREATE INDEX IF NOT EXISTS idx_stg_miller_center_presidential_speeches_date ON target_schema.stg_miller_center_presidential_speeches(date);
